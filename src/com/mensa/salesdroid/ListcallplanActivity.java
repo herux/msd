@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActionBar;
 import android.support.v4.app.ActionBar.Tab;
@@ -26,6 +28,12 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listcallplan);
+
+		LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		CustomerLocationListener locListener = new CustomerLocationListener();
+		locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
+				locListener);
+
 		customers = new ArrayList<Customer>();
 		final ActionBar ab = getSupportActionBar();
 		ab.setBackgroundDrawable(getResources().getDrawable(
@@ -45,7 +53,7 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
 				// TODO Auto-generated method stub
-				 GetOutletsFromLocation();
+				// GetOutletsFromLocation();
 			}
 
 			@Override
