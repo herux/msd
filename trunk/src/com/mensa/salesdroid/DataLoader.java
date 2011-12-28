@@ -23,35 +23,30 @@ import android.os.Environment;
 
 public class DataLoader {
 	public static final int dlPRODUCTS = 0;
-	
-	static final String PRODUCTSFILENAME = "products.mbs";
-	static final String SALESMANFILENAME = "salesmans.mbs";
-	
-	static String[] dataFILENAMES = {PRODUCTSFILENAME, SALESMANFILENAME};
-	
-	static final String APP_DATAFOLDER = "mensadata";
-	
+
 	private int[] dlData;
 	private boolean ExtStorageAvailable = false;
 	private boolean ExtStorageWriteable = false;
 	private BaseDataListObj[] datalist;
 	String state = Environment.getExternalStorageState();
-	
+
 	public DataLoader(int... dlData) {
-		
-//		if (Environment.MEDIA_MOUNTED.equals(state)) {
-//		    ExtStorageAvailable = ExtStorageWriteable = true;
-//		} else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-//		    ExtStorageAvailable = true;
-//		    ExtStorageWriteable = false;
-//		} else {
-//		    ExtStorageAvailable = ExtStorageWriteable = false;
-//		}
+
+		// if (Environment.MEDIA_MOUNTED.equals(state)) {
+		// ExtStorageAvailable = ExtStorageWriteable = true;
+		// } else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+		// ExtStorageAvailable = true;
+		// ExtStorageWriteable = false;
+		// } else {
+		// ExtStorageAvailable = ExtStorageWriteable = false;
+		// }
 		datalist = new BaseDataListObj[dlData.length];
 		this.dlData = dlData;
 		for (int i = 0; i < dlData.length; i++) {
 			try {
-				FileInputStream jsonfile  = new FileInputStream(new File("/sdcard/"+APP_DATAFOLDER+"/"+dataFILENAMES[i]));
+				FileInputStream jsonfile = new FileInputStream(new File(
+						"/sdcard/" + MensaApplication.APP_DATAFOLDER + "/"
+								+ MensaApplication.dataFILENAMES[i]));
 				InputStreamReader inputreader = new InputStreamReader(jsonfile);
 				BufferedReader buffreader = new BufferedReader(inputreader);
 				StringBuilder json = new StringBuilder();
@@ -64,39 +59,49 @@ public class DataLoader {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-				if (i==dlPRODUCTS){
+
+				if (i == dlPRODUCTS) {
 					JSONObject jsonobj;
 					try {
 						jsonobj = new JSONObject(json.toString());
-						JSONArray jsonproducts = jsonobj.getJSONArray("Products");
+						JSONArray jsonproducts = jsonobj
+								.getJSONArray("master_product");
 						Product product;
 						BaseDataListObj products = (BaseDataListObj) new Products();
 						for (int j = 0; j < jsonproducts.length(); j++) {
-							product = new Product(jsonproducts.getJSONObject(j).getString("branch"), 
-												  jsonproducts.getJSONObject(j).getString("division"), 
-												  jsonproducts.getJSONObject(j).getString("part_no"), 
-												  jsonproducts.getJSONObject(j).getString("part_name"), 
-												  jsonproducts.getJSONObject(j).getLong("qty_availabe"));
-							((Products)products).addProduct(product);
+							product = new Product(jsonproducts.getJSONObject(j)
+									.getString("CONTRACT"), jsonproducts
+									.getJSONObject(j).getString("DIV"),
+									jsonproducts.getJSONObject(j).getString(
+											"PART_NO"), jsonproducts
+											.getJSONObject(j).getString(
+													"DESCRIPTION"),
+									jsonproducts.getJSONObject(j).getString(
+											"LOCATION_NO"), jsonproducts
+											.getJSONObject(j).getString(
+													"LOT_BATCH_NO"),
+									jsonproducts.getJSONObject(j).getLong(
+											"QTY_ONHAND"), jsonproducts
+											.getJSONObject(j).getLong(
+													"QTY_RESERVED"));
+							((Products) products).addProduct(product);
 						}
-						datalist[i] = products; 
+						datalist[i] = products;
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
+
 				}
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			
+
 		}
-		
+
 	}
-	
+
 	public BaseDataListObj[] getDatalist() {
 		return datalist;
 	}
@@ -104,14 +109,13 @@ public class DataLoader {
 	public int[] getDlData() {
 		return dlData;
 	}
-	
+
 	public boolean isExtStorageAvailable() {
 		return ExtStorageAvailable;
 	}
-	
+
 	public boolean isExtStorageWriteable() {
 		return ExtStorageWriteable;
 	}
 
-	
 }

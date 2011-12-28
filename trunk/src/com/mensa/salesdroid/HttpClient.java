@@ -23,61 +23,66 @@ import org.apache.http.util.EntityUtils;
 import android.os.Handler;
 
 public class HttpClient {
-	public static void isNetworkAvailable(final String AURL, final Handler handler, final int timeout) {
-        new Thread() {
-            private boolean responded = false;
-            @Override
-            public void run() {
-                new Thread() {
-                    @Override
-                    public void run() {
-                        HttpGet requestForTest = new HttpGet(AURL);
-                        try {
-                            new DefaultHttpClient().execute(requestForTest); 
-                            responded = true;
-                        } catch (Exception e) {}
-                    }
+	public static void isNetworkAvailable(final String AURL,
+			final Handler handler, final int timeout) {
+		new Thread() {
+			private boolean responded = false;
 
-                }.start();
+			@Override
+			public void run() {
+				new Thread() {
+					@Override
+					public void run() {
+						HttpGet requestForTest = new HttpGet(AURL);
+						try {
+							new DefaultHttpClient().execute(requestForTest);
+							responded = true;
+						} catch (Exception e) {
+						}
+					}
 
-                try {
-                    int waited = 0;
-                    while(!responded && (waited < timeout)) {
-                        sleep(100);
-                        if(!responded ) { 
-                            waited += 100;
-                        }
-                    }
-                } 
-                catch(InterruptedException e) {}  
-                finally { 
-                    if (!responded) { handler.sendEmptyMessage(0); } 
-                    else { handler.sendEmptyMessage(1); }
-                }
-            }
-        }.start();
+				}.start();
 
-	} 
-	
-	public String HttpPost(String AURL, String AInput){
+				try {
+					int waited = 0;
+					while (!responded && (waited < timeout)) {
+						sleep(100);
+						if (!responded) {
+							waited += 100;
+						}
+					}
+				} catch (InterruptedException e) {
+				} finally {
+					if (!responded) {
+						handler.sendEmptyMessage(0);
+					} else {
+						handler.sendEmptyMessage(1);
+					}
+				}
+			}
+		}.start();
+
+	}
+
+	public String executeHttpPost(String AURL, String AInput) {
 		DefaultHttpClient http = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(AURL);
 		String ret = "";
 		try {
-	        StringEntity se = new StringEntity( AInput , HTTP.UTF_8);
-	        httppost.setEntity(se);
+			StringEntity se = new StringEntity(AInput, HTTP.UTF_8);
+			httppost.setEntity(se);
 
-	        HttpResponse httpresponse = http.execute(httppost);
-	        HttpEntity resEntity = httpresponse.getEntity();
-	        ret = EntityUtils.toString(resEntity);
-	        	        
-	    } catch (ClientProtocolException e) {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
-	    } catch (IOException e) {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
-	    }
+			HttpResponse httpresponse = http.execute(httppost);
+			HttpEntity resEntity = httpresponse.getEntity();
+			ret = EntityUtils.toString(resEntity);
+
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return ret;
 	}
 }
