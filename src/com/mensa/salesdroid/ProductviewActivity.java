@@ -76,7 +76,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			super.onActivityCreated(savedInstanceState);
 
 			products = new ArrayList<Product>();
-			products.add(new Product("", "", "", "", 0));
+			products.add(new Product("", "", "", "", "", "", 0, 0));
 			adapter = new ProductsAdapter(getActivity(), R.layout.productlist,
 					products);
 			setListAdapter(adapter);
@@ -163,14 +163,12 @@ public class ProductviewActivity extends BaseFragmentActivity {
 							.getResources().getDisplayMetrics());
 			text.setPadding(padding, padding, padding, padding);
 			scroller.addView(text);
-			text.setText(products.get(getShownIndex()).getPart_name());
+			text.setText(products.get(getShownIndex()).getDESCRIPTION());
 			return scroller;
 		}
 	}
 
 	public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-		// FIXME add a proper implementation, for now just rotate the left
-		// fragment
 	}
 
 }

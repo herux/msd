@@ -23,8 +23,8 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
 
 		LayoutInflater inflater = activity.getLayoutInflater();
 		View row = inflater.inflate(R.layout.productlist, parent, false);
-		TextView label = (TextView) row.findViewById(R.id.tvTable); 
-		label.setText(getItem(position).getPart_name());
+		TextView label = (TextView) row.findViewById(R.id.tvTable);
+		label.setText(getItem(position).getDESCRIPTION());
 
 		return row;
 	}
