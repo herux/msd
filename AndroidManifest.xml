@@ -3,7 +3,7 @@
     package="com.mensa.salesdroid"
     android:versionCode="1"
     android:versionName="1.0" >
-	
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,21 +13,25 @@
     <uses-sdk android:minSdkVersion="10" />
 
     <application
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name" 
         android:name="MensaApplication"
-        android:theme="@style/Theme.Sherlock">
-        <activity android:name=".LoginActivity"
-                  android:label="@string/app_name">
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Sherlock" >
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainmenuActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ProductviewActivity"/>
-        <activity android:name=".ProductviewDetailsActivity"/>
-        <activity android:name=".ListcallplanActivity"/>
+        <activity
+            android:name=".MainmenuActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ProductviewActivity" />
+        <activity android:name=".ProductviewDetailsActivity" />
+        <activity android:name=".ListcallplanActivity" />
     </application>
 
 </manifest>

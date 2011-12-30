@@ -1,3 +1,11 @@
+/**
+ * author : herux
+ * email  : heruxi@gmail.com
+ * site   : http://www.herux.com
+ * blogs  : http://herux.wordpress.com	
+ * created: 22.12.2011	
+ */
+
 package com.mensa.salesdroid;
 
 import android.app.Application;

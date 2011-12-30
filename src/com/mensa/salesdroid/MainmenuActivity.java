@@ -8,7 +8,11 @@
 
 package com.mensa.salesdroid;
 
+import com.mensa.salesdroid.DataSync.OnDataSyncListener;
+
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +27,7 @@ import android.widget.Toast;
 
 public class MainmenuActivity extends Activity {
 	private static DataSync sync;
+	static ProgressDialog progressDialog;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,17 +60,40 @@ public class MainmenuActivity extends Activity {
 			
 			@Override
 			public void onClick(View arg0) {
+				showDialog(0);
 				sync = new DataSync(handler);
+				sync.setOnDataSyncListener(new OnDataSyncListener() {
+					
+					@Override
+					public void OnDataSync(String dataname, int count, int max) {
+						progressDialog.setProgress(count);
+						progressDialog.setMessage(dataname);
+					}
+				});
 				sync.start();
 			}
 		});
+	}
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+        case 0:{
+        	progressDialog = new ProgressDialog(MainmenuActivity.this);
+        	progressDialog.setTitle("Data Synchronization");
+        	progressDialog.setMessage(MensaApplication.dataFILENAMES[0]);
+        	progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        	progressDialog.setMax(MensaApplication.dataFILENAMES.length);
+        	}
+        }
+		return progressDialog;
 	}
 	
 	final static Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			int total = msg.arg1;
 			if (total >= 0) {
-				Log.d("mensa", "Selesai = "+sync.getResponse());
+				progressDialog.dismiss();
 			}
 		}
 	};

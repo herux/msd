@@ -335,10 +335,10 @@ containing a value of this type.
         public static final int windowActionModeOverlay=0x7f010014;
     }
     public static final class color {
-        public static final int abs__item_bg=0x7f05000a;
+        public static final int abs__item_bg=0x7f05000b;
         public static final int abs__item_focused=0x7f050000;
-        public static final int abs__tab_text_color_dark=0x7f05000b;
-        public static final int abs__tab_text_color_light=0x7f05000c;
+        public static final int abs__tab_text_color_dark=0x7f05000c;
+        public static final int abs__tab_text_color_light=0x7f05000d;
         public static final int background1=0x7f050006;
         public static final int background2=0x7f050007;
         public static final int background3=0x7f050008;
@@ -348,6 +348,7 @@ containing a value of this type.
         public static final int title_separator=0x7f050009;
         public static final int title_text=0x7f050002;
         public static final int title_text_alt=0x7f050003;
+        public static final int titlemaincolor=0x7f05000a;
     }
     public static final class dimen {
         public static final int text_size_large=0x7f090003;
@@ -399,16 +400,27 @@ containing a value of this type.
         public static final int actionbarbackground=0x7f020028;
         public static final int background=0x7f020029;
         public static final int backgroundland=0x7f02002a;
-        public static final int calendar=0x7f02002b;
-        public static final int calendarselected=0x7f02002c;
-        public static final int customers=0x7f02002d;
-        public static final int ic_launcher=0x7f02002e;
-        public static final int login=0x7f02002f;
-        public static final int productlist=0x7f020030;
-        public static final int promo=0x7f020031;
-        public static final int salescallplan=0x7f020032;
-        public static final int synchronize=0x7f020033;
-        public static final int viewdetail=0x7f020034;
+        public static final int btncalendar=0x7f02002b;
+        public static final int btncustomer=0x7f02002c;
+        public static final int btnproductlist=0x7f02002d;
+        public static final int btnpromo=0x7f02002e;
+        public static final int btnsalescallplan=0x7f02002f;
+        public static final int btnsynchronize=0x7f020030;
+        public static final int calendar=0x7f020031;
+        public static final int calendarselected=0x7f020032;
+        public static final int customers=0x7f020033;
+        public static final int customerselected=0x7f020034;
+        public static final int ic_launcher=0x7f020035;
+        public static final int login=0x7f020036;
+        public static final int productlist=0x7f020037;
+        public static final int productlistselected=0x7f020038;
+        public static final int promo=0x7f020039;
+        public static final int promoselected=0x7f02003a;
+        public static final int salescallplan=0x7f02003b;
+        public static final int salescallplanselected=0x7f02003c;
+        public static final int synchronize=0x7f02003d;
+        public static final int synchronizeselected=0x7f02003e;
+        public static final int viewdetail=0x7f02003f;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f040023;

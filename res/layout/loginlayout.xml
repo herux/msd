@@ -2,6 +2,7 @@
 <LinearLayout android:id="@+id/widget0"
 	android:layout_width="fill_parent" 
 	android:layout_height="fill_parent"
+	android:background="@drawable/background"
 	xmlns:android="http://schemas.android.com/apk/res/android">
 
 	<RelativeLayout
@@ -28,7 +29,7 @@
 	        android:layout_alignBottom="@+id/textView1"
 	        android:layout_centerHorizontal="true"
 	        android:layout_marginBottom="32dp"
-	        android:text="MENSA BINSASUKSES"
+	        android:text="MENSA BINASUKSES"
 	        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 	    <EditText

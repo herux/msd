@@ -3,6 +3,7 @@
     android:id="@+id/db1_root"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/background"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -21,13 +22,13 @@
             <Button
                 android:id="@+id/btn_salescallplan"
                 style="@style/HomeButton"
-                android:drawableTop="@drawable/salescallplan"
+                android:drawableTop="@drawable/btnsalescallplan"
                 android:text="Sales Call Plan" />
 
             <Button
                 android:id="@+id/btn_productlist"
                 style="@style/HomeButton"
-                android:drawableTop="@drawable/productlist"
+                android:drawableTop="@drawable/btnproductlist"
                 android:text="Product List" />
         </LinearLayout>
 
@@ -40,13 +41,13 @@
             <Button
                 android:id="@+id/btn_calendar"
                 style="@style/HomeButton"
-                android:drawableTop="@drawable/calendar"
+                android:drawableTop="@drawable/btncalendar"
                 android:text="Calendar" />
 
             <Button
                 android:id="@+id/btn_synchronize"
                 style="@style/HomeButton"
-                android:drawableTop="@drawable/synchronize"
+                android:drawableTop="@drawable/btnsynchronize"
                 android:text="Synchronize" />
         </LinearLayout>
 
@@ -59,13 +60,13 @@
             <Button
                 android:id="@+id/btn_addcustomer"
                 style="@style/HomeButton"
-                android:drawableTop="@drawable/customers"
+                android:drawableTop="@drawable/btncustomer"
                 android:text="Add Customer" />
 
             <Button
                 android:id="@+id/btn_infopromo"
                 style="@style/HomeButton"
-                android:drawableTop="@drawable/promo"
+                android:drawableTop="@drawable/btnpromo"
                 android:text="Info Promo" />
         </LinearLayout>
     </LinearLayout>
