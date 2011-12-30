@@ -26,8 +26,8 @@
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textSize">@dimen/text_size_small</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@color/foreground1</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/titlemaincolor</item>
         <item name="android:background">@null</item>
     </style>
 
