@@ -11,6 +11,7 @@ package com.mensa.salesdroid;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.mensa.salesdroid.ProductviewActivity.ProductDetailsFragment;
 
@@ -23,12 +24,11 @@ public class ProductviewDetailsActivity extends FragmentActivity {
 			finish();
 			return;
 		}
-
 		if (savedInstanceState == null) {
 			ProductDetailsFragment details = new ProductDetailsFragment();
 			details.setArguments(getIntent().getExtras());
 			getSupportFragmentManager().beginTransaction()
-					.add(android.R.id.content, details).commit();
+					.add(android.R.id.content, details).commit();  
 		}
 	}
 

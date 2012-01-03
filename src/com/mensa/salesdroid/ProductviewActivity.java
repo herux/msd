@@ -18,12 +18,11 @@ import android.support.v4.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
-import android.util.TypedValue;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class ProductviewActivity extends BaseFragmentActivity {
@@ -109,7 +108,6 @@ public class ProductviewActivity extends BaseFragmentActivity {
 
 		void showDetails(int index) {
 			mCurCheckPosition = index;
-
 			if (mDualPane) {
 				getListView().setItemChecked(index, true);
 
@@ -135,6 +133,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 	}
 
 	public static class ProductDetailsFragment extends Fragment {
+		
 		public static ProductDetailsFragment newInstance(int index) {
 			ProductDetailsFragment f = new ProductDetailsFragment();
 
@@ -152,19 +151,12 @@ public class ProductviewActivity extends BaseFragmentActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			if (container == null) {
-				return null;
-			}
+			View v = inflater.inflate(R.layout.productdetail, null);
+			TextView productdesc = (TextView) v.findViewById(
+					R.id.tvProductDetail);
+			productdesc.setText(products.get(getShownIndex()).getDESCRIPTION());
+			return v;
 
-			ScrollView scroller = new ScrollView(getActivity());
-			TextView text = new TextView(getActivity());
-			int padding = (int) TypedValue.applyDimension(
-					TypedValue.COMPLEX_UNIT_DIP, 4, getActivity()
-							.getResources().getDisplayMetrics());
-			text.setPadding(padding, padding, padding, padding);
-			scroller.addView(text);
-			text.setText(products.get(getShownIndex()).getDESCRIPTION());
-			return scroller;
 		}
 	}
 
