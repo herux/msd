@@ -411,16 +411,18 @@ containing a value of this type.
         public static final int customers=0x7f020033;
         public static final int customerselected=0x7f020034;
         public static final int ic_launcher=0x7f020035;
-        public static final int login=0x7f020036;
-        public static final int productlist=0x7f020037;
-        public static final int productlistselected=0x7f020038;
-        public static final int promo=0x7f020039;
-        public static final int promoselected=0x7f02003a;
-        public static final int salescallplan=0x7f02003b;
-        public static final int salescallplanselected=0x7f02003c;
-        public static final int synchronize=0x7f02003d;
-        public static final int synchronizeselected=0x7f02003e;
-        public static final int viewdetail=0x7f02003f;
+        public static final int list=0x7f020036;
+        public static final int listicon=0x7f020037;
+        public static final int login=0x7f020038;
+        public static final int productlist=0x7f020039;
+        public static final int productlistselected=0x7f02003a;
+        public static final int promo=0x7f02003b;
+        public static final int promoselected=0x7f02003c;
+        public static final int salescallplan=0x7f02003d;
+        public static final int salescallplanselected=0x7f02003e;
+        public static final int synchronize=0x7f02003f;
+        public static final int synchronizeselected=0x7f020040;
+        public static final int viewdetail=0x7f020041;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f040023;
@@ -445,6 +447,7 @@ containing a value of this type.
         public static final int abs__up=0x7f040017;
         public static final int blocks_now=0x7f040010;
         public static final int blocks_ruler=0x7f04000f;
+        public static final int btnBasket=0x7f04003a;
         public static final int btnLogin=0x7f040032;
         public static final int btn_addcustomer=0x7f040038;
         public static final int btn_calendar=0x7f040036;
@@ -460,12 +463,13 @@ containing a value of this type.
         public static final int etPassword=0x7f04002e;
         public static final int etUsername=0x7f040030;
         public static final int homeAsUp=0x7f040006;
-        public static final int imageView1=0x7f04003a;
-        public static final int imageView2=0x7f04003e;
+        public static final int imageView1=0x7f04003e;
+        public static final int imgProduct=0x7f04003b;
         public static final int lblPassword=0x7f04002f;
         public static final int lblUsername=0x7f040031;
         public static final int listMode=0x7f040002;
         public static final int normal=0x7f040001;
+        public static final int productgallery=0x7f04003d;
         public static final int relativeLayout1=0x7f040025;
         public static final int showCustom=0x7f040008;
         public static final int showHome=0x7f040005;
@@ -478,10 +482,10 @@ containing a value of this type.
         public static final int title_text=0x7f04000b;
         public static final int titles=0x7f040027;
         public static final int tvCustomer=0x7f040026;
+        public static final int tvProductDetail=0x7f04003c;
         public static final int tvSearch=0x7f040028;
-        public static final int tvTable=0x7f04003b;
-        public static final int tvTotalHarga=0x7f04003c;
-        public static final int tvTotalItem=0x7f04003d;
+        public static final int tvTable=0x7f04003f;
+        public static final int tvTotalHarga=0x7f040040;
         public static final int useLogo=0x7f040004;
         public static final int widget0=0x7f04002a;
         public static final int widget30=0x7f04002b;
@@ -508,8 +512,9 @@ containing a value of this type.
         public static final int loginlayout=0x7f03000e;
         public static final int main=0x7f03000f;
         public static final int mainmenu=0x7f030010;
-        public static final int productlist=0x7f030011;
-        public static final int productviewlayout=0x7f030012;
+        public static final int productdetail=0x7f030011;
+        public static final int productlist=0x7f030012;
+        public static final int productviewlayout=0x7f030013;
     }
     public static final class string {
         public static final int abs__tab_under_ab_tag=0x7f070000;
