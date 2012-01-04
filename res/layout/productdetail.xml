@@ -4,35 +4,40 @@
     android:layout_height="match_parent" >
 
     <Button
-        android:id="@+id/btnBasket"
+        android:id="@+id/btnAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="28dp"
         android:text="Add to basket" />
+
+    <TextView
+        android:id="@+id/tvProductDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/btnAdd"
+        android:layout_marginLeft="21dp"
+        android:text="Product Descriptions" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/btnAdd"
+        android:layout_alignParentLeft="true"
+        android:text="Description: " />
 
     <ImageView
         android:id="@+id/imgProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/btnAdd"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="55dp"
-        android:src="@drawable/listicon" />
-
-    <TextView
-        android:id="@+id/tvProductDetail"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="desc product" />
-
-    <Gallery
-        android:id="@+id/productgallery"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom" />
+        android:layout_marginBottom="34dp"
+        android:adjustViewBounds="true"
+        android:alpha="1"
+        android:soundEffectsEnabled="true"
+        android:src="@drawable/noimageproduct" />
 
 </RelativeLayout>
