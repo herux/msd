@@ -448,7 +448,7 @@ containing a value of this type.
         public static final int abs__up=0x7f040017;
         public static final int blocks_now=0x7f040010;
         public static final int blocks_ruler=0x7f04000f;
-        public static final int btnAdd=0x7f04003c;
+        public static final int btnAdd=0x7f04003a;
         public static final int btnLogin=0x7f040032;
         public static final int btn_addcustomer=0x7f040038;
         public static final int btn_calendar=0x7f040036;
@@ -465,7 +465,7 @@ containing a value of this type.
         public static final int etUsername=0x7f040030;
         public static final int homeAsUp=0x7f040006;
         public static final int imageView1=0x7f04003d;
-        public static final int imgProduct=0x7f04003a;
+        public static final int imgProduct=0x7f04003c;
         public static final int lblPassword=0x7f04002f;
         public static final int lblUsername=0x7f040031;
         public static final int listMode=0x7f040002;

@@ -27,18 +27,18 @@ import android.widget.TextView;
 
 public class ProductviewActivity extends BaseFragmentActivity {
 	static ProductsThread productsThread;
-	static ArrayList<Product> products;
 	static ProductsAdapter adapter;
+	static MensaApplication application;
 
 	final static Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			int total = msg.arg1;
 			if (total >= 0) {
 				productsThread.setState(BaseThread.STATE_DONE);
-				products = productsThread.getProducts();
+				application.setProducts(productsThread.getProducts());
 				adapter.clear();
-				for (int i = 0; i < products.size(); i++) {
-					adapter.add(products.get(i));
+				for (int i = 0; i < application.getProducts().size(); i++) {
+					adapter.add(application.getProducts().get(i));
 				}
 				adapter.notifyDataSetChanged();
 			}
@@ -53,6 +53,8 @@ public class ProductviewActivity extends BaseFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		application = getMensaapplication();
+
 		setContentView(R.layout.productviewlayout);
 		final ActionBar ab = getSupportActionBar();
 		ab.setBackgroundDrawable(getResources().getDrawable(
@@ -74,10 +76,13 @@ public class ProductviewActivity extends BaseFragmentActivity {
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
 
-			products = new ArrayList<Product>();
-			products.add(new Product("", "", "", "", "", "", 0, 0));
+			if (application.getProducts() == null) {
+				application.setProducts(new ArrayList<Product>());
+				application.getProducts().add(
+						new Product("", "", "", "", "", "", 0, 0));
+			}
 			adapter = new ProductsAdapter(getActivity(), R.layout.productlist,
-					products);
+					application.getProducts());
 			setListAdapter(adapter);
 
 			View detailsFrame = getActivity().findViewById(R.id.details);
@@ -133,7 +138,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 	}
 
 	public static class ProductDetailsFragment extends Fragment {
-		
+
 		public static ProductDetailsFragment newInstance(int index) {
 			ProductDetailsFragment f = new ProductDetailsFragment();
 
@@ -152,9 +157,9 @@ public class ProductviewActivity extends BaseFragmentActivity {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			View v = inflater.inflate(R.layout.productdetail, null);
-			TextView productdesc = (TextView) v.findViewById(
-					R.id.tvProductDetail);
-			productdesc.setText(products.get(getShownIndex()).getDESCRIPTION());
+			TextView productdesc = (TextView) v
+					.findViewById(R.id.tvProductDetail);
+			productdesc.setText(application.getProducts().get(getShownIndex()).getDESCRIPTION());
 			return v;
 
 		}
