@@ -8,6 +8,8 @@
 
 package com.mensa.salesdroid;
 
+import java.util.ArrayList;
+
 import android.app.Application;
 
 public class MensaApplication extends Application {
@@ -23,6 +25,8 @@ public class MensaApplication extends Application {
 			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3Byb2R1Y3Q=",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3NhbGVzbWFu",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX2N1c3RvbWVy" };
+	
+	private ArrayList<Product> products;
 
 	@Override
 	public void onCreate() {
@@ -34,6 +38,14 @@ public class MensaApplication extends Application {
 	public void onTerminate() {
 		// TODO Auto-generated method stub
 		super.onTerminate();
+	}
+
+	public ArrayList<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(ArrayList<Product> products) {
+		this.products = products;
 	}
 
 }
