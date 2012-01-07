@@ -19,14 +19,16 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageView1"
         android:layout_toRightOf="@+id/imageView1"
+        android:textColor="@color/titlemaincolor"
         android:text="Table" />
 
     <TextView
-        android:id="@+id/tvTotalHarga"
+        android:id="@+id/tvHarga"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/tvTable"
         android:layout_alignLeft="@+id/tvTable"
+        android:textColor="@color/titlemaincolor"
         android:text="Harga" />
 
 </RelativeLayout>
