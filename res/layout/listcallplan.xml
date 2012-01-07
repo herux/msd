@@ -9,13 +9,24 @@
         android:layout_height="match_parent"
         class="com.mensa.salesdroid.ListcallplanActivity$CustomersFragment" />
 
-    <AutoCompleteTextView
-        android:id="@+id/tvSearch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Search Customers" >
+    <!-- <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-        <requestFocus />
-    </AutoCompleteTextView>
+        <AutoCompleteTextView
+            android:id="@+id/tvSearch"
+            android:layout_width="270dip"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/searchbkg"
+            android:cursorVisible="false"
+            android:inputType="textAutoComplete"
+            android:singleLine="true" >
+
+            <requestFocus />
+        </AutoCompleteTextView>  
+
+    </RelativeLayout>-->
 
 </FrameLayout>
