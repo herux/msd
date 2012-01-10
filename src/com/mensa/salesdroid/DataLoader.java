@@ -23,6 +23,7 @@ import android.os.Environment;
 
 public class DataLoader {
 	public static final int dlPRODUCTS = 0;
+	public static final int dlCUSTOMERS = 1;
 
 	private int[] dlData;
 	private boolean ExtStorageAvailable = false;
@@ -60,8 +61,9 @@ public class DataLoader {
 					e.printStackTrace();
 				}
 
-				if (i == dlPRODUCTS) {
-					JSONObject jsonobj;
+				JSONObject jsonobj;
+				switch (i) {
+				case dlPRODUCTS: {
 					try {
 						jsonobj = new JSONObject(json.toString());
 						JSONArray jsonproducts = jsonobj
@@ -91,8 +93,36 @@ public class DataLoader {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-
 				}
+				case dlCUSTOMERS: {
+					try {
+						jsonobj = new JSONObject(json.toString());
+						JSONArray jsoncustomers = jsonobj
+								.getJSONArray("master_customer");
+						Customer customer;
+						BaseDataListObj customers = (BaseDataListObj) new Customers();
+						for (int j = 0; j < jsoncustomers.length(); j++) {
+							customer = new Customer(jsoncustomers
+									.getJSONObject(j).getString("CABANG"), "",
+									jsoncustomers.getJSONObject(j).getString(
+											"CUSTOMER_CODE"), jsoncustomers
+											.getJSONObject(j).getString(
+													"CUSTOMER_NAME"), "chain",
+									"group", "bill_name", "bill_address",
+									"delivery_name", jsoncustomers
+											.getJSONObject(j).getString(
+													"ALAMAT_KIRIM"), "zipcode",
+									"coordinate");
+							((Customers) customers).addCustomer(customer);
+						}
+						datalist[i] = customers;
+					} catch (JSONException e) {
+						// TODO: handle exception
+						e.printStackTrace();
+					}
+				}
+				}
+
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

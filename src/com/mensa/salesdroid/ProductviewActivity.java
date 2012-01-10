@@ -37,6 +37,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 				productsThread.setState(BaseThread.STATE_DONE);
 				application.setProducts(productsThread.getProducts());
 				adapter.clear();
+				adapter.add(new Product("", "", "", "Search", "", "", 0, 0));
 				for (int i = 0; i < application.getProducts().size(); i++) {
 					adapter.add(application.getProducts().get(i));
 				}
@@ -61,9 +62,9 @@ public class ProductviewActivity extends BaseFragmentActivity {
 				R.drawable.actionbarbackground));
 		ab.setDisplayHomeAsUpEnabled(false);
 		ab.setDisplayUseLogoEnabled(false);
-		ab.addTab(ab.newTab().setText("Recent"));
+		ab.addTab(ab.newTab().setText("Focus"));
 		ab.addTab(ab.newTab().setText("Promo"));
-		ab.addTab(ab.newTab().setText("All Products"));
+		ab.addTab(ab.newTab().setText("All"));
 		showTabsNav();
 		Reload();
 	}

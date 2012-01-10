@@ -18,23 +18,23 @@ private ArrayList<Customer> customers;
 		customers = new ArrayList<Customer>();
 	}
 	
-	public void addProduct(Customer ACustomer){
+	public void addCustomer(Customer ACustomer){
 		customers.add(ACustomer);
 	}
 	
-	public void removeProduct(Customer ACustomer){
+	public void removeCustomer(Customer ACustomer){
 		customers.remove(ACustomer);
 	}
 	
-	public void removeProduct(int location){
+	public void removeCustomer(int location){
 		customers.remove(location);
 	}
 	
-	public ArrayList<Customer> getProducts() {
+	public ArrayList<Customer> getCustomers() {
 		return customers;
 	}
 	
-	public void setProducts(ArrayList<Customer> customers) {
+	public void setCustomers(ArrayList<Customer> customers) {
 		this.customers = customers;
 	}
 	
