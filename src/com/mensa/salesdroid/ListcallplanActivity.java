@@ -41,17 +41,15 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 		ab.setDisplayHomeAsUpEnabled(false);
 		ab.setDisplayUseLogoEnabled(false);
 		
+		customers = new ArrayList<Customer>();
 		int[] datatypes = new int[1];
 		datatypes[0] = DataLoader.dlCUSTOMERS;
 		DataLoader dtcustomers = new DataLoader(datatypes);
-		Customers custs = (Customers) dtcustomers.getDatalist()[DataLoader.dlCUSTOMERS];
+		Customers custs = (Customers) dtcustomers.getDatalist()[0];
 		
-		customers = custs.getCustomers(); //new ArrayList<Customer>();
-//		adapter.add(new Customer("", "", "", "", "", "", "", "", "", "", "", ""));
-//		for (int i = 0; i < custs.; i++) {
-//			adapter.add(application.getProducts().get(i));
-//		}
-//		adapter.notifyDataSetChanged();
+		customers = custs.getCustomers();
+		customers.add(0, new Customer("", "", "", "", "", "", "", "", "", "",
+					"", ""));
 	}
 
 	public static class CustomersFragment extends ListFragment {

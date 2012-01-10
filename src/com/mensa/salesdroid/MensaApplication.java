@@ -19,13 +19,13 @@ public class MensaApplication extends Application {
 	
 	static final String APP_DATAFOLDER = "mensadata";
 
-	static String[] dataFILENAMES = { PRODUCTSFILENAME, SALESMANSFILENAME,
-			CUSTOMERSFILENAME };
+	static String[] dataFILENAMES = { PRODUCTSFILENAME, CUSTOMERSFILENAME, SALESMANSFILENAME};
 	static final String mbs_url = "http://simfoni.mbs.co.id/services.php?";
 	static final String[] paths = {
 			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3Byb2R1Y3Q=",
-			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3NhbGVzbWFu",
-			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX2N1c3RvbWVy" };
+			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX2N1c3RvbWVy",
+			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3NhbGVzbWFu"
+			 };
 	
 	private ArrayList<Product> products;
 

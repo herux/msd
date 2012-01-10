@@ -20,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Environment;
+import android.util.Log;
 
 public class DataLoader {
 	public static final int dlPRODUCTS = 0;
@@ -41,13 +42,16 @@ public class DataLoader {
 		// } else {
 		// ExtStorageAvailable = ExtStorageWriteable = false;
 		// }
+
 		datalist = new BaseDataListObj[dlData.length];
 		this.dlData = dlData;
 		for (int i = 0; i < dlData.length; i++) {
 			try {
 				FileInputStream jsonfile = new FileInputStream(new File(
 						"/sdcard/" + MensaApplication.APP_DATAFOLDER + "/"
-								+ MensaApplication.dataFILENAMES[i]));
+								+ MensaApplication.dataFILENAMES[dlData[i]]));
+				Log.d("mensa", "dataFILENAMES="
+						+ MensaApplication.dataFILENAMES[dlData[i]]);
 				InputStreamReader inputreader = new InputStreamReader(jsonfile);
 				BufferedReader buffreader = new BufferedReader(inputreader);
 				StringBuilder json = new StringBuilder();
@@ -60,9 +64,8 @@ public class DataLoader {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
 				JSONObject jsonobj;
-				switch (i) {
+				switch (dlData[i]) {
 				case dlPRODUCTS: {
 					try {
 						jsonobj = new JSONObject(json.toString());
@@ -93,6 +96,7 @@ public class DataLoader {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					break;
 				}
 				case dlCUSTOMERS: {
 					try {
@@ -121,6 +125,7 @@ public class DataLoader {
 						e.printStackTrace();
 					}
 				}
+					break;
 				}
 
 			} catch (FileNotFoundException e) {
