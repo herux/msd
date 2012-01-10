@@ -16,6 +16,7 @@ public class MensaApplication extends Application {
 	static final String CUSTOMERSFILENAME = "customers.mbs";
 	static final String PRODUCTSFILENAME = "products.mbs";
 	static final String SALESMANSFILENAME = "salesmans.mbs";
+	
 	static final String APP_DATAFOLDER = "mensadata";
 
 	static String[] dataFILENAMES = { PRODUCTSFILENAME, SALESMANSFILENAME,

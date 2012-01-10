@@ -35,12 +35,23 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 		locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
 				locListener);
 
-		customers = new ArrayList<Customer>();
 		final ActionBar ab = getSupportActionBar();
 		ab.setBackgroundDrawable(getResources().getDrawable(
 				R.drawable.actionbarbackground));
 		ab.setDisplayHomeAsUpEnabled(false);
 		ab.setDisplayUseLogoEnabled(false);
+		
+		int[] datatypes = new int[1];
+		datatypes[0] = DataLoader.dlCUSTOMERS;
+		DataLoader dtcustomers = new DataLoader(datatypes);
+		Customers custs = (Customers) dtcustomers.getDatalist()[DataLoader.dlCUSTOMERS];
+		
+		customers = custs.getCustomers(); //new ArrayList<Customer>();
+//		adapter.add(new Customer("", "", "", "", "", "", "", "", "", "", "", ""));
+//		for (int i = 0; i < custs.; i++) {
+//			adapter.add(application.getProducts().get(i));
+//		}
+//		adapter.notifyDataSetChanged();
 	}
 
 	public static class CustomersFragment extends ListFragment {
@@ -51,8 +62,8 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
 
-			customers.add(new Customer("1", "2", "3", "No Customer", "5", "6",
-					"7", "8", "9", "10", "11", "12"));
+			customers.add(new Customer("", "", "", "", "", "", "", "", "", "",
+					"", ""));
 			adapter = new CustomersAdapter(getActivity(),
 					R.layout.listcallplan, customers);
 			setListAdapter(adapter);
