@@ -1,28 +1,37 @@
+/**
+ * author : herux
+ * email  : heruxi@gmail.com
+ * site   : http://www.herux.com
+ * blogs  : http://herux.wordpress.com	
+ * created: 01.01.2012	
+ */
+
 package com.mensa.salesdroid;
 
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
-
-import com.mensa.salesdroid.ProductviewActivity.ProductDetailsFragment;
 
 public class ListcallplanActivity extends BaseFragmentActivity {
 	double LATITUDE = 37.42233;
 	double LONGITUDE = -122.083;
 
 	static ArrayList<Customer> customers;
+	static ArrayList<Customer> customersforsearch;
 	static CustomersAdapter adapter;
 
 	@Override
@@ -40,16 +49,17 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 				R.drawable.actionbarbackground));
 		ab.setDisplayHomeAsUpEnabled(false);
 		ab.setDisplayUseLogoEnabled(false);
-		
+
 		customers = new ArrayList<Customer>();
+		customersforsearch = new ArrayList<Customer>();
 		int[] datatypes = new int[1];
 		datatypes[0] = DataLoader.dlCUSTOMERS;
 		DataLoader dtcustomers = new DataLoader(datatypes);
 		Customers custs = (Customers) dtcustomers.getDatalist()[0];
-		
-		customers = custs.getCustomers();
-		customers.add(0, new Customer("", "", "", "", "", "", "", "", "", "",
-					"", ""));
+
+		customersforsearch = custs.getCustomers();
+		customers = customersforsearch;
+		customers.add(0, new Customer("", "", "", "", "", "", "", "", ""));
 	}
 
 	public static class CustomersFragment extends ListFragment {
@@ -60,18 +70,67 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
 
-			customers.add(new Customer("", "", "", "", "", "", "", "", "", "",
-					"", ""));
+			customers.add(new Customer("", "", "", "", "", "", "", "", ""));
 			adapter = new CustomersAdapter(getActivity(),
 					R.layout.listcallplan, customers);
 			setListAdapter(adapter);
+
+			View detailsFrame = getActivity().findViewById(R.id.details);
+			mDualPane = detailsFrame != null
+					&& detailsFrame.getVisibility() == View.VISIBLE;
+
+			if (savedInstanceState != null) {
+				mCurCheckPosition = savedInstanceState.getInt("curChoice", 0);
+			}
+
+			if (mDualPane) {
+				getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+				showDetails(mCurCheckPosition);
+			}
+
+		}
+
+		@Override
+		public void onSaveInstanceState(Bundle outState) {
+			super.onSaveInstanceState(outState);
+			outState.putInt("curChoice", mCurCheckPosition);
+		}
+
+		@Override
+		public void onListItemClick(ListView l, View v, int position, long id) {
+			showDetails(position);
+		}
+
+		void showDetails(int index) {
+			mCurCheckPosition = index;
+			if (mDualPane) {
+				getListView().setItemChecked(index, true);
+
+				CustomerDetailsFragment details = (CustomerDetailsFragment) getFragmentManager()
+						.findFragmentById(R.id.details);
+				if (details == null || details.getShownIndex() != index) {
+					details = CustomerDetailsFragment.newInstance(index);
+
+					FragmentTransaction ft = getFragmentManager()
+							.beginTransaction();
+					ft.replace(R.id.details, details);
+					ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+					ft.commit();
+				}
+
+			} else {
+				Intent intent = new Intent();
+				intent.setClass(getActivity(), ListcallplanDetailActivity.class);
+				intent.putExtra("index", index);
+				startActivity(intent);
+			}
 		}
 
 	}
 
 	public static class CustomerDetailsFragment extends Fragment {
-		public static ProductDetailsFragment newInstance(int index) {
-			ProductDetailsFragment f = new ProductDetailsFragment();
+		public static CustomerDetailsFragment newInstance(int index) {
+			CustomerDetailsFragment f = new CustomerDetailsFragment();
 
 			Bundle args = new Bundle();
 			args.putInt("index", index);
@@ -87,19 +146,29 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			if (container == null) {
-				return null;
-			}
-
-			ScrollView scroller = new ScrollView(getActivity());
-			TextView text = new TextView(getActivity());
-			int padding = (int) TypedValue.applyDimension(
-					TypedValue.COMPLEX_UNIT_DIP, 4, getActivity()
-							.getResources().getDisplayMetrics());
-			text.setPadding(padding, padding, padding, padding);
-			scroller.addView(text);
-			// text.setText(cus.get(getShownIndex()).getPart_name());
-			return scroller;
+			View v = inflater.inflate(R.layout.callplandetail, null);
+			TextView customerdesc = (TextView) v.findViewById(R.id.tvCustomer);
+			customerdesc.setText(customers.get(getShownIndex())
+					.getCustomername());
+			TextView addresskirim = (TextView) v
+					.findViewById(R.id.tvAddressKirim);
+			addresskirim.setText(customers.get(getShownIndex())
+					.getAlamatkirim());
+			TextView addresstagih = (TextView) v
+					.findViewById(R.id.tvAddressTagih);
+			addresstagih.setText(customers.get(getShownIndex())
+					.getAlamattagihan());
+			Button btnCheckin = (Button) v.findViewById(R.id.btnCheckin);
+			btnCheckin.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View arg0) {
+					Intent intent = new Intent();
+					intent.setClass(getActivity(), CustomerMenuActivity.class);
+					startActivity(intent);
+				}
+			});
+			return v;
 		}
 	}
 

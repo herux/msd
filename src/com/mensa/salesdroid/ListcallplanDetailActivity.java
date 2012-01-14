@@ -1,20 +1,12 @@
-/**
- * author : herux
- * email  : heruxi@gmail.com
- * site   : http://www.herux.com
- * blogs  : http://herux.wordpress.com	
- * created: 16.11.2011	
- */
-
 package com.mensa.salesdroid;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import com.mensa.salesdroid.ProductviewActivity.ProductDetailsFragment;
+import com.mensa.salesdroid.ListcallplanActivity.CustomerDetailsFragment;
 
-public class ProductviewDetailsActivity extends FragmentActivity {
+public class ListcallplanDetailActivity extends FragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +16,7 @@ public class ProductviewDetailsActivity extends FragmentActivity {
 			return;
 		}
 		if (savedInstanceState == null) {
-			ProductDetailsFragment details = new ProductDetailsFragment();
+			CustomerDetailsFragment details = new CustomerDetailsFragment();
 			details.setArguments(getIntent().getExtras());
 			getSupportFragmentManager().beginTransaction()
 					.add(android.R.id.content, details).commit();

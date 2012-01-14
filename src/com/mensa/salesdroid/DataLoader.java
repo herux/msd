@@ -50,8 +50,6 @@ public class DataLoader {
 				FileInputStream jsonfile = new FileInputStream(new File(
 						"/sdcard/" + MensaApplication.APP_DATAFOLDER + "/"
 								+ MensaApplication.dataFILENAMES[dlData[i]]));
-				Log.d("mensa", "dataFILENAMES="
-						+ MensaApplication.dataFILENAMES[dlData[i]]);
 				InputStreamReader inputreader = new InputStreamReader(jsonfile);
 				BufferedReader buffreader = new BufferedReader(inputreader);
 				StringBuilder json = new StringBuilder();
@@ -107,18 +105,29 @@ public class DataLoader {
 						BaseDataListObj customers = (BaseDataListObj) new Customers();
 						for (int j = 0; j < jsoncustomers.length(); j++) {
 							customer = new Customer(jsoncustomers
-									.getJSONObject(j).getString("CABANG"), "",
+									.getJSONObject(j).getString("CUSTOMER_ID"),
 									jsoncustomers.getJSONObject(j).getString(
-											"CUSTOMER_CODE"), jsoncustomers
+											"NAMA"), jsoncustomers
 											.getJSONObject(j).getString(
-													"CUSTOMER_NAME"), "chain",
-									"group", "bill_name", "bill_address",
-									"delivery_name", jsoncustomers
+													"CGROUP"), jsoncustomers
 											.getJSONObject(j).getString(
-													"ALAMAT_KIRIM"), "zipcode",
-									"coordinate");
+													"CUSTOMER_CHAIN"),
+									jsoncustomers.getJSONObject(j).getString(
+											"NAMA_KIRIM"), jsoncustomers
+											.getJSONObject(j).getString(
+													"NAMA_TAGIHAN"),
+									jsoncustomers.getJSONObject(j).getString(
+											"ALAMAT_KIRIM"), jsoncustomers
+											.getJSONObject(j).getString(
+													"ALAMAT_TAGIHAN"),
+									jsoncustomers.getJSONObject(j).getString(
+											"KOORDINAT"));
 							((Customers) customers).addCustomer(customer);
 						}
+						Log.d("mensa",
+								"juml="
+										+ Integer.toString(jsoncustomers
+												.length()));
 						datalist[i] = customers;
 					} catch (JSONException e) {
 						// TODO: handle exception
