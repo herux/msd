@@ -8,141 +8,121 @@
 
 package com.mensa.salesdroid;
 
+//"master_customer":[
+//{
+//"CUSTOMER_ID":"BDG1",
+//"NAMA":"PT. MBS - Bandung",
+//"CGROUP":"INT",
+//"CUSTOMER_CHAIN":null,
+//"NAMA_KIRIM":"PT. MBS - Bandung",
+//"NAMA_TAGIHAN":"PT. MBS - Bandung",
+//"ALAMAT_KIRIM":"JL. IBRAHIM ADJIE NO.358BANDUNG 40284",
+//"ALAMAT_TAGIHAN":"JL. IBRAHIM ADJIE NO.358BANDUNG 40284",
+//"KOORDINAT":null
+//},
+
 public class Customer {
-	private String branch, 
-		salesman_code, 
-		cust_code, 
-		cust_name,
-		cust_chain,
-		cust_group,
-		bill_name,
-		bill_address,
-		delivery_name,
-		delivery_address,
-		zip_code,
-		coordinate;
+	private String customerid, 
+		customername, 
+		cgroup, 
+		customerchain,
+		namakirim,
+		namatagihan,
+		alamatkirim,
+		alamattagihan,
+		koordinat;
 	
-	public Customer(String abranch, 
-			String asalesman_code, 
-			String acust_code, 
-			String acust_name,
-			String acust_chain,
-			String acust_group,
-			String abill_name,
-			String abill_address,
-			String adelivery_name,
-			String adelivery_address,
-			String azip_code,
-			String acoordinate) {
+	public Customer(String customerid, 
+			String customername, 
+			String cgroup, 
+			String customerchain,
+			String namakirim,
+			String namatagihan,
+			String alamatkirim,
+			String alamattagihan,
+			String koordinat) {
 		
-		branch = abranch; 
-		salesman_code = asalesman_code;
-		cust_code = acust_code; 
-		cust_name = acust_name;
-		cust_chain = acust_chain;
-		cust_group = acust_group;
-		bill_name = abill_name;
-		bill_address = abill_address;
-		delivery_name = adelivery_name;
-		delivery_address = adelivery_address;
-		zip_code = azip_code;
-		coordinate = acoordinate;
+		this.customerid = customerid; 
+		this.customername = customername; 
+		this.cgroup = cgroup; 
+		this.customerchain = customerchain;
+		this.setNamakirim(namakirim);
+		this.namatagihan = namatagihan;
+		this.alamatkirim = alamatkirim;
+		this.setAlamattagihan(alamattagihan);
+		this.setKoordinat(koordinat);
 	}
 
-	public String getBranch() {
-		return branch;
+	public String getCustomerid() {
+		return customerid;
 	}
 
-	public void setBranch(String branch) {
-		this.branch = branch;
+	public void setCustomerid(String customerid) {
+		this.customerid = customerid;
 	}
 
-	public String getSalesman_code() {
-		return salesman_code;
+	public String getCustomername() {
+		return customername;
 	}
 
-	public void setSalesman_code(String salesman_code) {
-		this.salesman_code = salesman_code;
+	public void setCustomername(String customername) {
+		this.customername = customername;
 	}
 
-	public String getCust_code() {
-		return cust_code;
+	public String getCgroup() {
+		return cgroup;
 	}
 
-	public void setCust_code(String cust_code) {
-		this.cust_code = cust_code;
+	public void setCgroup(String cgroup) {
+		this.cgroup = cgroup;
 	}
 
-	public String getCust_name() {
-		return cust_name;
+	public String getCustomerchain() {
+		return customerchain;
 	}
 
-	public void setCust_name(String cust_name) {
-		this.cust_name = cust_name;
+	public void setCustomerchain(String customerchain) {
+		this.customerchain = customerchain;
 	}
 
-	public String getCust_chain() {
-		return cust_chain;
+	public String getNamakirim() {
+		return namakirim;
 	}
 
-	public void setCust_chain(String cust_chain) {
-		this.cust_chain = cust_chain;
+	public void setNamakirim(String namakirim) {
+		this.namakirim = namakirim;
 	}
 
-	public String getCust_group() {
-		return cust_group;
+	public String getKoordinat() {
+		return koordinat;
 	}
 
-	public void setCust_group(String cust_group) {
-		this.cust_group = cust_group;
+	public void setKoordinat(String koordinat) {
+		this.koordinat = koordinat;
 	}
 
-	public String getBill_name() {
-		return bill_name;
+	public String getAlamattagihan() {
+		return alamattagihan;
 	}
 
-	public void setBill_name(String bill_name) {
-		this.bill_name = bill_name;
+	public void setAlamattagihan(String alamattagihan) {
+		this.alamattagihan = alamattagihan;
 	}
-
-	public String getBill_address() {
-		return bill_address;
+	
+	public String getAlamatkirim() {
+		return alamatkirim;
 	}
-
-	public void setBill_address(String bill_address) {
-		this.bill_address = bill_address;
+	
+	public void setAlamatkirim(String alamatkirim) {
+		this.alamatkirim = alamatkirim;
 	}
-
-	public String getDelivery_name() {
-		return delivery_name;
+	
+	public String getNamatagihan() {
+		return namatagihan;
 	}
-
-	public void setDelivery_name(String delivery_name) {
-		this.delivery_name = delivery_name;
-	}
-
-	public String getDelivery_address() {
-		return delivery_address;
-	}
-
-	public void setDelivery_address(String delivery_address) {
-		this.delivery_address = delivery_address;
-	}
-
-	public String getZip_code() {
-		return zip_code;
-	}
-
-	public void setZip_code(String zip_code) {
-		this.zip_code = zip_code;
-	}
-
-	public String getCoordinate() {
-		return coordinate;
-	}
-
-	public void setCoordinate(String coordinate) {
-		this.coordinate = coordinate;
+	
+	public void setNamatagihan(String namatagihan) {
+		this.namatagihan = namatagihan;
 	}
 	
 	

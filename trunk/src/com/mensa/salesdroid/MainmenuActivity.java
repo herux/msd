@@ -3,7 +3,7 @@
  * email  : heruxi@gmail.com
  * site   : http://www.herux.com
  * blogs  : http://herux.wordpress.com	
- * created: 16.11.2011	
+ * created: 13.01.2012	
  */
 
 package com.mensa.salesdroid;
