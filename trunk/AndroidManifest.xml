@@ -37,7 +37,9 @@
         <activity android:name=".ProductviewDetailsActivity" />
         <activity android:name=".ListcallplanActivity" />
         <activity android:name=".ListcallplanDetailActivity" />
-        <activity android:name=".CustomerMenuActivity" />
+        <activity
+            android:name=".CustomerMenuActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".InfoReturActivity" />
     </application>
 
