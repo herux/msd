@@ -48,5 +48,9 @@ public class MensaApplication extends Application {
 	public void setProducts(ArrayList<Product> products) {
 		this.products = products;
 	}
+	
+	public void addProduct(int index, Product product){
+		this.products.add(index, product);
+	}
 
 }

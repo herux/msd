@@ -95,6 +95,32 @@
                 </EditText>
             </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvDeskripsi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/linearLayout3"
+            android:text="Description" />
+
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tvDeskripsi"
+            android:layout_marginLeft="37dp"
+            android:layout_toRightOf="@+id/tvDeskripsi" />
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editText1"
+            android:layout_toLeftOf="@+id/editText1"
+            android:text="Submit" />
+
     </RelativeLayout>
 
     <Button
