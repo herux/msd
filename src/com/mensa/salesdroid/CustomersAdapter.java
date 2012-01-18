@@ -1,3 +1,11 @@
+/**
+ * author : herux
+ * email  : heruxi@gmail.com
+ * site   : http://www.herux.com
+ * blogs  : http://herux.wordpress.com	
+ * created: 20.12.2011	
+ */
+
 package com.mensa.salesdroid;
 
 import java.util.ArrayList;
@@ -15,11 +23,13 @@ import android.widget.TextView;
 
 public class CustomersAdapter extends ArrayAdapter<Customer> {
 	Activity activity;
+	ArrayList<Customer> customersforsearch;
 
 	public CustomersAdapter(Activity activity, int textViewResourceId,
-			ArrayList<Customer> customers) {
+			ArrayList<Customer> customers, ArrayList<Customer> customersforsearch) {
 		super(activity, textViewResourceId, customers);
 		this.activity = activity;
+		this.customersforsearch = customersforsearch;
 	}
 
 	@Override

@@ -72,7 +72,7 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 
 			customers.add(new Customer("", "", "", "", "", "", "", "", ""));
 			adapter = new CustomersAdapter(getActivity(),
-					R.layout.listcallplan, customers);
+					R.layout.listcallplan, customers, customersforsearch);
 			setListAdapter(adapter);
 
 			View detailsFrame = getActivity().findViewById(R.id.details);

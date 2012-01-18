@@ -9,6 +9,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <uses-sdk android:minSdkVersion="10" />
 
@@ -32,8 +36,9 @@
         <activity android:name=".ProductviewActivity" />
         <activity android:name=".ProductviewDetailsActivity" />
         <activity android:name=".ListcallplanActivity" />
-        <activity android:name=".ListcallplanDetailActivity"/>
-        <activity android:name=".CustomerMenuActivity"/>
+        <activity android:name=".ListcallplanDetailActivity" />
+        <activity android:name=".CustomerMenuActivity" />
+        <activity android:name=".InfoReturActivity" />
     </application>
 
 </manifest>
