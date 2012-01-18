@@ -478,7 +478,9 @@ containing a value of this type.
         public static final int blocks_now=0x7f040010;
         public static final int blocks_ruler=0x7f04000f;
         public static final int btnAdd=0x7f04004b;
+        public static final int btnCamera=0x7f04003a;
         public static final int btnCheckin=0x7f04002b;
+        public static final int btnGallery=0x7f04003b;
         public static final int btnLogin=0x7f040045;
         public static final int btn_addcustomer=0x7f04004a;
         public static final int btn_calendar=0x7f040048;
@@ -490,8 +492,6 @@ containing a value of this type.
         public static final int btn_productlist=0x7f040047;
         public static final int btn_salescallplan=0x7f040046;
         public static final int btn_synchronize=0x7f040049;
-        public static final int button1=0x7f04003b;
-        public static final int button2=0x7f04003a;
         public static final int db1_root=0x7f04002c;
         public static final int details=0x7f04003d;
         public static final int dialog_discard_confirm=0x7f04000c;
