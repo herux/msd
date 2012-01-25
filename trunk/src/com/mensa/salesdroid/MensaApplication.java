@@ -18,20 +18,20 @@ public class MensaApplication extends Application {
 	static final String CUSTOMERSFILENAME = "customers.mbs";
 	static final String PRODUCTSFILENAME = "products.mbs";
 	static final String SALESMANSFILENAME = "salesmans.mbs";
-	static final String PRODUCTSFOCUSFILENAME = "productsfocus";
-	static final String PRODUCTSPROMOFILENAME = "productspromo";
-	static final String PIUTANGFILENAME = "piutangs";
+	static final String PRODUCTSFOCUSFILENAME = "productsfocus.mbs";
+	static final String PRODUCTSPROMOFILENAME = "productspromo.mbs";
+	static final String PIUTANGFILENAME = "piutangs.mbs";
 
 	static final String APP_DATAFOLDER = "mensadata";
 
 	static String[] dataFILENAMES = { PRODUCTSFILENAME, CUSTOMERSFILENAME,
-			SALESMANSFILENAME}; //, PRODUCTSFOCUSFILENAME, PRODUCTSPROMOFILENAME, PIUTANGFILENAME 
+			SALESMANSFILENAME, PRODUCTSFOCUSFILENAME}; //, PRODUCTSPROMOFILENAME, PIUTANGFILENAME 
 	static final String mbs_url = "http://simfoni.mbs.co.id/services.php?";
 	static final String[] paths = {
 			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3Byb2R1Y3Q=",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX2N1c3RvbWVy",
-			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3NhbGVzbWFu" //,
-//			"",
+			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3NhbGVzbWFu",
+			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9mb2N1cw=="//,
 //			"",
 //			""
 			};

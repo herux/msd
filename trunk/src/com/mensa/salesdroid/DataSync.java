@@ -37,6 +37,10 @@ public class DataSync extends BaseThread {
 	@Override
 	public void execute() {
 		http = new HttpClient();
+		File root = Environment.getExternalStorageDirectory();
+		String folder = MensaApplication.APP_DATAFOLDER+"/";
+		File file = new File(root, folder);
+		file.mkdirs();
 		for (int i = 0; i < MensaApplication.paths.length; i++) {
 			if (onDataSyncListener!=null){
 				onDataSyncListener.OnDataSync(MensaApplication.dataFILENAMES[i], i, 0);
@@ -44,10 +48,8 @@ public class DataSync extends BaseThread {
 			response = http.executeHttpPost(MensaApplication.mbs_url
 					+ MensaApplication.paths[i], "");
 			try {
-				File root = Environment.getExternalStorageDirectory();
 				if (root.canWrite()) {
-					File file = new File(root, MensaApplication.APP_DATAFOLDER+"/"+MensaApplication.dataFILENAMES[i]);
-					file.mkdirs();
+					file = new File(root, folder+MensaApplication.dataFILENAMES[i]);
 					FileWriter filewriter = new FileWriter(file);
 					BufferedWriter out = new BufferedWriter(filewriter);
 					out.write(response);
