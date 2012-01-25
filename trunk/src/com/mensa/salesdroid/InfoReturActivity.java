@@ -19,7 +19,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class InfoReturActivity extends BaseFragmentActivity {
-	int CAMERA_PIC_REQUEST = 1; 
+	int CAMERA_PIC_REQUEST = 2; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,16 @@ public class InfoReturActivity extends BaseFragmentActivity {
 	            startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
 			}
 		});
+		
+		Button btnGallery = (Button) findViewById(R.id.btnGallery);
+		btnGallery.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+//				Intent galleryIntent = new Intent(android.provider.LiveFolders.ACTION_IMAGE_CAPTURE);
+//	            startActivityForResult(galleryIntent, CAMERA_PIC_REQUEST);
+			}
+		});     
 	}
 	
 	@Override

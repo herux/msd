@@ -47,6 +47,7 @@ public class DataSync extends BaseThread {
 				File root = Environment.getExternalStorageDirectory();
 				if (root.canWrite()) {
 					File file = new File(root, MensaApplication.APP_DATAFOLDER+"/"+MensaApplication.dataFILENAMES[i]);
+					file.mkdirs();
 					FileWriter filewriter = new FileWriter(file);
 					BufferedWriter out = new BufferedWriter(filewriter);
 					out.write(response);

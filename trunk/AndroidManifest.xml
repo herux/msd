@@ -14,7 +14,7 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
-    <uses-sdk android:minSdkVersion="10" />
+    <uses-sdk android:minSdkVersion="7" />
 
     <application
         android:name="MensaApplication"
@@ -40,7 +40,12 @@
         <activity
             android:name=".CustomerMenuActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".InfoReturActivity" />
+        <activity android:name=".InfoReturActivity" 
+            android:screenOrientation="portrait" />
+        <activity android:name=".CheckoutOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ListPiutangActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
