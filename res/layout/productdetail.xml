@@ -40,4 +40,17 @@
         android:soundEffectsEnabled="true"
         android:src="@drawable/noimageproduct" />
 
+    <EditText
+        android:id="@+id/edtQty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/btnAdd"
+        android:layout_toLeftOf="@+id/btnAdd"
+        android:layout_toRightOf="@+id/tvProductDetail"
+        android:inputType="number"
+        android:text="1"  >
+
+        <requestFocus />
+    </EditText>
+
 </RelativeLayout>

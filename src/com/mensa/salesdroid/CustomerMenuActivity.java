@@ -43,6 +43,28 @@ public class CustomerMenuActivity extends Activity {
 				startActivity(intent);
 			}
 		});
+		
+		Button btncheckoutorder = (Button) findViewById(R.id.btn_checkout);
+		btncheckoutorder.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent();
+				intent.setClass(CustomerMenuActivity.this, CheckoutOrderActivity.class);
+				startActivity(intent);				
+			}
+		});
+		
+		Button btnlistpiutang = (Button) findViewById(R.id.btn_listpiutang);
+		btnlistpiutang.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent();
+				intent.setClass(CustomerMenuActivity.this, ListPiutangActivity.class);
+				startActivity(intent);
+			}
+		});
 
 	}
 

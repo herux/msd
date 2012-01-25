@@ -10,6 +10,8 @@ package com.mensa.salesdroid;
 
 import java.util.ArrayList;
 
+import com.mensa.salesdroid.SalesOrder.SalesItems;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,9 +23,12 @@ import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ProductviewActivity extends BaseFragmentActivity {
 	static ProductsThread productsThread;
@@ -35,7 +40,8 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			int total = msg.arg1;
 			if (total >= 0) {
 				productsThread.setState(BaseThread.STATE_DONE);
-				application.addProduct(0, new Product("", "", "", "Search", "", "", 0, 0));
+				application.addProduct(0, new Product("", "", "", "Search", "",
+						"", 0, 0));
 				application.setProducts(productsThread.getProducts());
 				adapter.clear();
 				for (int i = 0; i < application.getProducts().size(); i++) {
@@ -79,8 +85,8 @@ public class ProductviewActivity extends BaseFragmentActivity {
 
 			if (application.getProducts() == null) {
 				application.setProducts(new ArrayList<Product>());
-				application.addProduct(0, 
-						new Product("", "", "", "", "", "", 0, 0));
+				application.addProduct(0, new Product("", "", "", "", "", "",
+						0, 0));
 			}
 			adapter = new ProductsAdapter(getActivity(), R.layout.productlist,
 					application.getProducts());
@@ -160,7 +166,34 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			View v = inflater.inflate(R.layout.productdetail, null);
 			TextView productdesc = (TextView) v
 					.findViewById(R.id.tvProductDetail);
-			productdesc.setText(application.getProducts().get(getShownIndex()).getDESCRIPTION());
+			productdesc.setText(application.getProducts().get(getShownIndex())
+					.getDESCRIPTION());
+			final TextView tvqty = (TextView) v.findViewById(R.id.edtQty);
+			tvqty.setText("1");
+
+			Button btnaddbasket = (Button) v.findViewById(R.id.btnAdd);
+			btnaddbasket.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View arg0) {
+					Log.d("mensa", "onClick basketbutton");
+					SalesOrder so = application.getSalesorder();
+					if (so == null) {
+						so = new SalesOrder("", "", "");
+						application.setSalesorder(so);
+					}
+					SalesItems si = so.new SalesItems(application.getProducts()
+							.get(getShownIndex()), Float.parseFloat((String) tvqty.getText()), 1000);
+					application.setSalesitems(si);
+					Log.d("mensa", "setelah set sales");
+
+					Toast toast = Toast.makeText(getActivity(), "Product "
+							+ application.getProducts().get(getShownIndex())
+									.getDESCRIPTION()
+							+ " successfully add to basket", Toast.LENGTH_LONG);
+					Log.d("mensa", "setelah set sales");
+				}
+			});
 			return v;
 
 		}
