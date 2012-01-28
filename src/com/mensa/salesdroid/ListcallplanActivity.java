@@ -33,10 +33,12 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 	static ArrayList<Customer> customers;
 	static ArrayList<Customer> customersforsearch;
 	static CustomersAdapter adapter;
+	static MensaApplication application;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		application = getMensaapplication();
 		setContentView(R.layout.listcallplan);
 
 		LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -163,6 +165,7 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 				
 				@Override
 				public void onClick(View arg0) {
+					application.setCurrentCustomer(customers.get(getShownIndex()));
 					Intent intent = new Intent();
 					intent.setClass(getActivity(), CustomerMenuActivity.class);
 					startActivity(intent);

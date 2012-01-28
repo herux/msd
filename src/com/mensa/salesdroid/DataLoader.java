@@ -25,6 +25,7 @@ import android.util.Log;
 public class DataLoader {
 	public static final int dlPRODUCTS = 0;
 	public static final int dlCUSTOMERS = 1;
+	public static final int dlPRODUCTSFOCUS = 3;
 
 	private int[] dlData;
 	private boolean ExtStorageAvailable = false;
@@ -94,6 +95,9 @@ public class DataLoader {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+				}
+				case dlPRODUCTSFOCUS: {
+					
 					break;
 				}
 				case dlCUSTOMERS: {
