@@ -9,27 +9,37 @@
 package com.mensa.salesdroid;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.app.ActionBar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuItem;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 public class InfoReturActivity extends BaseFragmentActivity {
 	int CAMERA_PIC_REQUEST = 2; 
+	
+	Fragment fragment;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.inforeturlayout);
 		
-		final ActionBar ab = getSupportActionBar();
-		ab.setBackgroundDrawable(getResources().getDrawable(
-				R.drawable.actionbarbackground));
-		ab.setTitle("Info Return");
+		FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        fragment = fm.findFragmentByTag("f1");
+        if (fragment == null) {
+        	fragment = new MenuReturn();
+            ft.add(fragment, "f1");
+        }
+        ft.show(fragment);
+        ft.commit();      
 		
 		Button btncamera = (Button) findViewById(R.id.btnCamera);
 		btncamera.setOnClickListener(new OnClickListener() {
@@ -57,14 +67,32 @@ public class InfoReturActivity extends BaseFragmentActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 	    if( requestCode == CAMERA_PIC_REQUEST)
 	    {   
-	        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-	        ImageView image =(ImageView) findViewById(R.id.ivImageRetur);
-	        image.setImageBitmap(thumbnail);
+//	        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+//	        ImageView image =(ImageView) findViewById(R.id.ivImageRetur);
+//	        image.setImageBitmap(thumbnail);
 	    }
 	    else 
 	    {
-	        Toast.makeText(InfoReturActivity.this, "Picture NOt taken", Toast.LENGTH_LONG);
+	        Toast.makeText(InfoReturActivity.this, "Picture not taken", Toast.LENGTH_LONG);
 	    }
 	}
+	
+	public static class MenuReturn extends Fragment {
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setHasOptionsMenu(true);
+        }
+
+        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+            menu.add("New").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        }
+        
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+        	return super.onOptionsItemSelected(item);
+        }
+    }
 
 }

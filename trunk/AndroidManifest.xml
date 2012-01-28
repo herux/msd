@@ -46,6 +46,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ListPiutangActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".FragmentMenuSupport"></activity>
     </application>
 
 </manifest>

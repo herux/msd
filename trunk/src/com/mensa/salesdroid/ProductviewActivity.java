@@ -10,10 +10,6 @@ package com.mensa.salesdroid;
 
 import java.util.ArrayList;
 
-import org.json.JSONObject;
-
-import com.mensa.salesdroid.SalesOrder.SalesItems;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,6 +29,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.mensa.salesdroid.SalesOrder.SalesItems;
 
 public class ProductviewActivity extends BaseFragmentActivity {
 	static ProductsThread productsThread;
@@ -71,12 +69,13 @@ public class ProductviewActivity extends BaseFragmentActivity {
 		application = getMensaapplication();
 
 		setContentView(R.layout.productviewlayout);
-		final ActionBar ab = getSupportActionBar();
-		ab.setBackgroundDrawable(getResources().getDrawable(
-				R.drawable.actionbarbackground));
-		ab.setDisplayHomeAsUpEnabled(false);
-		ab.setDisplayUseLogoEnabled(false);
-		Tab tabfocus = ab.newTab();
+		
+		ActionBar actionbar = getSupportActionBar();
+		actionbar.setDisplayHomeAsUpEnabled(false);
+		actionbar.setDisplayUseLogoEnabled(false);
+		actionbar.setSubtitle("View products list");
+		
+		Tab tabfocus = actionbar.newTab();
 		tabfocus.setText("Focus");
 		tabfocus.setTabListener(new TabListener() {
 			
@@ -97,9 +96,9 @@ public class ProductviewActivity extends BaseFragmentActivity {
 				
 			}
 		});
-		ab.addTab(tabfocus);
+		actionbar.addTab(tabfocus);
 		
-		Tab tabPromo = ab.newTab();
+		Tab tabPromo = actionbar.newTab();
 		tabPromo.setText("Promo");
 		tabPromo.setTabListener(new TabListener() {
 			
@@ -121,9 +120,9 @@ public class ProductviewActivity extends BaseFragmentActivity {
 				
 			}
 		});
-		ab.addTab(tabPromo);
+		actionbar.addTab(tabPromo);
 		
-		Tab tabAll = ab.newTab();
+		Tab tabAll = actionbar.newTab();
 		tabAll.setText("All");
 		tabAll.setTabListener(new TabListener() {
 			
@@ -151,7 +150,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 				
 			}
 		});
-		ab.addTab(tabAll);
+		actionbar.addTab(tabAll);
 		showTabsNav();
 		Reload();
 	}
@@ -185,7 +184,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 				getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 				showDetails(mCurCheckPosition);
 			}
-
+			
 		}
 
 		@Override
@@ -244,40 +243,39 @@ public class ProductviewActivity extends BaseFragmentActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
+			
 			View v = inflater.inflate(R.layout.productdetail, null);
 			TextView productdesc = (TextView) v
 					.findViewById(R.id.tvProductDetail);
 			productdesc.setText(application.getProducts().get(getShownIndex())
 					.getDESCRIPTION());
+			
 			final TextView tvqty = (TextView) v.findViewById(R.id.edtQty);
 			tvqty.setText("1");
-
+						
 			Button btnaddbasket = (Button) v.findViewById(R.id.btnAdd);
 			btnaddbasket.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View arg0) {
-					Log.d("mensa", "onClick basketbutton");
 					SalesOrder so = application.getSalesorder();
 					if (so == null) {
 						so = new SalesOrder("", "", "");
 						application.setSalesorder(so);
 					}
 					SalesItems si = so.new SalesItems(application.getProducts()
-							.get(getShownIndex()), Float.parseFloat((String) tvqty.getText()), 1000);
+							.get(getShownIndex()), Float.parseFloat((String) tvqty.getText()), 1000); 
 					application.setSalesitems(si);
-					Log.d("mensa", "setelah set sales");
 
 					Toast toast = Toast.makeText(getActivity(), "Product "
 							+ application.getProducts().get(getShownIndex())
 									.getDESCRIPTION()
 							+ " successfully add to basket", Toast.LENGTH_LONG);
-					Log.d("mensa", "setelah set sales");
 				}
 			});
 			return v;
-
 		}
+		
 	}
 
 	public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {

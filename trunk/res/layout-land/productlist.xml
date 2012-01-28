@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="100dip"
-        android:layout_height="100dip"
+        android:layout_width="50dip"
+        android:layout_height="50dip"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:src="@drawable/box" />
@@ -21,7 +21,7 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/imageView1"
         android:text="Table"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/titlemaincolor" />
 
     <TextView
@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageView1"
-        android:layout_alignLeft="@+id/tvTable"
+        android:layout_alignParentRight="true"
         android:text="Harga"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/titlemaincolor" />
@@ -38,8 +38,8 @@
         android:id="@+id/tvCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/tvHarga"
-        android:layout_toRightOf="@+id/imageView1"
+        android:layout_alignBottom="@+id/imageView1"
+        android:layout_alignLeft="@+id/tvTable"
         android:text="PartNo"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/titlemaincolor" />
