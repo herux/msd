@@ -24,8 +24,8 @@ public class EditTextSearch extends EditText implements OnKeyListener {
 
 	public EditTextSearch(Context context) {
 		super(context);
-
 		this.setOnKeyListener(this);
+		this.setSingleLine(true);
 	}
 
 	public EditTextSearch(Context context, AttributeSet attrs, int defStyle) {
