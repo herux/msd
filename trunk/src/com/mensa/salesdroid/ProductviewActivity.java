@@ -10,6 +10,8 @@ package com.mensa.salesdroid;
 
 import java.util.ArrayList;
 
+import org.json.JSONObject;
+
 import com.mensa.salesdroid.SalesOrder.SalesItems;
 
 import android.content.Intent;
@@ -17,6 +19,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActionBar;
+import android.support.v4.app.ActionBar.Tab;
+import android.support.v4.app.ActionBar.TabListener;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
@@ -43,6 +47,10 @@ public class ProductviewActivity extends BaseFragmentActivity {
 				application.addProduct(0, new Product("", "", "", "Search", "",
 						"", 0, 0));
 				application.setProducts(productsThread.getProducts());
+				
+				// get products focus, karena tab pertama adalah focus
+//				JSONObject productfocus = new JSONObject();
+//				productfocus
 				adapter.clear();
 				for (int i = 0; i < application.getProducts().size(); i++) {
 					adapter.add(application.getProducts().get(i));
@@ -68,9 +76,82 @@ public class ProductviewActivity extends BaseFragmentActivity {
 				R.drawable.actionbarbackground));
 		ab.setDisplayHomeAsUpEnabled(false);
 		ab.setDisplayUseLogoEnabled(false);
-		ab.addTab(ab.newTab().setText("Focus"));
-		ab.addTab(ab.newTab().setText("Promo"));
-		ab.addTab(ab.newTab().setText("All"));
+		Tab tabfocus = ab.newTab();
+		tabfocus.setText("Focus");
+		tabfocus.setTabListener(new TabListener() {
+			
+			@Override
+			public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onTabSelected(Tab tab, FragmentTransaction ft) {
+				
+			}
+			
+			@Override
+			public void onTabReselected(Tab tab, FragmentTransaction ft) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		ab.addTab(tabfocus);
+		
+		Tab tabPromo = ab.newTab();
+		tabPromo.setText("Promo");
+		tabPromo.setTabListener(new TabListener() {
+			
+			@Override
+			public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onTabSelected(Tab tab, FragmentTransaction ft) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onTabReselected(Tab tab, FragmentTransaction ft) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		ab.addTab(tabPromo);
+		
+		Tab tabAll = ab.newTab();
+		tabAll.setText("All");
+		tabAll.setTabListener(new TabListener() {
+			
+			@Override
+			public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onTabSelected(Tab tab, FragmentTransaction ft) {
+				application.ProductsClear();
+				application.addProduct(0, new Product("", "", "", "Search", "",
+						"", 0, 0));
+				adapter.clear();
+				for (int i = 0; i < application.getProducts().size(); i++) {
+					adapter.add(application.getProducts().get(i));
+				}
+				adapter.notifyDataSetChanged();
+			}
+			
+			@Override
+			public void onTabReselected(Tab tab, FragmentTransaction ft) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		ab.addTab(tabAll);
 		showTabsNav();
 		Reload();
 	}

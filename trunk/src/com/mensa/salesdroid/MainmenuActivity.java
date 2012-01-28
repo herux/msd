@@ -67,7 +67,6 @@ public class MainmenuActivity extends Activity {
 					@Override
 					public void OnDataSync(String dataname, int count, int max) {
 						progressDialog.setProgress(count);
-//						progressDialog.setMessage(dataname);
 					}
 				});
 				sync.start();
