@@ -46,11 +46,10 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 		locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
 				locListener);
 
-		final ActionBar ab = getSupportActionBar();
-		ab.setBackgroundDrawable(getResources().getDrawable(
-				R.drawable.actionbarbackground));
-		ab.setDisplayHomeAsUpEnabled(false);
-		ab.setDisplayUseLogoEnabled(false);
+		final ActionBar actionbar = getSupportActionBar();
+		actionbar.setDisplayHomeAsUpEnabled(false);
+		actionbar.setDisplayUseLogoEnabled(false);
+		actionbar.setSubtitle("Sales Call Plan");
 
 		customers = new ArrayList<Customer>();
 		customersforsearch = new ArrayList<Customer>();

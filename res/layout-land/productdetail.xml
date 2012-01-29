@@ -50,6 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/tvProductDetail"
         android:layout_alignParentRight="true"
+        android:background="@drawable/cart"
         android:text="Add to basket" />
 
 </RelativeLayout>
