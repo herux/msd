@@ -72,6 +72,26 @@ public class MainmenuActivity extends Activity {
 				sync.start();
 			}
 		});
+        Button btnInfopromo = (Button)findViewById(R.id.btn_infopromo);
+        btnInfopromo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent();
+				intent.setClass(MainmenuActivity.this, ProductviewActivity.class);
+				startActivity(intent);
+			}
+		});
+        Button btnAddCust = (Button)findViewById(R.id.btn_addcustomer);
+        btnAddCust.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent();
+				intent.setClass(MainmenuActivity.this, AddCustomerActivity.class);
+				startActivity(intent);
+			}
+		});
 	}
 	
 	@Override

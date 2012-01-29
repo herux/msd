@@ -53,7 +53,7 @@ public class EditTextSearch extends EditText implements OnKeyListener {
 		if (!TextUtils.isEmpty(username)) {
 			for (int i = 0; i < objtosearch.size(); i++) {
 				if (objtosearch.get(i).equals(username)) {
-//					objlist.add(object);
+					// objlist.add(object);
 					if (i >= 5) {
 						break;
 					}

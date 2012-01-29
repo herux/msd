@@ -46,7 +46,9 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ListPiutangActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".FragmentMenuSupport"></activity>
+        <activity android:name=".AddCustomerActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".CalendarActivity"/>
     </application>
 
 </manifest>
