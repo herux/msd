@@ -46,11 +46,11 @@ public class Customer {
 		this.customername = customername; 
 		this.cgroup = cgroup; 
 		this.customerchain = customerchain;
-		this.setNamakirim(namakirim);
+		this.namakirim = namakirim;
 		this.namatagihan = namatagihan;
 		this.alamatkirim = alamatkirim;
-		this.setAlamattagihan(alamattagihan);
-		this.setKoordinat(koordinat);
+		this.alamattagihan = alamattagihan;
+		this.koordinat = koordinat;
 	}
 
 	public String getCustomerid() {

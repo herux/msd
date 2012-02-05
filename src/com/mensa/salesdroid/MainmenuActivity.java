@@ -61,7 +61,8 @@ public class MainmenuActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				showDialog(0);
-				sync = new DataSync(handler);
+				MensaApplication app = (MensaApplication) getApplication();
+				sync = new DataSync(handler, app);
 				sync.setOnDataSyncListener(new OnDataSyncListener() {
 					
 					@Override

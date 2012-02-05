@@ -8,20 +8,49 @@
 
 package com.mensa.salesdroid;
 
+import java.text.NumberFormat;
+import java.util.ArrayList;
+
 import android.os.Bundle;
 import android.support.v4.app.ActionBar;
+import android.support.v4.app.ListFragment;
+import android.widget.TextView;
 
 public class CheckoutOrderActivity extends BaseFragmentActivity {
+	static SalesItemsAdapter adapter;
+	static MensaApplication application;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.checkoutorder);
+		
+		application = getMensaapplication();
+		setContentView(R.layout.checkoutlayout);
+		TextView tvtotal = (TextView) findViewById(R.id.tvgrandtotal);
+		NumberFormat nf = NumberFormat.getInstance();
+		tvtotal.setText("Rp. "+nf.format(application.getSalesorder().getTotal()));
+		TextView tvordernum = (TextView) findViewById(R.id.tvordernum);
+		tvordernum.setText(application.getSalesorder().getOrdernumber());
+		TextView tvorderdate = (TextView) findViewById(R.id.tvorderdate);
+		tvorderdate.setText(application.getSalesorder().getDates());
+		TextView tvsalesid = (TextView) findViewById(R.id.tvordersalesid);
+		tvsalesid.setText(application.getSalesorder().getSalesmanid());
 		
 		final ActionBar ab = getSupportActionBar();
-		ab.setBackgroundDrawable(getResources().getDrawable(
-				R.drawable.actionbarbackground));
-		ab.setTitle("Checkout Order");
+		ab.setSubtitle("Checkout");
+	}
+	
+	public static class SalesItemsFragment extends ListFragment {
+		
+		@Override
+		public void onActivityCreated(Bundle savedInstanceState) {
+			super.onActivityCreated(savedInstanceState);
+			
+			adapter = new SalesItemsAdapter(getActivity(), R.layout.checkoutorder,
+					application.getSalesitems());
+			setListAdapter(adapter);
+		}
+		
 	}
 
 }

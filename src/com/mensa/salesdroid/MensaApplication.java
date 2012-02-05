@@ -10,8 +10,6 @@ package com.mensa.salesdroid;
 
 import java.util.ArrayList;
 
-import com.mensa.salesdroid.SalesOrder.SalesItems;
-
 import android.app.Application;
 
 public class MensaApplication extends Application {
@@ -24,22 +22,26 @@ public class MensaApplication extends Application {
 
 	static final String APP_DATAFOLDER = "mensadata";
 
+	static String[] dlFILENAMES = { "isi_mob_product_master.zip",
+			"isi_mob_master_customerv.zip", "isi_mob_master_salesman.zip",
+			"isi_mob_product_focus_t.zip", "isi_mob_piutang.zip" };
+
 	static String[] dataFILENAMES = { PRODUCTSFILENAME, CUSTOMERSFILENAME,
-			SALESMANSFILENAME, PRODUCTSFOCUSFILENAME, PIUTANGFILENAME}; //, PRODUCTSPROMOFILENAME 
+			SALESMANSFILENAME, PRODUCTSFOCUSFILENAME, PIUTANGFILENAME };
+
 	static final String mbs_url = "http://simfoni.mbs.co.id/services.php?";
 	static final String[] paths = {
 			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3Byb2R1Y3Q=",
-			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX2N1c3RvbWVy",
+			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX2N1c3RvbWVy&uid=",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3NhbGVzbWFu",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9mb2N1cw==",
-			"key=czRMZTU0dVRvTWF0MTBu&tab=cGl1dGFuZw=="//,
-//			""
-			};
+			"key=czRMZTU0dVRvTWF0MTBu&tab=cGl1dGFuZw==" };
 
 	private ArrayList<Product> products;
 	private SalesOrder salesorder;
-	private SalesItems salesitems;
+	private ArrayList<SalesItem> salesitems;
 	private Customer currentCustomer;
+	private String salesid;
 
 	@Override
 	public void onCreate() {
@@ -64,8 +66,8 @@ public class MensaApplication extends Application {
 	public void addProduct(int index, Product product) {
 		this.products.add(index, product);
 	}
-	
-	public void ProductsClear(){
+
+	public void ProductsClear() {
 		this.products.clear();
 	}
 
@@ -77,11 +79,11 @@ public class MensaApplication extends Application {
 		this.salesorder = salesorder;
 	}
 
-	public SalesItems getSalesitems() {
+	public ArrayList<SalesItem> getSalesitems() {
 		return salesitems;
 	}
 
-	public void setSalesitems(SalesItems salesitems) {
+	public void setSalesitems(ArrayList<SalesItem> salesitems) {
 		this.salesitems = salesitems;
 	}
 
@@ -91,6 +93,14 @@ public class MensaApplication extends Application {
 
 	public void setCurrentCustomer(Customer currentCustomer) {
 		this.currentCustomer = currentCustomer;
+	}
+
+	public String getSalesid() {
+		return salesid;
+	}
+
+	public void setSalesid(String salesid) {
+		this.salesid = salesid;
 	}
 
 }

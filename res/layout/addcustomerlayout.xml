@@ -1,7 +1,126 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/relativeLayout1"
+    <TableLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+          >
 
-    </RelativeLayout>
+        <TableRow android:background="@drawable/backgrdrounded">
+
+            <TextView
+                android:id="@+id/tvcustname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="Name" />
+
+            <EditText
+                android:id="@+id/etcustname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="180dip" />
+        </TableRow>
+
+        <TableRow android:background="@drawable/backgrdrounded">
+
+            <TextView
+                android:id="@+id/tvcgroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="CGroup" />
+
+            <EditText
+                android:id="@+id/etcgroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="100dip" />
+        </TableRow>
+
+        <TableRow android:background="@drawable/backgrdrounded">
+
+            <TextView
+                android:id="@+id/tvchain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="Chain" />
+
+            <EditText
+                android:id="@+id/etchain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="100dip" />
+        </TableRow>
+
+        <TableRow android:background="@drawable/backgrdrounded">
+
+            <TextView
+                android:id="@+id/tvnamakirim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="Nama Kirim" />
+
+            <EditText
+                android:id="@+id/etnamakirim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="100dip" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/tvalamatkirim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="Alamat Kirim" />
+
+            <EditText
+                android:id="@+id/etalamatkirim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="100dip" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/tvnamatagihan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="Nama Tagihan" />
+
+            <EditText
+                android:id="@+id/etnamatagihan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="100dip" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/tvalamattagihan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="alamat Tagihan" />
+
+            <EditText
+                android:id="@+id/etalamattagihan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="100dip" />
+        </TableRow>
+    </TableLayout>
+
+</RelativeLayout>

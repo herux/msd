@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <RelativeLayout 
+        android:id="@+id/rlsalesorder"
+        android:layout_width="wrap_content"
+        android:layout_height="90dip">
+        <TextView
+            android:id="@+id/tvordernum"
+            android:layout_width="wrap_content"
+        	android:layout_height="30dip"
+        	android:text="Order Number"/>
+        <TextView
+            android:id="@+id/tvorderdate"
+            android:layout_width="wrap_content"
+        	android:layout_height="30dip"
+        	android:layout_below="@+id/tvordernum"
+        	android:text="Order Date"/>
+        <TextView
+            android:id="@+id/tvordersalesid"
+            android:layout_width="wrap_content"
+        	android:layout_height="30dip"
+        	android:layout_below="@+id/tvorderdate"
+        	android:text="SalesID"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/llcaptionhead"
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:layout_below="@+id/rlsalesorder"
+        android:layout_alignParentLeft="true"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/tvname"
+            android:layout_width="150dip"
+            android:layout_height="wrap_content"
+            android:background="@drawable/columnhead"
+            android:gravity="center_vertical"
+            android:text="Product Name" />
+
+        <TextView
+            android:id="@+id/tvqty"
+            android:layout_width="70dip"
+            android:layout_height="wrap_content"
+            android:background="@drawable/columnhead"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Qty" />
+
+        <TextView
+            android:id="@+id/tvtotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/columnhead"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Total" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/flrow"
+        android:layout_width="match_parent"
+        android:layout_height="250dip"
+        android:layout_below="@+id/llcaptionhead" >
+
+        <fragment
+            android:id="@+id/titles"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            class="com.mensa.salesdroid.CheckoutOrderActivity$SalesItemsFragment" />
+    </FrameLayout>
+    <LinearLayout
+        android:id="@+id/llfooter"
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/flrow" 
+        android:orientation="horizontal" >
+        <TextView
+            android:id="@+id/tvname"
+            android:layout_width="150dip"
+            android:layout_height="wrap_content"
+             />
+
+        <TextView
+            android:id="@+id/tvqty"
+            android:layout_width="70dip"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvgrandtotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/columnhead"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Total" />
+    </LinearLayout>
+</RelativeLayout>
