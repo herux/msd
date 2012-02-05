@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">MENSA Sales</string>
     <string name="description_logo">MENSA Sales</string>
+    <string name="dialog_checkin">Anda sudah melakukan checkin, ingin mengubahnya ?</string>
 </resources>

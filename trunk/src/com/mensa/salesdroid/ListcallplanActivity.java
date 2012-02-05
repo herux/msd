@@ -25,6 +25,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.mensa.salesdroid.AlertFragmentDialog.OnClickNegativeButtonListener;
+import com.mensa.salesdroid.AlertFragmentDialog.OnClickPositiveButtonListener;
 
 public class ListcallplanActivity extends BaseFragmentActivity {
 	double LATITUDE = 37.42233;
@@ -130,6 +134,7 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 	}
 
 	public static class CustomerDetailsFragment extends Fragment {
+
 		public static CustomerDetailsFragment newInstance(int index) {
 			CustomerDetailsFragment f = new CustomerDetailsFragment();
 
@@ -138,6 +143,36 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 			f.setArguments(args);
 
 			return f;
+		}
+
+		void showDialog() {
+			AlertFragmentDialog alert = AlertFragmentDialog
+					.newInstance(R.string.dialog_checkin);
+			alert.SetOnClickPositiveButtonListener(new OnClickPositiveButtonListener() {
+
+				@Override
+				public void OnClick() {
+					application.setCurrentCustomer(customers
+							.get(getShownIndex()));
+					Toast toast = Toast.makeText(getActivity(), "Customer check, changed.!", Toast.LENGTH_SHORT);
+					toast.show();
+					Intent intent = new Intent();
+					intent.setClass(getActivity(), CustomerMenuActivity.class);
+					startActivity(intent);
+				}
+			});
+			alert.SetOnClickNegativeButtonListener(new OnClickNegativeButtonListener() {
+				
+				@Override
+				public void OnClick() {
+					Toast toast = Toast.makeText(getActivity(), "Re-Checkin", Toast.LENGTH_SHORT);
+					toast.show();
+					Intent intent = new Intent();
+					intent.setClass(getActivity(), CustomerMenuActivity.class);
+					startActivity(intent);
+				}
+			});
+			alert.show(getSupportFragmentManager(), "dialog");
 		}
 
 		public int getShownIndex() {
@@ -161,13 +196,18 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 					.getAlamattagihan());
 			Button btnCheckin = (Button) v.findViewById(R.id.btnCheckin);
 			btnCheckin.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View arg0) {
-					application.setCurrentCustomer(customers.get(getShownIndex()));
-					Intent intent = new Intent();
-					intent.setClass(getActivity(), CustomerMenuActivity.class);
-					startActivity(intent);
+					if (application.getCurrentCustomer() == null) {
+						application.setCurrentCustomer(customers
+								.get(getShownIndex()));
+						Intent intent = new Intent();
+						intent.setClass(getActivity(), CustomerMenuActivity.class);
+						startActivity(intent);
+					} else {
+						showDialog();
+					}
 				}
 			});
 			return v;

@@ -9,8 +9,10 @@
 package com.mensa.salesdroid;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,7 +22,6 @@ import android.support.v4.app.ActionBar.TabListener;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,8 +30,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.mensa.salesdroid.SalesOrder.SalesItems;
 
 public class ProductviewActivity extends BaseFragmentActivity {
 	static ProductsThread productsThread;
@@ -45,10 +44,10 @@ public class ProductviewActivity extends BaseFragmentActivity {
 				application.addProduct(0, new Product("", "", "", "Search", "",
 						"", 0, 0));
 				application.setProducts(productsThread.getProducts());
-				
+
 				// get products focus, karena tab pertama adalah focus
-//				JSONObject productfocus = new JSONObject();
-//				productfocus
+				// JSONObject productfocus = new JSONObject();
+				// productfocus
 				adapter.clear();
 				for (int i = 0; i < application.getProducts().size(); i++) {
 					adapter.add(application.getProducts().get(i));
@@ -69,69 +68,69 @@ public class ProductviewActivity extends BaseFragmentActivity {
 		application = getMensaapplication();
 
 		setContentView(R.layout.productviewlayout);
-		
+
 		ActionBar actionbar = getSupportActionBar();
 		actionbar.setDisplayHomeAsUpEnabled(false);
 		actionbar.setDisplayUseLogoEnabled(false);
 		actionbar.setSubtitle("View products list");
-		
+
 		Tab tabfocus = actionbar.newTab();
 		tabfocus.setText("Focus");
 		tabfocus.setTabListener(new TabListener() {
-			
+
 			@Override
 			public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
-				
+
 			}
-			
+
 			@Override
 			public void onTabReselected(Tab tab, FragmentTransaction ft) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 		actionbar.addTab(tabfocus);
-		
+
 		Tab tabPromo = actionbar.newTab();
 		tabPromo.setText("Promo");
 		tabPromo.setTabListener(new TabListener() {
-			
+
 			@Override
 			public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void onTabReselected(Tab tab, FragmentTransaction ft) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 		actionbar.addTab(tabPromo);
-		
+
 		Tab tabAll = actionbar.newTab();
 		tabAll.setText("All");
 		tabAll.setTabListener(new TabListener() {
-			
+
 			@Override
 			public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
 				application.ProductsClear();
@@ -143,11 +142,11 @@ public class ProductviewActivity extends BaseFragmentActivity {
 				}
 				adapter.notifyDataSetChanged();
 			}
-			
+
 			@Override
 			public void onTabReselected(Tab tab, FragmentTransaction ft) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 		actionbar.addTab(tabAll);
@@ -184,7 +183,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 				getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 				showDetails(mCurCheckPosition);
 			}
-			
+
 		}
 
 		@Override
@@ -243,39 +242,69 @@ public class ProductviewActivity extends BaseFragmentActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			
+
 			View v = inflater.inflate(R.layout.productdetail, null);
 			TextView productdesc = (TextView) v
 					.findViewById(R.id.tvProductDetail);
 			productdesc.setText(application.getProducts().get(getShownIndex())
 					.getDESCRIPTION());
-			
+
 			final TextView tvqty = (TextView) v.findViewById(R.id.edtQty);
+			tvqty.setWidth(50);
 			tvqty.setText("1");
-						
+
 			Button btnaddbasket = (Button) v.findViewById(R.id.btnAdd);
 			btnaddbasket.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View arg0) {
+					int idx = getShownIndex();
+					ArrayList<SalesItem> sis = application.getSalesitems();
+					if (sis == null) {
+						sis = new ArrayList<SalesItem>();
+					}
+					SalesItem si = new SalesItem(application.getProducts().get(
+							idx), Integer.parseInt(tvqty.getText().toString()),
+							1000);
+					sis.add(si);
+					application.setSalesitems(sis);
+
+					double total = 0;
+					for (int i = 0; i < application.getSalesitems().size(); i++) {
+						total = total
+								+ (application.getSalesitems().get(i).getQty() * application
+										.getSalesitems().get(i).getHarga());
+					}
+
 					SalesOrder so = application.getSalesorder();
 					if (so == null) {
 						so = new SalesOrder("", "", "");
-						application.setSalesorder(so);
+						Calendar c = Calendar.getInstance();
+						int day = c.get(Calendar.DAY_OF_MONTH);
+						int month = c.get(Calendar.MONTH);
+						int year = c.get(Calendar.YEAR);
+						so.setDates(Integer.toString(day) + "-"
+								+ Integer.toString(month) + ""
+								+ Integer.toString(year));
+						so.setOrdernumber("OrderNumber");
+						so.setSalesmanid(application.getSalesid());
 					}
-					SalesItems si = so.new SalesItems(application.getProducts()
-							.get(getShownIndex()), Float.parseFloat((String) tvqty.getText()), 1000); 
-					application.setSalesitems(si);
+					so.setTotal(total);
+					application.setSalesorder(so);
 
 					Toast toast = Toast.makeText(getActivity(), "Product "
-							+ application.getProducts().get(getShownIndex())
+							+ application.getProducts().get(idx)
 									.getDESCRIPTION()
 							+ " successfully add to basket", Toast.LENGTH_LONG);
+					toast.show();
+					if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+						getActivity().finish();
+					}
 				}
 			});
 			return v;
 		}
-		
+
 	}
 
 	public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {

@@ -11,6 +11,7 @@ package com.mensa.salesdroid;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -19,23 +20,40 @@ import android.widget.Toast;
 
 public class LoginActivity extends Activity {
 	@Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.loginlayout);
-		EditText etUsername = (EditText) findViewById(R.id.etUsername);
-		EditText etPassword = (EditText) findViewById(R.id.etPassword);
+		setContentView(R.layout.loginlayout);
+		final EditText etUsername = (EditText) findViewById(R.id.etUsername);
+		etUsername.setText("JKT1-FR-NV9");
+		final EditText etPassword = (EditText) findViewById(R.id.etPassword);
+		etPassword.setText("Z");
 		Button btnLogin = (Button) findViewById(R.id.btnLogin);
 		btnLogin.setOnClickListener(new OnClickListener() {
-			
+
 			public void onClick(View arg0) {
-//				Toast toast = Toast.makeText(LoginActivity.this, "Login button clicked", Toast.LENGTH_SHORT);
-//				toast.show();
-				Intent intent = new Intent();
-				intent.setClass(LoginActivity.this, MainmenuActivity.class);
-				startActivity(intent);
+				HttpClient http = new HttpClient();
+				String request = "http://simfoni.mbs.co.id/services.php?key=czRMZTU0dVRvTWF0MTBu&tab=bG9naW4=&uid="
+						+ etUsername.getText().toString()
+						+ "&pwd="
+						+ etPassword.getText().toString(); 
+				Log.d("mensa", "request: "+request);
+				String response = http
+						.executeHttpPost(request, "");
+				Log.d("mensa", "response: "+response);
+				if (response.equals("-1")) {
+					Toast toast = Toast.makeText(LoginActivity.this,
+							"Wrong username and/or password",
+							Toast.LENGTH_SHORT);
+					toast.show();
+				}else{
+					MensaApplication app = (MensaApplication) getApplication();
+					app.setSalesid(response);
+					Intent intent = new Intent();
+					intent.setClass(LoginActivity.this, MainmenuActivity.class);
+					startActivity(intent);
+				}
 			}
 		});
 	}
-
 }

@@ -35,15 +35,6 @@ public class DataLoader {
 
 	public DataLoader(int... dlData) {
 
-		// if (Environment.MEDIA_MOUNTED.equals(state)) {
-		// ExtStorageAvailable = ExtStorageWriteable = true;
-		// } else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-		// ExtStorageAvailable = true;
-		// ExtStorageWriteable = false;
-		// } else {
-		// ExtStorageAvailable = ExtStorageWriteable = false;
-		// }
-
 		datalist = new BaseDataListObj[dlData.length];
 		this.dlData = dlData;
 		for (int i = 0; i < dlData.length; i++) {
@@ -60,14 +51,16 @@ public class DataLoader {
 						json.append(line);
 					}
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				JSONObject jsonobj;
 				switch (dlData[i]) {
 				case dlPRODUCTS: {
 					try {
+						Log.d("mensa", "dlProduct1");
+						Log.d("mensa", "json:"+json.toString());
 						jsonobj = new JSONObject(json.toString());
+						Log.d("mensa", "jsonobj:"+jsonobj.toString());
 						JSONArray jsonproducts = jsonobj
 								.getJSONArray("master_product");
 						Product product;
@@ -95,11 +88,13 @@ public class DataLoader {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				}
-				case dlPRODUCTSFOCUS: {
-					
+					Log.d("mensa", "dlProduct2");
 					break;
 				}
+//				case dlPRODUCTSFOCUS: {
+//					
+//					break;
+//				}
 				case dlCUSTOMERS: {
 					try {
 						jsonobj = new JSONObject(json.toString());
@@ -128,10 +123,6 @@ public class DataLoader {
 											"KOORDINAT"));
 							((Customers) customers).addCustomer(customer);
 						}
-						Log.d("mensa",
-								"juml="
-										+ Integer.toString(jsoncustomers
-												.length()));
 						datalist[i] = customers;
 					} catch (JSONException e) {
 						// TODO: handle exception

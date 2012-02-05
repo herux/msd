@@ -8,7 +8,13 @@
 
 package com.mensa.salesdroid;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -18,9 +24,11 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
+import org.apache.http.util.ByteArrayBuffer;
 import org.apache.http.util.EntityUtils;
 
 import android.os.Handler;
+import android.util.Log;
 
 public class HttpClient {
 	public static void isNetworkAvailable(final String AURL,
@@ -84,5 +92,45 @@ public class HttpClient {
 			e.printStackTrace();
 		}
 		return ret;
+	}
+
+	public void DownloadFromURL(String uri, String fileName) { //http://www.helloandroid.com/tutorials/how-download-fileimage-url-your-device
+		try {
+			URL url = new URL(uri);
+			File file = new File(fileName);
+
+			long startTime = System.currentTimeMillis();
+			 Log.d("mensa", "download begining");
+			 Log.d("mensa", "download url:" + url);
+			 Log.d("mensa", "downloaded file name:" + fileName);
+			/* Open a connection to that URL. */
+			URLConnection ucon = url.openConnection();
+
+			/*
+			 * Define InputStreams to read from the URLConnection.
+			 */
+			InputStream is = ucon.getInputStream();
+			BufferedInputStream bis = new BufferedInputStream(is);
+
+			/*
+			 * Read bytes to the Buffer until there is nothing more to read(-1).
+			 */
+			ByteArrayBuffer baf = new ByteArrayBuffer(50);
+			int current = 0;
+			while ((current = bis.read()) != -1) {
+				baf.append((byte) current);
+			}
+
+			/* Convert the Bytes read to a String. */
+			FileOutputStream fos = new FileOutputStream(file);
+			fos.write(baf.toByteArray());
+			fos.close();
+			 Log.d("mensa", "download ready in"
+			 + ((System.currentTimeMillis() - startTime) / 1000)
+			 + " sec");
+
+		} catch (IOException e) {
+			// Log.d("ImageManager", "Error: " + e);
+		}
 	}
 }

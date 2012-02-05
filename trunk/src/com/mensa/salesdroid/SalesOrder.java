@@ -14,16 +14,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.ClipData.Item;
-
 public class SalesOrder {
-	
+
 	public SalesOrder(String ordernumber, String salesmanid, String order_date) {
 		this.ordernumber = ordernumber;
 		this.salesmanid = salesmanid;
 		this.dates = order_date;
 	}
-	
+
 	private String ordernumber;
 
 	public String getOrdernumber() {
@@ -33,10 +31,9 @@ public class SalesOrder {
 	public void setOrdernumber(String ordernumber) {
 		this.ordernumber = ordernumber;
 	}
-	
-	
+
 	private String salesmanid;
-	
+
 	public String getSalesmanid() {
 		return salesmanid;
 	}
@@ -44,9 +41,9 @@ public class SalesOrder {
 	public void setSalesmanid(String salesmanid) {
 		this.salesmanid = salesmanid;
 	}
-	
+
 	private String dates;
-	
+
 	public String getDates() {
 		return dates;
 	}
@@ -55,19 +52,29 @@ public class SalesOrder {
 		this.dates = dates;
 	}
 
-	private ArrayList<SalesItems> salesitems;
-	
-	public ArrayList<SalesItems> getSalesitems() {
+	private ArrayList<SalesItem> salesitems;
+
+	public ArrayList<SalesItem> getSalesitems() {
 		return salesitems;
 	}
 
-	public void setItem(ArrayList<SalesItems> salesitems) {
+	public void setSalesitems(ArrayList<SalesItem> salesitems) {
 		this.salesitems = salesitems;
+	}
+
+	private double total;
+
+	public double getTotal() {
+		return total;
+	}
+
+	public void setTotal(double total) {
+		this.total = total;
 	}
 
 	public String saveToJSON() {
 		JSONObject Sales = new JSONObject();
-		JSONArray Items = new JSONArray(); 
+		JSONArray Items = new JSONArray();
 		try {
 			for (int i = 0; i < salesitems.size(); i++) {
 				JSONObject item = new JSONObject();
@@ -76,7 +83,7 @@ public class SalesOrder {
 				item.put("PRICE", salesitems.get(i).getHarga());
 				Items.put(i, item);
 			}
-			
+
 			Sales.put("ordernumber", getOrdernumber());
 			Sales.put("salesmanid", getSalesmanid());
 			Sales.put("orderdate", getDates());
@@ -86,43 +93,6 @@ public class SalesOrder {
 			e.printStackTrace();
 		}
 		return null;
-	}
-	
-	public class SalesItems {
-		private float qty;
-		private Product product;
-		private float harga;
-		
-		public SalesItems(Product product, float qty, float harga) {
-			this.product = product;
-			this.qty = qty;
-			this.harga = harga;
-		}
-		
-		
-		public Product getProduct() {
-			return product;
-		}
-		
-		public void setProduct(Product product) {
-			this.product = product;
-		}
-		
-		public float getQty() {
-			return qty;
-		}
-		
-		public void setQty(float qty) {
-			this.qty = qty;
-		}
-
-		public float getHarga() {
-			return harga;
-		}
-
-		public void setHarga(float harga) {
-			this.harga = harga;
-		}
 	}
 
 }

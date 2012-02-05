@@ -21,9 +21,12 @@ public class DataSync extends BaseThread {
 	HttpClient http;
 	private String response = "";
 	OnDataSyncListener onDataSyncListener;
+	
+	MensaApplication application;
 
-	public DataSync(Handler h) {
+	public DataSync(Handler h, MensaApplication app) {
 		super(h);
+		application = app;
 	}
 	
 	public void setOnDataSyncListener(OnDataSyncListener listener){
@@ -45,8 +48,11 @@ public class DataSync extends BaseThread {
 			if (onDataSyncListener!=null){
 				onDataSyncListener.OnDataSync(MensaApplication.dataFILENAMES[i], i, 0);
 			}
-			response = http.executeHttpPost(MensaApplication.mbs_url
-					+ MensaApplication.paths[i], "");
+			String request = MensaApplication.mbs_url + MensaApplication.paths[i];
+			if (i==DataLoader.dlCUSTOMERS){
+				request = request+application.getSalesid();
+			}
+			response = http.executeHttpPost(request, "");
 			try {
 				if (root.canWrite()) {
 					file = new File(root, folder+MensaApplication.dataFILENAMES[i]);
