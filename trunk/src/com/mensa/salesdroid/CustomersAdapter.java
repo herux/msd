@@ -18,7 +18,6 @@ import android.view.View.OnFocusChangeListener;
 import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -52,36 +51,36 @@ public class CustomersAdapter extends ArrayAdapter<Customer> {
 		label.setText(getItem(position).getCustomername());
 		TextView address = (TextView) row.findViewById(R.id.tvAddess);
 		address.setText(getItem(position).getAlamattagihan());
-		if (position == 0) {
-			final EditTextSearch etSearch = new EditTextSearch(activity);
-			etSearch.setBackgroundResource(R.drawable.searchbkg);
-			etSearch.setText("Search");
-			etSearch.setOnKeyListener(new OnKeyListener() {
-
-				@Override
-				public boolean onKey(View arg0, int arg1, KeyEvent arg2) {
-
-					return false;
-				}
-			});
-
-			etSearch.setOnFocusChangeListener(new OnFocusChangeListener() {
-
-				@Override
-				public void onFocusChange(View arg0, boolean hasFocus) {
-					if (hasFocus == true) {
-						etSearch.setText("");
-					} else {
-						if (etSearch.getText().equals("")) {
-							etSearch.setText("Search");
-						}
-					}
-				}
-			});
-			rl.addView(etSearch);
-			rl.removeView(address);
-			rl.removeView(iv);
-		}
+//		if (position == 0) {
+//			final EditTextSearch etSearch = new EditTextSearch(activity);
+//			etSearch.setBackgroundResource(R.drawable.searchbkg);
+//			etSearch.setText("Search");
+//			etSearch.setOnKeyListener(new OnKeyListener() {
+//
+//				@Override
+//				public boolean onKey(View arg0, int arg1, KeyEvent arg2) {
+//
+//					return false;
+//				}
+//			});
+//
+//			etSearch.setOnFocusChangeListener(new OnFocusChangeListener() {
+//
+//				@Override
+//				public void onFocusChange(View arg0, boolean hasFocus) {
+//					if (hasFocus == true) {
+//						etSearch.setText("");
+//					} else {
+//						if (etSearch.getText().equals("")) {
+//							etSearch.setText("Search");
+//						}
+//					}
+//				}
+//			});
+//			rl.addView(etSearch);
+//			rl.removeView(address);
+//			rl.removeView(iv);
+// 		}
 
 		return row;
 	}

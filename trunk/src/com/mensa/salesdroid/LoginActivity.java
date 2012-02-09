@@ -25,7 +25,7 @@ public class LoginActivity extends Activity {
 
 		setContentView(R.layout.loginlayout);
 		final EditText etUsername = (EditText) findViewById(R.id.etUsername);
-		etUsername.setText("JKT1-FR-NV9");
+		etUsername.setText("YGY1-CP-SRN");
 		final EditText etPassword = (EditText) findViewById(R.id.etPassword);
 		etPassword.setText("Z");
 		Button btnLogin = (Button) findViewById(R.id.btnLogin);

@@ -49,10 +49,12 @@ public class DataSync extends BaseThread {
 				onDataSyncListener.OnDataSync(MensaApplication.dataFILENAMES[i], i, 0);
 			}
 			String request = MensaApplication.mbs_url + MensaApplication.paths[i];
-			if (i==DataLoader.dlCUSTOMERS){
+			if ((i==DataLoader.dlCUSTOMERS)||(i==DataLoader.dlPIUTANG)){
 				request = request+application.getSalesid();
 			}
+			Log.d("mensa", "request:"+request);
 			response = http.executeHttpPost(request, "");
+			Log.d("mensa", "response:"+response);
 			try {
 				if (root.canWrite()) {
 					file = new File(root, folder+MensaApplication.dataFILENAMES[i]);
@@ -60,6 +62,7 @@ public class DataSync extends BaseThread {
 					BufferedWriter out = new BufferedWriter(filewriter);
 					out.write(response);
 					out.close();
+					Log.d("mensa", "savetofile:"+folder+MensaApplication.dataFILENAMES[i]);
 				}
 			} catch (IOException e) {
 				Log.e("mensa", "Could not write file" + e.getMessage());

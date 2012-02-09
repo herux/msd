@@ -18,6 +18,7 @@ import android.support.v4.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -62,9 +63,9 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 		DataLoader dtcustomers = new DataLoader(datatypes);
 		Customers custs = (Customers) dtcustomers.getDatalist()[0];
 
+		customers.clear();
 		customersforsearch = custs.getCustomers();
 		customers = customersforsearch;
-		customers.add(0, new Customer("", "", "", "", "", "", "", "", ""));
 	}
 
 	public static class CustomersFragment extends ListFragment {
@@ -75,7 +76,6 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
 
-			customers.add(new Customer("", "", "", "", "", "", "", "", ""));
 			adapter = new CustomersAdapter(getActivity(),
 					R.layout.listcallplan, customers, customersforsearch);
 			setListAdapter(adapter);
@@ -202,6 +202,7 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 					if (application.getCurrentCustomer() == null) {
 						application.setCurrentCustomer(customers
 								.get(getShownIndex()));
+						Log.d("mensa", "Checkin:"+application.getCurrentCustomer().getCustomerid()+":"+application.getCurrentCustomer().getCustomername());
 						Intent intent = new Intent();
 						intent.setClass(getActivity(), CustomerMenuActivity.class);
 						startActivity(intent);

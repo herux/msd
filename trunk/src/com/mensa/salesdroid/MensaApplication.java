@@ -35,7 +35,7 @@ public class MensaApplication extends Application {
 			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX2N1c3RvbWVy&uid=",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3NhbGVzbWFu",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9mb2N1cw==",
-			"key=czRMZTU0dVRvTWF0MTBu&tab=cGl1dGFuZw==" };
+			"key=czRMZTU0dVRvTWF0MTBu&tab=cGl1dGFuZw==&uid=" };
 
 	private ArrayList<Product> products;
 	private SalesOrder salesorder;
