@@ -20,12 +20,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Environment;
-import android.util.Log;
 
 public class DataLoader {
 	public static final int dlPRODUCTS = 0;
 	public static final int dlCUSTOMERS = 1;
+	public static final int dlSALESMANS = 2;
 	public static final int dlPRODUCTSFOCUS = 3;
+	public static final int dlPIUTANG = 4;
 
 	private int[] dlData;
 	private boolean ExtStorageAvailable = false;
@@ -57,10 +58,7 @@ public class DataLoader {
 				switch (dlData[i]) {
 				case dlPRODUCTS: {
 					try {
-						Log.d("mensa", "dlProduct1");
-						Log.d("mensa", "json:"+json.toString());
 						jsonobj = new JSONObject(json.toString());
-						Log.d("mensa", "jsonobj:"+jsonobj.toString());
 						JSONArray jsonproducts = jsonobj
 								.getJSONArray("master_product");
 						Product product;
@@ -80,7 +78,9 @@ public class DataLoader {
 									jsonproducts.getJSONObject(j).getLong(
 											"QTY_ONHAND"), jsonproducts
 											.getJSONObject(j).getLong(
-													"QTY_RESERVED"));
+													"QTY_RESERVED"),
+									jsonproducts.getJSONObject(j).getDouble(
+											"HNA"));
 							((Products) products).addProduct(product);
 						}
 						datalist[i] = products;
@@ -88,13 +88,46 @@ public class DataLoader {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					Log.d("mensa", "dlProduct2");
 					break;
 				}
-//				case dlPRODUCTSFOCUS: {
-//					
-//					break;
-//				}
+				case dlPRODUCTSFOCUS: {
+
+					break;
+				}
+				case dlPIUTANG: {
+					try {
+						jsonobj = new JSONObject(json.toString());
+						JSONArray jsonpiutangs = jsonobj
+								.getJSONArray("piutang");
+						Piutang piutang;
+						BaseDataListObj piutangs = (BaseDataListObj) new Piutangs();
+						for (int j = 0; j < jsonpiutangs.length(); j++) {
+							piutang = new Piutang(jsonpiutangs.getJSONObject(j)
+									.getString("SITE"), jsonpiutangs
+									.getJSONObject(j).getString("DIVISI"),
+									jsonpiutangs.getJSONObject(j).getString(
+											"RAYON_SALES"), jsonpiutangs
+											.getJSONObject(j).getString(
+													"IDENTITY"), jsonpiutangs
+											.getJSONObject(j).getString(
+													"INVOICE_NO"), jsonpiutangs
+											.getJSONObject(j).getString(
+													"INVOICE_DATE"),
+									jsonpiutangs.getJSONObject(j).getString(
+											"DUE_DATE"), jsonpiutangs
+											.getJSONObject(j).getDouble(
+													"INVOICE_AMOUNT"),
+									jsonpiutangs.getJSONObject(j).getDouble(
+											"OPEN_AMOUNT"));
+							((Piutangs) piutangs).AddPiutang(piutang);
+						}
+						datalist[i] = piutangs;
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					break;
+				}
 				case dlCUSTOMERS: {
 					try {
 						jsonobj = new JSONObject(json.toString());

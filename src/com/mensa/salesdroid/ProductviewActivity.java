@@ -42,7 +42,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			if (total >= 0) {
 				productsThread.setState(BaseThread.STATE_DONE);
 				application.addProduct(0, new Product("", "", "", "Search", "",
-						"", 0, 0));
+						"", 0, 0, 0));
 				application.setProducts(productsThread.getProducts());
 
 				// get products focus, karena tab pertama adalah focus
@@ -135,7 +135,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
 				application.ProductsClear();
 				application.addProduct(0, new Product("", "", "", "Search", "",
-						"", 0, 0));
+						"", 0, 0, 0));
 				adapter.clear();
 				for (int i = 0; i < application.getProducts().size(); i++) {
 					adapter.add(application.getProducts().get(i));
@@ -165,7 +165,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			if (application.getProducts() == null) {
 				application.setProducts(new ArrayList<Product>());
 				application.addProduct(0, new Product("", "", "", "", "", "",
-						0, 0));
+						0, 0, 0));
 			}
 			adapter = new ProductsAdapter(getActivity(), R.layout.productlist,
 					application.getProducts());

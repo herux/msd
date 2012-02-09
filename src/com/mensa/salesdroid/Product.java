@@ -12,10 +12,11 @@ public class Product {
 	private String CONTRACT, DIV, PART_NO, DESCRIPTION, LOCATION_NO,
 			LOT_BATCH_NO;
 	private float QTY_ONHAND, QTY_RESERVED;
+	private double PRICE;
 
 	public Product(String ACONTRACT, String ADIV, String APART_NO,
 			String ADESCRIPTION, String ALOCATION_NO, String ALOT_BATCH_NO,
-			float AQTY_ONHAND, float AQTY_RESERVED) {
+			float AQTY_ONHAND, float AQTY_RESERVED, double APRICE) {
 		CONTRACT = ACONTRACT;
 		DIV = ADIV;
 		PART_NO = APART_NO;
@@ -24,6 +25,7 @@ public class Product {
 		LOT_BATCH_NO = ALOT_BATCH_NO;
 		QTY_ONHAND = AQTY_ONHAND;
 		QTY_RESERVED = AQTY_RESERVED;
+		PRICE = APRICE;
 	}
 
 	public String getCONTRACT() {
@@ -88,6 +90,14 @@ public class Product {
 
 	public void setQTY_RESERVED(float qTY_RESERVED) {
 		QTY_RESERVED = qTY_RESERVED;
+	}
+
+	public double getPRICE() {
+		return PRICE;
+	}
+
+	public void setPRICE(double pRICE) {
+		PRICE = pRICE;
 	}
 
 }
