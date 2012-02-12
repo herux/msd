@@ -15,6 +15,7 @@ import android.support.v4.app.ActionBar;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class CustomerMenuActivity extends BaseFragmentActivity {
 
@@ -57,10 +58,19 @@ public class CustomerMenuActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent();
-				intent.setClass(CustomerMenuActivity.this,
-						CheckoutOrderActivity.class);
-				startActivity(intent);
+				if (getMensaapplication().getSalesitems() == null) {
+					Toast toast = Toast
+							.makeText(
+									CustomerMenuActivity.this,
+									"There has not been selected product, please go to the menu's 'capture order' to choose",
+									Toast.LENGTH_SHORT);
+					toast.show();
+				} else {
+					Intent intent = new Intent();
+					intent.setClass(CustomerMenuActivity.this,
+							CheckoutOrderActivity.class);
+					startActivity(intent);
+				}
 			}
 		});
 

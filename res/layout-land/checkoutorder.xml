@@ -5,7 +5,7 @@
 
     <LinearLayout
         android:id="@+id/llrow"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
@@ -14,10 +14,17 @@
 
         <TextView
             android:id="@+id/tvnamerow"
-            android:layout_width="150dip"
+            android:layout_width="200dip"
             android:layout_height="wrap_content"
             android:gravity="left|center_horizontal"
             android:text="Product Name" />
+
+        <TextView
+            android:id="@+id/tvpricerow"
+            android:layout_width="100dip"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Price" />
 
         <TextView
             android:id="@+id/tvqtyrow"

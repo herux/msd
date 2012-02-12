@@ -1,16 +1,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
->
+    android:background="@drawable/background" >
 
     <TableLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-          >
+        android:layout_centerHorizontal="true" >
 
-        <TableRow android:background="@drawable/backgrdrounded">
+        <TableRow>
 
             <TextView
                 android:id="@+id/tvcustname"
@@ -26,7 +25,7 @@
                 android:width="180dip" />
         </TableRow>
 
-        <TableRow android:background="@drawable/backgrdrounded">
+        <TableRow>
 
             <TextView
                 android:id="@+id/tvcgroup"
@@ -42,7 +41,7 @@
                 android:width="100dip" />
         </TableRow>
 
-        <TableRow android:background="@drawable/backgrdrounded">
+        <TableRow>
 
             <TextView
                 android:id="@+id/tvchain"
@@ -58,7 +57,7 @@
                 android:width="100dip" />
         </TableRow>
 
-        <TableRow android:background="@drawable/backgrdrounded">
+        <TableRow>
 
             <TextView
                 android:id="@+id/tvnamakirim"

@@ -265,7 +265,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 					}
 					SalesItem si = new SalesItem(application.getProducts().get(
 							idx), Integer.parseInt(tvqty.getText().toString()),
-							1000);
+							application.getProducts().get(idx).getPRICE());
 					sis.add(si);
 					application.setSalesitems(sis);
 
