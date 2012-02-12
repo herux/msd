@@ -6,7 +6,7 @@ public class SalesItem {
 	private Product product;
 	private double harga;
 	
-	public SalesItem(Product product, float qty, float harga) {
+	public SalesItem(Product product, float qty, double harga) {
 		this.product = product;
 		this.qty = qty;
 		this.harga = harga;

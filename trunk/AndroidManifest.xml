@@ -35,20 +35,24 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ProductviewActivity" />
         <activity android:name=".ProductviewDetailsActivity" />
-        <activity android:name=".ListcallplanActivity" />
+        <activity
+            android:name=".ListcallplanActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".ListcallplanDetailActivity" />
         <activity
             android:name=".CustomerMenuActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".InfoReturActivity" 
+        <activity
+            android:name=".InfoReturActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".CheckoutOrderActivity"
+        <activity android:name=".CheckoutOrderActivity" />
+        <activity
+            android:name=".ListPiutangActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ListPiutangActivity"
+        <activity
+            android:name=".AddCustomerActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".AddCustomerActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".CalendarActivity"/>
+        <activity android:name=".CalendarActivity" />
     </application>
 
 </manifest>

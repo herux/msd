@@ -24,6 +24,7 @@ public class ListPiutangActivity extends BaseFragmentActivity {
 		DataLoader dtpiutangs = new DataLoader(datatypes);
 		Piutangs piutangs = (Piutangs) dtpiutangs.getDatalist()[0];
 		alPiutangs = piutangs.getPiutangs();
+		
 //		for (int i = 0; i < piutangs.getPiutangs().size(); i++) {
 //			Log.d("mensa", "custid:"
 //					+ piutangs.getPiutangs().get(i).getCustomerid());

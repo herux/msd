@@ -78,6 +78,15 @@ public class MensaApplication extends Application {
 	public void setSalesorder(SalesOrder salesorder) {
 		this.salesorder = salesorder;
 	}
+	
+	public void deleteSalesitem(int index){
+		salesitems.remove(index);
+	}
+	
+	public void changeQtySalesitem(int index, float newQty){
+		SalesItem si = salesitems.get(index);
+		si.setQty(newQty);
+	}
 
 	public ArrayList<SalesItem> getSalesitems() {
 		return salesitems;
