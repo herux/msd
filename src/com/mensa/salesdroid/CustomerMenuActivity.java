@@ -8,7 +8,6 @@
 
 package com.mensa.salesdroid;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActionBar;
@@ -27,7 +26,7 @@ public class CustomerMenuActivity extends BaseFragmentActivity {
 		final ActionBar ab = getSupportActionBar();
 		ab.setSubtitle("Customer menu ("
 				+ getMensaapplication().getCurrentCustomer().getCustomername()
-				+ ")");
+				+ ") - Sales: "+getMensaapplication().getSalesid());
 
 		Button btninforeturn = (Button) findViewById(R.id.btn_inforeturn);
 		btninforeturn.setOnClickListener(new OnClickListener() {
