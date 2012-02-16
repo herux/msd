@@ -26,11 +26,6 @@ public class ListPiutangActivity extends BaseFragmentActivity {
 		alPiutangs = piutangs.getPiutangs();
 		
 //		for (int i = 0; i < piutangs.getPiutangs().size(); i++) {
-//			Log.d("mensa", "custid:"
-//					+ piutangs.getPiutangs().get(i).getCustomerid());
-//			Log.d("mensa", "curren:"
-//					+ getMensaapplication().getCurrentCustomer()
-//							.getCustomerid());
 //			if (getMensaapplication().getCurrentCustomer().getCustomerid()
 //					.equals(piutangs.getPiutangs().get(i).getCustomerid())) {
 //				alPiutangs.add(piutangs.getPiutangs().get(i));
