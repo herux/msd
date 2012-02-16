@@ -27,7 +27,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 public class InfoReturActivity extends BaseFragmentActivity {
 	int CAMERA_PIC_REQUEST = 2;
@@ -120,7 +119,8 @@ public class InfoReturActivity extends BaseFragmentActivity {
 		}
 
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-			menu.add("New").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+			menu.add("New Return").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+			menu.add("Return List").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		}
 
 		@Override
