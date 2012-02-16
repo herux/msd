@@ -25,22 +25,30 @@
         android:textColor="@color/titlemaincolor" />
 
     <TextView
-        android:id="@+id/tvHarga"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageView1"
-        android:layout_alignParentRight="true"
-        android:text="Harga"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/titlemaincolor" />
-
-    <TextView
         android:id="@+id/tvCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageView1"
         android:layout_alignLeft="@+id/tvTable"
         android:text="PartNo"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/titlemaincolor" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tvCode"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/btnarrow" />
+
+    <TextView
+        android:id="@+id/tvHarga"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView2"
+        android:layout_toLeftOf="@+id/imageView2"
+        android:text="Harga"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/titlemaincolor" />
 
