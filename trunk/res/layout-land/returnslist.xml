@@ -19,7 +19,7 @@
             android:id="@+id/tvproductcoderow"
             android:layout_width="150dip"
             android:layout_height="wrap_content"
-            android:gravity="left|center_horizontal"
+            android:gravity="center_vertical|center_horizontal"
             android:text="Product Code" />
 
         <TextView
