@@ -9,6 +9,7 @@
 package com.mensa.salesdroid;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.app.Application;
 
@@ -40,6 +41,8 @@ public class MensaApplication extends Application {
 	private ArrayList<Product> products;
 	private SalesOrder salesorder;
 	private ArrayList<SalesItem> salesitems;
+	private Returns returns;
+	private ArrayList<ReturnItem> returnitems;
 	private Customer currentCustomer;
 	private String salesid;
 
@@ -47,6 +50,22 @@ public class MensaApplication extends Application {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
+	}
+	
+	public String getDateTimeStr() {
+		Calendar c = Calendar.getInstance();
+		int day = c.get(Calendar.DAY_OF_MONTH);
+		int month = c.get(Calendar.MONTH);
+		int year = c.get(Calendar.YEAR);
+		int hour = c.get(Calendar.HOUR);
+		int minute= c.get(Calendar.MINUTE);
+		int second= c.get(Calendar.SECOND);
+		return Integer.toString(day) + "-"
+				+ Integer.toString(month) + "-"
+				+ Integer.toString(year)+ " "
+				+ Integer.toString(hour)+ ":"
+				+ Integer.toString(minute)+":"
+				+ Integer.toString(second);
 	}
 
 	@Override
@@ -110,6 +129,26 @@ public class MensaApplication extends Application {
 
 	public void setSalesid(String salesid) {
 		this.salesid = salesid;
+	}
+
+	public Returns getReturns() {
+		return returns;
+	}
+
+	public void setReturns(Returns returns) {
+		this.returns = returns;
+	}
+	
+	public void deleteReturnItem(int index){
+		returnitems.remove(index);
+	}
+
+	public ArrayList<ReturnItem> getReturnitems() {
+		return returnitems;
+	}
+
+	public void setReturnitems(ArrayList<ReturnItem> returnitems) {
+		this.returnitems = returnitems;
 	}
 
 }
