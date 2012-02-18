@@ -6,20 +6,19 @@ import java.util.ArrayList;
 import net.londatiga.android.ActionItem;
 import net.londatiga.android.QuickAction;
 import net.londatiga.android.QuickAction.OnActionItemClickListener;
-
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.view.View.OnLongClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mensa.salesdroid.EditTextSearch.OnSearchFoundListener;
 
@@ -35,7 +34,7 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		
+
 		LayoutInflater inflater = activity.getLayoutInflater();
 		View row = inflater.inflate(R.layout.productlist, parent, false);
 		RelativeLayout rl = (RelativeLayout) row
@@ -90,29 +89,40 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
 			});
 			rl.addView(etSearch);
 		}
-		
-		ActionItem refreshitem = new ActionItem(REFRESHITEM, "Update this product", activity.getResources()
-				.getDrawable(android.R.drawable.ic_menu_today));
+
+		ActionItem refreshitem = new ActionItem(REFRESHITEM,
+				"Update this product", activity.getResources().getDrawable(
+						android.R.drawable.ic_menu_today));
 		final QuickAction qa = new QuickAction(activity);
 		qa.addActionItem(refreshitem);
 		qa.setOnActionItemClickListener(new OnActionItemClickListener() {
-			
+
 			@Override
 			public void onItemClick(QuickAction source, int pos, int actionId) {
-				if (actionId==REFRESHITEM){
-					
+				if (actionId == REFRESHITEM) {
+
 				}
 				qa.dismiss();
 			}
 		});
-		row.setOnLongClickListener(new OnLongClickListener() {
-			
-			@Override
-			public boolean onLongClick(View view) {
-				qa.show(view);
-				return false;
-			}
-		});
+//		row.setOnLongClickListener(new OnLongClickListener() {
+//
+//			@Override
+//			public boolean onLongClick(View view) {
+//				qa.show(view);
+//				return false;
+//			}
+//		});
+//		
+//		row.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View arg0) {
+//				// TODO Auto-generated method stub
+//				Toast toast = Toast.makeText(activity, "test", Toast.LENGTH_SHORT);
+//				toast.show();
+//			}
+//		});
 
 		return row;
 	}
