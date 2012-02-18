@@ -45,6 +45,8 @@
         <activity
             android:name=".InfoReturActivity"
             android:screenOrientation="portrait" />
+        <activity 
+            android:name=".InfoReturListActivity"/>
         <activity android:name=".CheckoutOrderActivity" />
         <activity
             android:name=".ListPiutangActivity"
