@@ -55,7 +55,7 @@ public class ReturnItemAdapter extends ArrayAdapter<ReturnItem> {
 		tvdesc.setText(getItem(position).getDescription());
 		if (activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			ImageView ivproduct = (ImageView) row.findViewById(R.id.ivproductrow);
-			ivproduct = getItem(position).getImage();
+			ivproduct.setImageBitmap(getItem(position).getImage());
 		}
 		row.setOnClickListener(new OnClickListener() {
 			

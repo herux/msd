@@ -40,9 +40,9 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
 		RelativeLayout rl = (RelativeLayout) row
 				.findViewById(R.id.relativeLayout1);
 		if ((position % 2) == 0) {
-			rl.setBackgroundResource(R.drawable.backgrndselectlist3);
+			rl.setBackgroundResource(R.drawable.productlistrow);
 		} else {
-			rl.setBackgroundResource(R.drawable.backgrndselectlist4);
+			rl.setBackgroundResource(R.drawable.productlistrow1);
 		}
 		TextView label = (TextView) row.findViewById(R.id.tvTable);
 		label.setText("Name. " + getItem(position).getDESCRIPTION());
