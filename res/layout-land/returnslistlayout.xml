@@ -26,7 +26,7 @@
 
     <LinearLayout
         android:id="@+id/llcaptionhead"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="30dip"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/rlreturns"
@@ -37,7 +37,7 @@
             android:layout_width="100dip"
             android:layout_height="wrap_content"
             android:background="@drawable/columnhead"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|center_horizontal"
             android:text="Image" />
         
         <TextView
@@ -45,7 +45,7 @@
             android:layout_width="150dip"
             android:layout_height="wrap_content"
             android:background="@drawable/columnhead"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|center_horizontal"
             android:text="Product Code" />
 
         <TextView
