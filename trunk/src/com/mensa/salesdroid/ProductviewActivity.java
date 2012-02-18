@@ -22,6 +22,7 @@ import android.support.v4.app.ActionBar.TabListener;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -196,6 +197,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 		public void onListItemClick(ListView l, View v, int position, long id) {
 			showDetails(position);
 		}
+			
 
 		void showDetails(int index) {
 			mCurCheckPosition = index;
@@ -279,13 +281,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 					SalesOrder so = application.getSalesorder();
 					if (so == null) {
 						so = new SalesOrder("", "", "");
-						Calendar c = Calendar.getInstance();
-						int day = c.get(Calendar.DAY_OF_MONTH);
-						int month = c.get(Calendar.MONTH);
-						int year = c.get(Calendar.YEAR);
-						so.setDates(Integer.toString(day) + "-"
-								+ Integer.toString(month) + ""
-								+ Integer.toString(year));
+						so.setDates(application.getDateTimeStr());
 						so.setOrdernumber("OrderNumber");
 						so.setSalesmanid(application.getSalesid());
 					}
