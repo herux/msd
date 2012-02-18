@@ -39,7 +39,7 @@ public class LoginActivity extends Activity {
 						+ "&pwd="
 						+ etPassword.getText().toString();
 				String response = http.executeHttpPost(request, "");
-				if (response.equals("-1")) {
+				if ((response.equals("-1"))||(response.equals("null"))) {
 					Toast toast = Toast.makeText(LoginActivity.this,
 							"Wrong username and/or password",
 							Toast.LENGTH_SHORT);

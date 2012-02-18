@@ -42,9 +42,9 @@ public class CustomersAdapter extends ArrayAdapter<Customer> {
 		RelativeLayout rl = (RelativeLayout) row
 				.findViewById(R.id.relativeLayout1);
 		if ((position % 2) == 0) {
-			rl.setBackgroundResource(R.drawable.list2);
+			rl.setBackgroundResource(R.drawable.customerlistrow);
 		} else {
-			rl.setBackgroundResource(R.drawable.list);
+			rl.setBackgroundResource(R.drawable.customerlistrow1);
 		}
 		ImageView iv = (ImageView) row.findViewById(R.id.ivCustomer);
 		TextView label = (TextView) row.findViewById(R.id.tvCustomer);

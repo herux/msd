@@ -14,7 +14,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -39,6 +38,7 @@ public class InfoReturActivity extends BaseFragmentActivity {
 	private String selectedImagePath;
 	static MensaApplication application;
 	static ImageView image;
+	Bitmap thumbnail;
 	Fragment fragment;
 
 	@Override
@@ -97,7 +97,7 @@ public class InfoReturActivity extends BaseFragmentActivity {
 				EditText etdesc = (EditText) findViewById(R.id.etreason);
 				ReturnItem ri = new ReturnItem("ProductCode?", Float
 						.parseFloat(etqty.getText().toString()), etdesc
-						.getText().toString(), image);
+						.getText().toString(), thumbnail);
 				ris.add(ri);
 				application.setReturnitems(ris);
 
@@ -162,12 +162,12 @@ public class InfoReturActivity extends BaseFragmentActivity {
 			if (requestCode == SELECT_PICTURE) {
 				Uri selectedImageUri = data.getData();
 				selectedImagePath = getPath(selectedImageUri);
-				Bitmap thumbnail = BitmapFactory.decodeFile(selectedImagePath);
+				thumbnail = BitmapFactory.decodeFile(selectedImagePath);
 				image.setImageBitmap(thumbnail);
 			}
 
 			if (requestCode == CAMERA_PIC_REQUEST) {
-				Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+				thumbnail = (Bitmap) data.getExtras().get("data");
 				ImageView image = (ImageView) findViewById(R.id.ivImageRetur);
 				image.setImageBitmap(thumbnail);
 			}
