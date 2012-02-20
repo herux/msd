@@ -11,6 +11,8 @@ package com.mensa.salesdroid;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import com.mensa.salesdroid.ProductsAdapter.OnListItemClickListener;
+
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -26,6 +28,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
@@ -170,6 +173,13 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			}
 			adapter = new ProductsAdapter(getActivity(), R.layout.productlist,
 					application.getProducts());
+			adapter.setOnListItemClickListener(new OnListItemClickListener() {
+				
+				@Override
+				public void OnListItemClick(View view, int position) {
+					showDetails(position);
+				}
+			});
 			setListAdapter(adapter);
 
 			View detailsFrame = getActivity().findViewById(R.id.details);
@@ -192,11 +202,12 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			super.onSaveInstanceState(outState);
 			outState.putInt("curChoice", mCurCheckPosition);
 		}
-
-		@Override
-		public void onListItemClick(ListView l, View v, int position, long id) {
-			showDetails(position);
-		}
+		
+		
+//		@Override
+//		public void onListItemClick(ListView l, View v, int position, long id) {
+//			showDetails(position);
+//		}
 			
 
 		void showDetails(int index) {

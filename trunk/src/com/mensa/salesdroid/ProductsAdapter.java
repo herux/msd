@@ -24,6 +24,7 @@ import com.mensa.salesdroid.EditTextSearch.OnSearchFoundListener;
 
 public class ProductsAdapter extends ArrayAdapter<Product> {
 	Activity activity;
+	OnListItemClickListener onListItemClickListener;
 	final static int REFRESHITEM = 1;
 
 	public ProductsAdapter(Activity activity, int textViewResourceId,
@@ -31,9 +32,17 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
 		super(activity, textViewResourceId, products);
 		this.activity = activity;
 	}
+	
+	public void setOnListItemClickListener(OnListItemClickListener listener){
+		onListItemClickListener = listener;
+	}
+	
+	public interface OnListItemClickListener{
+		public abstract void OnListItemClick(View view, int position);
+	} 
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 
 		LayoutInflater inflater = activity.getLayoutInflater();
 		View row = inflater.inflate(R.layout.productlist, parent, false);
@@ -105,24 +114,24 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
 				qa.dismiss();
 			}
 		});
-//		row.setOnLongClickListener(new OnLongClickListener() {
-//
-//			@Override
-//			public boolean onLongClick(View view) {
-//				qa.show(view);
-//				return false;
-//			}
-//		});
-//		
-//		row.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View arg0) {
-//				// TODO Auto-generated method stub
-//				Toast toast = Toast.makeText(activity, "test", Toast.LENGTH_SHORT);
-//				toast.show();
-//			}
-//		});
+		row.setOnLongClickListener(new OnLongClickListener() {
+
+			@Override
+			public boolean onLongClick(View view) {
+				qa.show(view);
+				return false;
+			}
+		});
+		
+		row.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View view) {
+				if (onListItemClickListener!=null){
+					onListItemClickListener.OnListItemClick(view, position);
+				}
+			}
+		});
 
 		return row;
 	}
