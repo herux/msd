@@ -23,6 +23,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.ByteArrayBuffer;
 import org.apache.http.util.EntityUtils;
@@ -70,6 +71,112 @@ public class HttpClient {
 			}
 		}.start();
 
+	}
+	
+	public String executeHttpGet(String AURL, String AInput) {
+		DefaultHttpClient http = new DefaultHttpClient();
+		HttpGet httpget = new HttpGet(AURL);
+		String ret = "";
+		try {
+			httpget.setParams(new HttpParams() {
+				
+				@Override
+				public HttpParams setParameter(String arg0, Object arg1) {
+					// TODO Auto-generated method stub
+					return null;
+				}
+				
+				@Override
+				public HttpParams setLongParameter(String arg0, long arg1) {
+					// TODO Auto-generated method stub
+					return null;
+				}
+				
+				@Override
+				public HttpParams setIntParameter(String arg0, int arg1) {
+					// TODO Auto-generated method stub
+					return null;
+				}
+				
+				@Override
+				public HttpParams setDoubleParameter(String arg0, double arg1) {
+					// TODO Auto-generated method stub
+					return null;
+				}
+				
+				@Override
+				public HttpParams setBooleanParameter(String arg0, boolean arg1) {
+					// TODO Auto-generated method stub
+					return null;
+				}
+				
+				@Override
+				public boolean removeParameter(String arg0) {
+					// TODO Auto-generated method stub
+					return false;
+				}
+				
+				@Override
+				public boolean isParameterTrue(String arg0) {
+					// TODO Auto-generated method stub
+					return false;
+				}
+				
+				@Override
+				public boolean isParameterFalse(String arg0) {
+					// TODO Auto-generated method stub
+					return false;
+				}
+				
+				@Override
+				public Object getParameter(String arg0) {
+					// TODO Auto-generated method stub
+					return null;
+				}
+				
+				@Override
+				public long getLongParameter(String arg0, long arg1) {
+					// TODO Auto-generated method stub
+					return 0;
+				}
+				
+				@Override
+				public int getIntParameter(String arg0, int arg1) {
+					// TODO Auto-generated method stub
+					return 0;
+				}
+				
+				@Override
+				public double getDoubleParameter(String arg0, double arg1) {
+					// TODO Auto-generated method stub
+					return 0;
+				}
+				
+				@Override
+				public boolean getBooleanParameter(String arg0, boolean arg1) {
+					// TODO Auto-generated method stub
+					return false;
+				}
+				
+				@Override
+				public HttpParams copy() {
+					// TODO Auto-generated method stub
+					return null;
+				}
+			});
+
+			HttpResponse httpresponse = http.execute(httpget);
+			HttpEntity resEntity = httpresponse.getEntity();
+			ret = EntityUtils.toString(resEntity);
+
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
 	}
 
 	public String executeHttpPost(String AURL, String AInput) {

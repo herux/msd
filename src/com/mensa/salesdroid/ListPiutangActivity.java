@@ -23,14 +23,14 @@ public class ListPiutangActivity extends BaseFragmentActivity {
 		datatypes[0] = DataLoader.dlPIUTANG;
 		DataLoader dtpiutangs = new DataLoader(datatypes);
 		Piutangs piutangs = (Piutangs) dtpiutangs.getDatalist()[0];
-		alPiutangs = piutangs.getPiutangs();
+//		alPiutangs = piutangs.getPiutangs();
 		
-//		for (int i = 0; i < piutangs.getPiutangs().size(); i++) {
-//			if (getMensaapplication().getCurrentCustomer().getCustomerid()
-//					.equals(piutangs.getPiutangs().get(i).getCustomerid())) {
-//				alPiutangs.add(piutangs.getPiutangs().get(i));
-//			}
-//		}
+		for (int i = 0; i < piutangs.getPiutangs().size(); i++) {
+			if (getMensaapplication().getCurrentCustomer().getCustomerid()
+					.equals(piutangs.getPiutangs().get(i).getCustomerid())) {
+				alPiutangs.add(piutangs.getPiutangs().get(i));
+			}
+		}
 	}
 
 	public static class PiutangList extends ListFragment {
