@@ -98,7 +98,7 @@ public class DataLoader {
 					try {
 						jsonobj = new JSONObject(json.toString());
 						JSONArray jsonpiutangs = jsonobj
-								.getJSONArray("piutang");
+								.getJSONArray("piutang_callplan");
 						Piutang piutang;
 						BaseDataListObj piutangs = (BaseDataListObj) new Piutangs();
 						for (int j = 0; j < jsonpiutangs.length(); j++) {

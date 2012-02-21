@@ -11,6 +11,7 @@ package com.mensa.salesdroid;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -38,8 +39,18 @@ public class LoginActivity extends Activity {
 						+ etUsername.getText().toString()
 						+ "&pwd="
 						+ etPassword.getText().toString();
+				Log.d("mensa", "Login request  : "+request);
 				String response = http.executeHttpPost(request, "");
-				if ((response.equals("-1"))||(response.equals("null"))) {
+				Log.d("mensa", "Login response :"+response);
+				if ((response.equals("null"))||(response.equals(""))){
+					Toast toast = Toast.makeText(LoginActivity.this,
+							"Can't connect to webservices, check your internet connection..",
+							Toast.LENGTH_SHORT);
+					toast.show();
+					return;
+				}
+				
+				if (response.equals("-1")) {
 					Toast toast = Toast.makeText(LoginActivity.this,
 							"Wrong username and/or password",
 							Toast.LENGTH_SHORT);
