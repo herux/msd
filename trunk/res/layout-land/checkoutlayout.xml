@@ -6,22 +6,50 @@
     <RelativeLayout
         android:id="@+id/rlsalesorder"
         android:layout_width="wrap_content"
-        android:layout_height="50dip" >
+        android:layout_height="70dip" >
 
         <TextView
             android:id="@+id/tvordernum"
             android:layout_width="wrap_content"
-            android:layout_height="30dip"
-            android:text="Order Num." />
+            android:layout_height="wrap_content"
+            android:text="Order Num: " />
 
         <TextView
             android:id="@+id/tvordernum_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tvordernum"
+            android:layout_toRightOf="@+id/tvordernum"
             android:text="value" />
-
+        
+        <TextView
+            android:id="@+id/tvorderdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvordernum"
+            android:text="Order Date: " />
+        
+        <TextView
+            android:id="@+id/tvorderdate_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tvorderdate"
+            android:layout_below="@+id/tvordernum_value"
+            android:text="value" />
+        
+        <TextView
+            android:id="@+id/tvsalesid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvorderdate"
+            android:text="Salesman: " />
+        
+        <TextView
+            android:id="@+id/tvsalesid_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tvsalesid"
+            android:layout_below="@+id/tvorderdate_value"
+            android:text="value" />
     </RelativeLayout>
 
     <LinearLayout
@@ -41,7 +69,7 @@
             android:text="Product Name" />
 
         <TextView
-            android:id="@+id/TextView01"
+            android:id="@+id/tvprice"
             android:layout_width="100dip"
             android:layout_height="wrap_content"
             android:background="@drawable/columnhead"
@@ -68,7 +96,7 @@
     <FrameLayout
         android:id="@+id/flrow"
         android:layout_width="match_parent"
-        android:layout_height="140dip"
+        android:layout_height="120dip"
         android:layout_below="@+id/llcaptionhead" >
 
         <fragment
@@ -81,15 +109,16 @@
     <LinearLayout
         android:id="@+id/llfooter"
         android:layout_width="fill_parent"
-        android:layout_height="30dip"
+        android:layout_height="60dip"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/flrow"
         android:orientation="horizontal" >
 
-        <TextView
-            android:id="@+id/tvname"
+        <Button
+            android:id="@+id/btnsubmit"
             android:layout_width="200dip"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Submit Order" />
 
         <TextView
             android:id="@+id/tvprice"
@@ -104,44 +133,11 @@
 
         <TextView
             android:id="@+id/tvgrandtotal"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/columnhead"
-            android:gravity="center_vertical|center_horizontal"
+            android:gravity="center_vertical|right"
             android:text="Total" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvorderdate"
-        android:layout_width="wrap_content"
-        android:layout_height="30dip"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="Order Date." />
-
-    <TextView
-        android:id="@+id/tvordersalesid"
-        android:layout_width="wrap_content"
-        android:layout_height="30dip"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="Salesman." />
-
-    <TextView
-        android:id="@+id/tvorderdate_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvorderdate"
-        android:layout_centerHorizontal="true"
-        android:text="value" />
-
-    <TextView
-        android:id="@+id/tvsalesid_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/tvordersalesid"
-        android:text="value" />
-
 </RelativeLayout>
