@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/columnhead"
-            android:gravity="center_vertical|center_horizontal"
+            android:gravity="right|center_horizontal"
             android:text="Total" />
     </LinearLayout>
 </RelativeLayout>
