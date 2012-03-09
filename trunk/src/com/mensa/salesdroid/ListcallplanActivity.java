@@ -36,7 +36,6 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 	double LONGITUDE = -122.083;
 
 	static ArrayList<Customer> customers;
-	static ArrayList<Customer> customersforsearch;
 	static CustomersAdapter adapter;
 	static MensaApplication application;
 
@@ -57,15 +56,11 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 		actionbar.setSubtitle("Sales Call Plan");
 
 		customers = new ArrayList<Customer>();
-		customersforsearch = new ArrayList<Customer>();
 		int[] datatypes = new int[1];
 		datatypes[0] = DataLoader.dlCUSTOMERS;
 		DataLoader dtcustomers = new DataLoader(datatypes);
 		Customers custs = (Customers) dtcustomers.getDatalist()[0];
-
-		customers.clear();
-		customersforsearch = custs.getCustomers();
-		customers = customersforsearch;
+		customers = custs.getCustomers();
 	}
 
 	public static class CustomersFragment extends ListFragment {
@@ -77,7 +72,7 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 			super.onActivityCreated(savedInstanceState);
 
 			adapter = new CustomersAdapter(getActivity(),
-					R.layout.listcallplan, customers, customersforsearch);
+					R.layout.listcallplan, customers);
 			setListAdapter(adapter);
 
 			View detailsFrame = getActivity().findViewById(R.id.details);
@@ -185,15 +180,15 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 			View v = inflater.inflate(R.layout.callplandetail, null);
 			TextView customerdesc = (TextView) v.findViewById(R.id.tvCustomer);
 			customerdesc.setText(customers.get(getShownIndex())
-					.getCustomername());
+					.getNAMA());
 			TextView addresskirim = (TextView) v
 					.findViewById(R.id.tvAddressKirim);
 			addresskirim.setText(customers.get(getShownIndex())
-					.getAlamatkirim());
+					.getNAMA());
 			TextView addresstagih = (TextView) v
 					.findViewById(R.id.tvAddressTagih);
 			addresstagih.setText(customers.get(getShownIndex())
-					.getAlamattagihan());
+					.getALAMAT_KIRIM());
 			Button btnCheckin = (Button) v.findViewById(R.id.btnCheckin);
 			btnCheckin.setOnClickListener(new OnClickListener() {
 
@@ -202,7 +197,7 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 					if (application.getCurrentCustomer() == null) {
 						application.setCurrentCustomer(customers
 								.get(getShownIndex()));
-						Log.d("mensa", "Checkin:"+application.getCurrentCustomer().getCustomerid()+":"+application.getCurrentCustomer().getCustomername());
+						Log.d("mensa", "Checkin:"+application.getCurrentCustomer().getCUSTOMER_CODE()+":"+application.getCurrentCustomer().getNAMA());
 						Intent intent = new Intent();
 						intent.setClass(getActivity(), CustomerMenuActivity.class);
 						startActivity(intent);

@@ -32,7 +32,7 @@ public class InfoReturListActivity extends BaseFragmentActivity {
 		lblsales.setText(application.getReturns().getSalesid());
 		
 		final ActionBar ab = getSupportActionBar();
-		ab.setSubtitle("Returns List "+application.getCurrentCustomer().getCustomername());
+		ab.setSubtitle("Returns List "+application.getCurrentCustomer().getNAMA());
 		
 		FragmentManager fm = getSupportFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();

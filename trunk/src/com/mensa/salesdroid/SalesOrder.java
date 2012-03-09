@@ -16,10 +16,33 @@ import org.json.JSONObject;
 
 public class SalesOrder {
 
-	public SalesOrder(String ordernumber, String salesmanid, String order_date) {
+	public SalesOrder(String ordernumber, String salesmanid, String order_date,
+			String customerid, String coordinate) {
 		this.ordernumber = ordernumber;
 		this.salesmanid = salesmanid;
 		this.dates = order_date;
+		this.customerid = customerid;
+		this.coordinate = coordinate;
+	}
+	
+	private String coordinate;
+	
+	public String getCoordinate() {
+		return coordinate;
+	}
+	
+	public void setCoordinate(String coordinate) {
+		this.coordinate = coordinate;
+	}
+
+	private String customerid;
+
+	public String getCustomerid() {
+		return customerid;
+	}
+
+	public void setCustomerid(String customerid) {
+		this.customerid = customerid;
 	}
 
 	private String ordernumber;
@@ -73,26 +96,32 @@ public class SalesOrder {
 	}
 
 	public String saveToJSON() {
+		JSONObject orderhead = new JSONObject();
 		JSONObject Sales = new JSONObject();
 		JSONArray Items = new JSONArray();
 		try {
 			for (int i = 0; i < salesitems.size(); i++) {
 				JSONObject item = new JSONObject();
-				item.put("PART_NO", salesitems.get(i).getProduct().getPART_NO());
-				item.put("QTY", salesitems.get(i).getQty());
-				item.put("PRICE", salesitems.get(i).getHarga());
+				item.put("productid", salesitems.get(i).getProduct().getPART_NO());
+				item.put("qty", salesitems.get(i).getQty());
+				item.put("subtotal", salesitems.get(i).getHarga()*salesitems.get(i).getQty());
 				Items.put(i, item);
 			}
 
 			Sales.put("ordernumber", getOrdernumber());
-			Sales.put("salesmanid", getSalesmanid());
-			Sales.put("orderdate", getDates());
-			Sales.put("items", Items);
+			Sales.put("datetimecheckin", getDates());
+			Sales.put("salesid", getSalesmanid());
+			Sales.put("customerid", getCustomerid());
+			Sales.put("coordinate", getCoordinate());
+			Sales.put("total", getTotal());
+			Sales.put("order_type", "PDA");
+			Sales.put("orderdetail", Items);
+			
+			orderhead.put("orderhead", Sales);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
-
 }

@@ -104,6 +104,7 @@ public class MainmenuActivity extends Activity {
 			progressDialog.setMessage(MensaApplication.dataFILENAMES[0]);
 			progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 			progressDialog.setMax(MensaApplication.dataFILENAMES.length);
+//			progressDialog.setContentView(R.layout.syncprogressdialoglayout);
 		}
 		}
 		return progressDialog;
