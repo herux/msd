@@ -4,7 +4,6 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,7 @@ public class PiutangsAdapter extends ArrayAdapter<Piutang> {
 		TextView tvamount = (TextView) row.findViewById(R.id.tvinvamount);
 		NumberFormat nf = NumberFormat.getInstance();
 		String harga = nf.format(getItem(position).getInvoice_amount());
-		tvamount.setText("Rp. "+harga);
+		tvamount.setText(harga);
 		return row;
 	}
 

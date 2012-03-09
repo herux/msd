@@ -13,6 +13,9 @@ import java.text.NumberFormat;
 import android.os.Bundle;
 import android.support.v4.app.ActionBar;
 import android.support.v4.app.ListFragment;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class CheckoutOrderActivity extends BaseFragmentActivity {
@@ -34,7 +37,17 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 		tvorderdate.setText(application.getSalesorder().getDates());
 		TextView tvsalesid = (TextView) findViewById(R.id.tvsalesid_value);
 		tvsalesid.setText(application.getSalesorder().getSalesmanid());
-
+		Button btnsubmit = (Button) findViewById(R.id.btnsubmit);
+		btnsubmit.getBackground().setAlpha(200);
+		btnsubmit.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				application.getSalesorder().saveToJSON();
+			}
+		});
+		
+		
 		final ActionBar ab = getSupportActionBar();
 		ab.setSubtitle("Checkout");
 	}

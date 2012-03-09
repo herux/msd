@@ -8,122 +8,180 @@
 
 package com.mensa.salesdroid;
 
-//"master_customer":[
 //{
-//"CUSTOMER_ID":"BDG1",
-//"NAMA":"PT. MBS - Bandung",
-//"CGROUP":"INT",
-//"CUSTOMER_CHAIN":null,
-//"NAMA_KIRIM":"PT. MBS - Bandung",
-//"NAMA_TAGIHAN":"PT. MBS - Bandung",
-//"ALAMAT_KIRIM":"JL. IBRAHIM ADJIE NO.358BANDUNG 40284",
-//"ALAMAT_TAGIHAN":"JL. IBRAHIM ADJIE NO.358BANDUNG 40284",
-//"KOORDINAT":null
-//},
+//	"CB_NOMOR":"P2011FR07005",
+//	"CABANG":"JKT2",
+//	"PERSON_ID":"JKT2-FR-RUB",
+//	"RAYON":"RS-FR-07",
+//	"PERIODE":"2012-02",
+//	"DIVISI":"1",
+//	"CUSTOMER_CODE":"JKT2-0182",
+//	"NAMA":"HERMINA, RSIA",
+//	"KLAS":"C",
+//	"VALUE_GUIDE":"90357888.25",
+//	"ALAMAT_KIRIM":"JL. JATINEGARA BARAT NO.126 KAMPUNG MELAYU - JATINEGARA JAKARTA TIMUR",
+//	"KOTA":"JAKARTA TIMUR",
+//	"CREDIT_LIMIT":"1169144000",
+//	"PIUTANG":"267506835"
+//	}
 
 public class Customer {
-	private String customerid, 
-		customername, 
-		cgroup, 
-		customerchain,
-		namakirim,
-		namatagihan,
-		alamatkirim,
-		alamattagihan,
-		koordinat;
-	
-	public Customer(String customerid, 
-			String customername, 
-			String cgroup, 
-			String customerchain,
-			String namakirim,
-			String namatagihan,
-			String alamatkirim,
-			String alamattagihan,
-			String koordinat) {
-		
-		this.customerid = customerid; 
-		this.customername = customername; 
-		this.cgroup = cgroup; 
-		this.customerchain = customerchain;
-		this.namakirim = namakirim;
-		this.namatagihan = namatagihan;
-		this.alamatkirim = alamatkirim;
-		this.alamattagihan = alamattagihan;
-		this.koordinat = koordinat;
+	private String CB_NOMOR;
+	private String CABANG;
+	private String PERSON_ID;
+	private String RAYON;
+	private String PERIODE;
+	private String DIVISI;
+	private String CUSTOMER_CODE;
+	private String NAMA;
+	private String KLAS;
+	private double VALUE_GUIDE;
+	private String ALAMAT_KIRIM;
+	private String KOTA;
+	private double CREDIT_LIMIT;
+	private double PIUTANG;
+	private String COORDINATE;
+
+	public Customer(String CB_NOMOR, String CABANG, String PERSON_ID,
+			String RAYON, String PERIODE, String DIVISI, String CUSTOMER_CODE,
+			String NAMA, String KLAS, double VALUE_GUIDE, String ALAMAT_KIRIM,
+			String KOTA, double CREDIT_LIMIT, double PIUTANG, String COORDINATE) {
+
+		this.setCB_NOMOR(CB_NOMOR);
+		this.setCABANG(CABANG);
+		this.setPERSON_ID(PERSON_ID);
+		this.setRAYON(RAYON);
+		this.setPERIODE(PERIODE);
+		this.setDIVISI(DIVISI);
+		this.setCUSTOMER_CODE(CUSTOMER_CODE);
+		this.setNAMA(NAMA);
+		this.setKLAS(KLAS);
+		this.setVALUE_GUIDE(VALUE_GUIDE);
+		this.setALAMAT_KIRIM(ALAMAT_KIRIM);
+		this.setKOTA(KOTA);
+		this.setCREDIT_LIMIT(CREDIT_LIMIT);
+		this.setPIUTANG(PIUTANG);
+		this.setCOORDINATE(COORDINATE);
 	}
 
-	public String getCustomerid() {
-		return customerid;
+	public String getCB_NOMOR() {
+		return CB_NOMOR;
 	}
 
-	public void setCustomerid(String customerid) {
-		this.customerid = customerid;
+	public void setCB_NOMOR(String cB_NOMOR) {
+		CB_NOMOR = cB_NOMOR;
 	}
 
-	public String getCustomername() {
-		return customername;
+	public String getCABANG() {
+		return CABANG;
 	}
 
-	public void setCustomername(String customername) {
-		this.customername = customername;
+	public void setCABANG(String cABANG) {
+		CABANG = cABANG;
 	}
 
-	public String getCgroup() {
-		return cgroup;
+	public double getVALUE_GUIDE() {
+		return VALUE_GUIDE;
 	}
 
-	public void setCgroup(String cgroup) {
-		this.cgroup = cgroup;
+	public void setVALUE_GUIDE(double vALUE_GUIDE) {
+		VALUE_GUIDE = vALUE_GUIDE;
 	}
 
-	public String getCustomerchain() {
-		return customerchain;
+	public String getPERSON_ID() {
+		return PERSON_ID;
 	}
 
-	public void setCustomerchain(String customerchain) {
-		this.customerchain = customerchain;
+	public void setPERSON_ID(String pERSON_ID) {
+		PERSON_ID = pERSON_ID;
 	}
 
-	public String getNamakirim() {
-		return namakirim;
+	public String getRAYON() {
+		return RAYON;
 	}
 
-	public void setNamakirim(String namakirim) {
-		this.namakirim = namakirim;
+	public void setRAYON(String rAYON) {
+		RAYON = rAYON;
 	}
 
-	public String getKoordinat() {
-		return koordinat;
+	public String getPERIODE() {
+		return PERIODE;
 	}
 
-	public void setKoordinat(String koordinat) {
-		this.koordinat = koordinat;
+	public void setPERIODE(String pERIODE) {
+		PERIODE = pERIODE;
 	}
 
-	public String getAlamattagihan() {
-		return alamattagihan;
+	public String getDIVISI() {
+		return DIVISI;
 	}
 
-	public void setAlamattagihan(String alamattagihan) {
-		this.alamattagihan = alamattagihan;
+	public void setDIVISI(String dIVISI) {
+		DIVISI = dIVISI;
 	}
-	
-	public String getAlamatkirim() {
-		return alamatkirim;
+
+	public String getCUSTOMER_CODE() {
+		return CUSTOMER_CODE;
 	}
-	
-	public void setAlamatkirim(String alamatkirim) {
-		this.alamatkirim = alamatkirim;
+
+	public void setCUSTOMER_CODE(String cUSTOMER_CODE) {
+		CUSTOMER_CODE = cUSTOMER_CODE;
 	}
-	
-	public String getNamatagihan() {
-		return namatagihan;
+
+	public String getNAMA() {
+		return NAMA;
 	}
-	
-	public void setNamatagihan(String namatagihan) {
-		this.namatagihan = namatagihan;
+
+	public void setNAMA(String nAMA) {
+		NAMA = nAMA;
 	}
-	
-	
+
+	public String getKLAS() {
+		return KLAS;
+	}
+
+	public void setKLAS(String kLAS) {
+		KLAS = kLAS;
+	}
+
+	public String getALAMAT_KIRIM() {
+		return ALAMAT_KIRIM;
+	}
+
+	public void setALAMAT_KIRIM(String aLAMAT_KIRIM) {
+		ALAMAT_KIRIM = aLAMAT_KIRIM;
+	}
+
+	public String getKOTA() {
+		return KOTA;
+	}
+
+	public void setKOTA(String kOTA) {
+		KOTA = kOTA;
+	}
+
+	public double getCREDIT_LIMIT() {
+		return CREDIT_LIMIT;
+	}
+
+	public void setCREDIT_LIMIT(double cREDIT_LIMIT) {
+		CREDIT_LIMIT = cREDIT_LIMIT;
+	}
+
+	public double getPIUTANG() {
+		return PIUTANG;
+	}
+
+	public void setPIUTANG(double pIUTANG) {
+		PIUTANG = pIUTANG;
+	}
+
+	public String getCOORDINATE() {
+		return COORDINATE;
+	}
+
+	public void setCOORDINATE(String cOORDINATE) {
+		COORDINATE = cOORDINATE;
+	}
+
 }

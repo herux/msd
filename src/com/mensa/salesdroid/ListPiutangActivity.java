@@ -1,10 +1,13 @@
 package com.mensa.salesdroid;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.support.v4.app.ActionBar;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
+import android.widget.TextView;
 
 public class ListPiutangActivity extends BaseFragmentActivity {
 	static PiutangsAdapter adapter;
@@ -17,20 +20,28 @@ public class ListPiutangActivity extends BaseFragmentActivity {
 
 		final ActionBar ab = getSupportActionBar();
 		ab.setSubtitle("List Piutang "
-				+ getMensaapplication().getCurrentCustomer().getCustomername());
+				+ getMensaapplication().getCurrentCustomer().getNAMA());
 
 		int[] datatypes = new int[1];
 		datatypes[0] = DataLoader.dlPIUTANG;
 		DataLoader dtpiutangs = new DataLoader(datatypes);
 		Piutangs piutangs = (Piutangs) dtpiutangs.getDatalist()[0];
-//		alPiutangs = piutangs.getPiutangs();
-		
+
+		alPiutangs = new ArrayList<Piutang>();
+		double grandtotal = 0;
 		for (int i = 0; i < piutangs.getPiutangs().size(); i++) {
-			if (getMensaapplication().getCurrentCustomer().getCustomerid()
-					.equals(piutangs.getPiutangs().get(i).getCustomerid())) {
-				alPiutangs.add(piutangs.getPiutangs().get(i));
+			Customer customer = getMensaapplication().getCurrentCustomer();
+			Piutang piutang = piutangs.getPiutangs().get(i); 
+			if (customer.getCUSTOMER_CODE().equals(piutang.getCustomerid())){
+				alPiutangs.add(piutang);
+				grandtotal = grandtotal + piutang.getInvoice_amount(); 
 			}
 		}
+		
+		NumberFormat nf = NumberFormat.getInstance();
+		String grandtotalStr = nf.format(grandtotal);
+		TextView tvGrandTotal = (TextView) findViewById(R.id.tvgrandtotal);
+		tvGrandTotal.setText(grandtotalStr);
 	}
 
 	public static class PiutangList extends ListFragment {

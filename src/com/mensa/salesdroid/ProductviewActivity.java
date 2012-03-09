@@ -174,7 +174,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			adapter = new ProductsAdapter(getActivity(), R.layout.productlist,
 					application.getProducts());
 			adapter.setOnListItemClickListener(new OnListItemClickListener() {
-				
+
 				@Override
 				public void OnListItemClick(View view, int position) {
 					showDetails(position);
@@ -202,13 +202,12 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			super.onSaveInstanceState(outState);
 			outState.putInt("curChoice", mCurCheckPosition);
 		}
-		
-		
-//		@Override
-//		public void onListItemClick(ListView l, View v, int position, long id) {
-//			showDetails(position);
-//		}
-			
+
+		// @Override
+		// public void onListItemClick(ListView l, View v, int position, long
+		// id) {
+		// showDetails(position);
+		// }
 
 		void showDetails(int index) {
 			mCurCheckPosition = index;
@@ -267,6 +266,10 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			tvqty.setText("1");
 
 			Button btnaddbasket = (Button) v.findViewById(R.id.btnAdd);
+			if (application.getCurrentCustomer() == null) {
+				btnaddbasket.setEnabled(false);
+				tvqty.setEnabled(false);
+			}
 			btnaddbasket.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -291,10 +294,16 @@ public class ProductviewActivity extends BaseFragmentActivity {
 
 					SalesOrder so = application.getSalesorder();
 					if (so == null) {
-						so = new SalesOrder("", "", "");
+						so = new SalesOrder("", "", "", "", "");
 						so.setDates(application.getDateTimeStr());
-						so.setOrdernumber("OrderNumber");
+						so.setOrdernumber("SOM."
+								+ application.getDateTimeInt()
+								+ "."
+								+ application.getCurrentCustomer()
+										.getCUSTOMER_CODE());
 						so.setSalesmanid(application.getSalesid());
+						so.setCustomerid(application.getCurrentCustomer()
+								.getCUSTOMER_CODE());
 					}
 					so.setTotal(total);
 					application.setSalesorder(so);

@@ -25,7 +25,7 @@ public class CustomerMenuActivity extends BaseFragmentActivity {
 
 		final ActionBar ab = getSupportActionBar();
 		ab.setSubtitle("Customer menu ("
-				+ getMensaapplication().getCurrentCustomer().getCustomername()
+				+ getMensaapplication().getCurrentCustomer().getNAMA()
 				+ ") - Sales: "+getMensaapplication().getSalesid());
 
 		Button btninforeturn = (Button) findViewById(R.id.btn_inforeturn);
