@@ -8,11 +8,15 @@
 
 package com.mensa.salesdroid;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.os.Environment;
+import android.util.Log;
 
 public class SalesOrder {
 
@@ -107,7 +111,6 @@ public class SalesOrder {
 				item.put("subtotal", salesitems.get(i).getHarga()*salesitems.get(i).getQty());
 				Items.put(i, item);
 			}
-
 			Sales.put("ordernumber", getOrdernumber());
 			Sales.put("datetimecheckin", getDates());
 			Sales.put("salesid", getSalesmanid());
@@ -118,10 +121,14 @@ public class SalesOrder {
 			Sales.put("orderdetail", Items);
 			
 			orderhead.put("orderhead", Sales);
+			File root = Environment.getExternalStorageDirectory();
+			String folder = MensaApplication.APP_DATAFOLDER + "/";
+			File file = new File(root, folder + MensaApplication.SALESORDERFILENAME + getOrdernumber());
+			MensaApplication.SaveStringToFile(file, orderhead.toString());
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return orderhead.toString();
 	}
 }

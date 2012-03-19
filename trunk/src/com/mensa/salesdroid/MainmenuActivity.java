@@ -9,8 +9,10 @@
 package com.mensa.salesdroid;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,12 +20,15 @@ import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.mensa.salesdroid.DataSync.OnDataSyncListener;
 
 public class MainmenuActivity extends Activity {
 	private static DataSync sync;
 	static ProgressDialog progressDialog;
+	static final int SYNCDIALOG = 0;
+	static final int CHOOSESYNCDIALOG = 1;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -58,17 +63,7 @@ public class MainmenuActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				showDialog(0);
-				MensaApplication app = (MensaApplication) getApplication();
-				sync = new DataSync(handler, app);
-				sync.setOnDataSyncListener(new OnDataSyncListener() {
-
-					@Override
-					public void OnDataSync(String dataname, int count, int max) {
-						progressDialog.setProgress(count);
-					}
-				});
-				sync.start();
+				showDialog(CHOOSESYNCDIALOG);
 			}
 		});
 		Button btnInfopromo = (Button) findViewById(R.id.btn_infopromo);
@@ -97,17 +92,45 @@ public class MainmenuActivity extends Activity {
 
 	@Override
 	protected Dialog onCreateDialog(int id) {
+		Dialog ret = null;
 		switch (id) {
-		case 0: {
+		case SYNCDIALOG: {
 			progressDialog = new ProgressDialog(MainmenuActivity.this);
 			progressDialog.setTitle("Data Synchronization");
-			progressDialog.setMessage(MensaApplication.dataFILENAMES[0]);
+			progressDialog.setMessage(MensaApplication.FULLSYNC[0]);
 			progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-			progressDialog.setMax(MensaApplication.dataFILENAMES.length);
-//			progressDialog.setContentView(R.layout.syncprogressdialoglayout);
+			progressDialog.setMax(MensaApplication.FULLSYNC.length);
+			ret = progressDialog;
+			break;
+		}
+		case CHOOSESYNCDIALOG: {
+			final CharSequence[] items = {"Full Sync", "Fast Sync", "Resend Pending"};
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("select the synchronization method");
+			builder.setItems(items, new DialogInterface.OnClickListener() {
+			    public void onClick(DialogInterface dialog, int item) {
+			        Toast.makeText(getApplicationContext(), items[item], Toast.LENGTH_SHORT).show();
+					showDialog(SYNCDIALOG);
+					MensaApplication app = (MensaApplication) getApplication();
+					sync = new DataSync(handler, app);
+					sync.setOnDataSyncListener(new OnDataSyncListener() {
+	
+						@Override
+						public void OnDataSync(String dataname, int count, int max) {
+							progressDialog.setProgress(count);
+						}
+					});
+					sync.start();
+
+			    }
+			});
+			AlertDialog alert = builder.create();
+			ret = alert;
+			break;
 		}
 		}
-		return progressDialog;
+		return ret;
 	}
 
 	final static Handler handler = new Handler() {

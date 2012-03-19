@@ -61,7 +61,7 @@ public class CustomerMenuActivity extends BaseFragmentActivity {
 					Toast toast = Toast
 							.makeText(
 									CustomerMenuActivity.this,
-									"There has not been selected product, please go to the menu's 'capture order' to choose",
+									"No product selected",
 									Toast.LENGTH_SHORT);
 					toast.show();
 				} else {

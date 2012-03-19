@@ -8,13 +8,18 @@
 
 package com.mensa.salesdroid;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.app.Application;
 import android.os.Environment;
-import android.util.Log;
 
 public class MensaApplication extends Application {
 	static final String CUSTOMERSFILENAME = "customers.mbs";
@@ -29,12 +34,19 @@ public class MensaApplication extends Application {
 	static final String PRODUCTSPAGEFILENAME = "products_";
 	static final String SALESMANSPAGEFILENAME = "salesmans_";
 	static final String SALESORDERFILENAME = "salesorder_";
-	
+
 	static final String APP_DATAFOLDER = "mensadata";
 
-	static String[] dataFILENAMES = { PRODUCTSFILENAME, CUSTOMERSFILENAME,
+	static String[] FULLSYNC = { PRODUCTSFILENAME, CUSTOMERSFILENAME,
 			SALESMANSFILENAME, PRODUCTSFOCUSFILENAME, PIUTANGFILENAME,
-			ORDERTYPE, RETURNCAUSE };
+			ORDERTYPE, RETURNCAUSE, SALESORDERFILENAME, PRODUCTSPROMOFILENAME };
+
+	static String[] FASTSYNC = { PRODUCTSFOCUSFILENAME, CUSTOMERSFILENAME,
+			PIUTANGFILENAME };
+
+	static String[] RPOSYNC = {
+
+	};
 
 	static final String mbs_url = "http://simfoni.mbs.co.id/services.php?";
 	static final String[] paths = {
@@ -44,9 +56,12 @@ public class MensaApplication extends Application {
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9mb2N1cw==&uid=",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cGl1dGFuZ19jYWxscGxhbg==&uid=",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=Y3VzdF9vcmRlcl90eXBl",
-			"key=czRMZTU0dVRvTWF0MTBu&tab=cmV0dXJuX2NhdXNl" };
+			"key=czRMZTU0dVRvTWF0MTBu&tab=cmV0dXJuX2NhdXNl",
+			"key=czRMZTU0dVRvTWF0MTBu&tab=cG9zdF9vcmRlcg==", // post_order
+			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9wcm9tbw==&uid=" };
 
 	private ArrayList<Product> products;
+	private ArrayList<Product> productsfocus;
 	private SalesOrder salesorder;
 	private ArrayList<SalesItem> salesitems;
 	private Returns returns;
@@ -60,13 +75,48 @@ public class MensaApplication extends Application {
 		super.onCreate();
 	}
 
-	public String getDataFolder() {
+	static public String getFileContent(FileInputStream filename) {
+		InputStreamReader inputreader = new InputStreamReader(filename);
+		BufferedReader buffreader = new BufferedReader(inputreader);
+		StringBuilder json = new StringBuilder();
+		String line;
+		try {
+			while ((line = buffreader.readLine()) != null) {
+				json.append(line);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "";
+		}
+		return json.toString();
+	}
+
+	static public void SaveStringToFile(File file, String string) {
+		try {
+			FileWriter filewriter = new FileWriter(file);
+			BufferedWriter out = new BufferedWriter(filewriter);
+			out.write(string);
+			out.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	static public String getDataFolder() {
 		File root = Environment.getExternalStorageDirectory();
 		String folder = MensaApplication.APP_DATAFOLDER + "/";
 		return root + "/" + folder;
 	}
 
-	public String getDateTimeStr() {
+	static public File[] getListFiles() {
+		String datafolder = getDataFolder();
+		File dir = new File(datafolder);
+		File[] filelist = dir.listFiles();
+		return filelist;
+	}
+
+	static public String getDateTimeStr() {
 		Calendar c = Calendar.getInstance();
 		int day = c.get(Calendar.DAY_OF_MONTH);
 		int month = c.get(Calendar.MONTH);
@@ -79,7 +129,17 @@ public class MensaApplication extends Application {
 				+ Integer.toString(minute) + ":" + Integer.toString(second);
 	}
 
-	public String getDateTimeInt() {
+	public static long daysBetween(Calendar startDate, Calendar endDate) {
+		Calendar date = (Calendar) startDate.clone();
+		long daysBetween = 0;
+		while (date.before(endDate)) {
+			date.add(Calendar.DAY_OF_MONTH, 1);
+			daysBetween++;
+		}
+		return daysBetween;
+	}
+	
+	static public String getDateTimeInt() {
 		Calendar c = Calendar.getInstance();
 		int day = c.get(Calendar.DAY_OF_MONTH);
 		int month = c.get(Calendar.MONTH);
@@ -90,8 +150,18 @@ public class MensaApplication extends Application {
 
 		String resStr = Integer.toString(day) + Integer.toString(month)
 				+ Integer.toString(year) + Integer.toString(hour)
-				+ Integer.toString(minute) + 
-				Integer.toString(second);
+				+ Integer.toString(minute) + Integer.toString(second);
+		return resStr;
+	}
+
+	static public String getTimeInt() {
+		Calendar c = Calendar.getInstance();
+		int hour = c.get(Calendar.HOUR);
+		int minute = c.get(Calendar.MINUTE);
+		int second = c.get(Calendar.SECOND);
+
+		String resStr = Integer.toString(hour) + Integer.toString(minute)
+				+ Integer.toString(second);
 		return resStr;
 	}
 
@@ -176,6 +246,14 @@ public class MensaApplication extends Application {
 
 	public void setReturnitems(ArrayList<ReturnItem> returnitems) {
 		this.returnitems = returnitems;
+	}
+
+	public ArrayList<Product> getProductsfocus() {
+		return productsfocus;
+	}
+
+	public void setProductsfocus(ArrayList<Product> productsfocus) {
+		this.productsfocus = productsfocus;
 	}
 
 }

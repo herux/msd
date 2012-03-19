@@ -13,6 +13,7 @@ public class Product {
 			LOT_BATCH_NO;
 	private float QTY_ONHAND, QTY_RESERVED;
 	private double PRICE;
+	private String fileSource;
 
 	public Product(String ACONTRACT, String ADIV, String APART_NO,
 			String ADESCRIPTION, String ALOCATION_NO, String ALOT_BATCH_NO,
@@ -98,6 +99,14 @@ public class Product {
 
 	public void setPRICE(double pRICE) {
 		PRICE = pRICE;
+	}
+
+	public String getFileSource() {
+		return fileSource;
+	}
+
+	public void setFileSource(String fileSource) {
+		this.fileSource = fileSource;
 	}
 
 }

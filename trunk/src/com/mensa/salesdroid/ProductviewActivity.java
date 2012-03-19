@@ -13,6 +13,8 @@ import java.util.Calendar;
 
 import com.mensa.salesdroid.ProductsAdapter.OnListItemClickListener;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -39,29 +41,29 @@ public class ProductviewActivity extends BaseFragmentActivity {
 	static ProductsThread productsThread;
 	static ProductsAdapter adapter;
 	static MensaApplication application;
+	static final int LOADDATADIALOG = 0;
+	static boolean loaded = false;
 
 	final static Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			int total = msg.arg1;
 			if (total >= 0) {
 				productsThread.setState(BaseThread.STATE_DONE);
-				application.addProduct(0, new Product("", "", "", "Search", "",
-						"", 0, 0, 0));
 				application.setProducts(productsThread.getProducts());
+				application.setProductsfocus(productsThread.getProductsfocus());
 
-				// get products focus, karena tab pertama adalah focus
-				// JSONObject productfocus = new JSONObject();
-				// productfocus
 				adapter.clear();
-				for (int i = 0; i < application.getProducts().size(); i++) {
-					adapter.add(application.getProducts().get(i));
+				for (int i = 0; i < application.getProductsfocus().size(); i++) {
+					adapter.add(application.getProductsfocus().get(i));
 				}
 				adapter.notifyDataSetChanged();
+				loaded = true;
 			}
 		}
 	};
 
 	private static void Reload() {
+		// showdialog
 		productsThread = new ProductsThread(handler);
 		productsThread.start();
 	}
@@ -90,7 +92,13 @@ public class ProductviewActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
-
+				if (loaded) {
+					adapter.clear();
+					for (int i = 0; i < application.getProductsfocus().size(); i++) {
+						adapter.add(application.getProductsfocus().get(i));
+					}
+					adapter.notifyDataSetChanged();
+				}
 			}
 
 			@Override
@@ -137,7 +145,6 @@ public class ProductviewActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
-				application.ProductsClear();
 				application.addProduct(0, new Product("", "", "", "Search", "",
 						"", 0, 0, 0));
 				adapter.clear();
@@ -156,6 +163,19 @@ public class ProductviewActivity extends BaseFragmentActivity {
 		actionbar.addTab(tabAll);
 		showTabsNav();
 		Reload();
+	}
+
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		Dialog dialog = null;
+		switch (id) {
+		case LOADDATADIALOG: {
+			dialog = ProgressDialog.show(ProductviewActivity.this, "",
+					"Loading data product. Please wait...", true);
+			break;
+		}
+		}
+		return dialog;
 	}
 
 	public static class ProductFragment extends ListFragment {
@@ -297,7 +317,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 						so = new SalesOrder("", "", "", "", "");
 						so.setDates(application.getDateTimeStr());
 						so.setOrdernumber("SOM."
-								+ application.getDateTimeInt()
+								+ application.getTimeInt()
 								+ "."
 								+ application.getCurrentCustomer()
 										.getCUSTOMER_CODE());

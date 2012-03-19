@@ -2,6 +2,7 @@ package com.mensa.salesdroid;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import net.londatiga.android.ActionItem;
 import net.londatiga.android.QuickAction;
