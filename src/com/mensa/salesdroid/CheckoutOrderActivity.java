@@ -8,15 +8,26 @@
 
 package com.mensa.salesdroid;
 
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+
+import org.apache.http.client.ClientProtocolException;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.ActionBar;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CheckoutOrderActivity extends BaseFragmentActivity {
 	static SalesItemsAdapter adapter;
@@ -40,14 +51,55 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 		Button btnsubmit = (Button) findViewById(R.id.btnsubmit);
 		btnsubmit.getBackground().setAlpha(200);
 		btnsubmit.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
-			public void onClick(View arg0) {
-				application.getSalesorder().saveToJSON();
+			public void onClick(View arg0){
+				application.getSalesorder().setSalesitems(
+						application.getSalesitems());
+				String input = Compression.encodeBase64(application
+						.getSalesorder().saveToJSON());
+				HttpClient httpc = new HttpClient();
+				try {
+					input = MensaApplication.mbs_url
+							+ MensaApplication.paths[7] + "&packet="
+							+ URLEncoder.encode(input, "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+					Toast toast = Toast.makeText(
+							CheckoutOrderActivity.this, "Transaction Failed, error: "+e.getMessage(),
+							Toast.LENGTH_LONG);
+					toast.show();
+				}
+				String response = httpc.executeHttpPost(input, "");
+				Log.d("mensa", "response= " + response);
+
+				try {
+					JSONObject statusObj = new JSONObject(response);
+					String status = statusObj.getString("status");
+					if (status.equals("OK")) {
+						Toast toast = Toast.makeText(
+								CheckoutOrderActivity.this, statusObj.getString("description"),
+								Toast.LENGTH_LONG);
+						toast.show();
+						// delete file disini
+						File root = Environment.getExternalStorageDirectory();
+						String folder = MensaApplication.APP_DATAFOLDER + "/";
+						File file = new File(root, folder + MensaApplication.SALESORDERFILENAME + application.getSalesorder().getOrdernumber());
+						file.delete();
+						application.setSalesorder(null);
+						application.setSalesitems(null);
+						finish();
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+					Toast toast = Toast.makeText(
+							CheckoutOrderActivity.this, "Transaction Failed, error: "+e.getMessage(),
+							Toast.LENGTH_LONG);
+					toast.show();
+				}
 			}
 		});
-		
-		
+
 		final ActionBar ab = getSupportActionBar();
 		ab.setSubtitle("Checkout");
 	}
