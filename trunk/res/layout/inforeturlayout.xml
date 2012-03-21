@@ -69,7 +69,26 @@
             android:layout_alignRight="@+id/etbarcode"
             android:layout_below="@id/etbarcode"
             android:width="100px" />
-
+        
+        <TextView
+            android:id="@+id/tvreturncause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etqty"
+            android:layout_toLeftOf="@+id/Spreturncause"
+            android:text="Reason Code"
+            android:width="100px" />
+        
+        <Spinner 
+            android:id="@+id/Spreturncause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawSelectorOnTop="true"
+            android:layout_below="@+id/etqty"
+            android:layout_alignLeft="@id/etqty"
+            android:layout_alignParentRight="true"
+            android:width="100px"/>
+        
         <TextView
             android:id="@+id/tvqty"
             android:layout_width="wrap_content"
@@ -79,33 +98,13 @@
             android:text="Qty"
             android:width="100px" />
 
-        <EditText
-            android:id="@+id/etreason"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/etqty"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/etqty"
-            android:width="100px"
-            android:height="80px" />
-
-        <TextView
-            android:id="@+id/tvreason"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/etqty"
-            android:layout_toLeftOf="@id/etreason"
-            android:text="Reason"
-            android:width="100px"
-             />
-
         <Button
             android:id="@+id/btnsave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/etreason"
-            android:text="Save" />
+            android:layout_below="@+id/Spreturncause"
+            android:text=" Save " />
 
     </RelativeLayout>
 
