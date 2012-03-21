@@ -8,7 +8,14 @@
 
 package com.mensa.salesdroid;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -27,9 +34,13 @@ import android.support.v4.view.MenuItem.OnMenuItemClickListener;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class InfoReturActivity extends BaseFragmentActivity {
@@ -40,12 +51,56 @@ public class InfoReturActivity extends BaseFragmentActivity {
 	static ImageView image;
 	Bitmap thumbnail;
 	Fragment fragment;
+	JSONArray rcCause;
+	int spinnerid = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.inforeturlayout);
 		application = getMensaapplication();
+		
+		//----load json returncause
+		FileInputStream jsonfile = null;
+		try {
+			jsonfile = new FileInputStream(
+					new File("/sdcard/"
+							+ MensaApplication.APP_DATAFOLDER + "/"
+							+ MensaApplication.FULLSYNC[6]));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			String rcContent = MensaApplication.getFileContent(jsonfile);
+			JSONObject rcObj = new JSONObject(rcContent);
+			rcCause = rcObj.getJSONArray("return_cause");
+			String[] returnCauses = new String[rcCause.length()];
+			for (int i = 0; i < rcCause.length(); i++) {
+				returnCauses[i] = rcCause.getJSONObject(i).getString("DESCRIPTION");
+			}
+			Spinner s = (Spinner) findViewById(R.id.Spreturncause);
+			s.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+					spinnerid = position;
+				}
+
+				@Override
+				public void onNothingSelected(AdapterView<?> parent) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
+			ArrayAdapter adapter = new ArrayAdapter(this,
+					android.R.layout.simple_spinner_dropdown_item, returnCauses);
+			s.setAdapter(adapter);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		//----
 
 		ActionBar actionbar = getSupportActionBar();
 		actionbar.setDisplayHomeAsUpEnabled(false);
@@ -94,10 +149,20 @@ public class InfoReturActivity extends BaseFragmentActivity {
 				}
 				application.setReturns(returns);
 				EditText etqty = (EditText) findViewById(R.id.etqty);
-				EditText etdesc = (EditText) findViewById(R.id.etreason);
-				ReturnItem ri = new ReturnItem("ProductCode?", Float
-						.parseFloat(etqty.getText().toString()), etdesc
-						.getText().toString(), thumbnail);
+				Spinner spinnerdesc = (Spinner) findViewById(R.id.Spreturncause);
+				ReturnItem ri = null;
+				try {
+					ri = new ReturnItem("ProductCode?", 
+							Float.parseFloat(etqty.getText().toString()), 
+							rcCause.getJSONObject(spinnerid).getString("RETURN_REASON"), 
+							thumbnail);
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				ris.add(ri);
 				application.setReturnitems(ris);
 
