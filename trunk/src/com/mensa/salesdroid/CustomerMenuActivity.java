@@ -84,6 +84,19 @@ public class CustomerMenuActivity extends BaseFragmentActivity {
 				startActivity(intent);
 			}
 		});
+		
+		Button btninfopromo= (Button) findViewById(R.id.btn_infopromo);
+		btninfopromo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent();
+				intent.setClass(CustomerMenuActivity.this,
+						ProductviewActivity.class);
+				intent.putExtra("opentab", 1);
+				startActivity(intent);
+			}
+		});
 
 	}
 
