@@ -93,7 +93,7 @@ public class CustomerMenuActivity extends BaseFragmentActivity {
 				Intent intent = new Intent();
 				intent.setClass(CustomerMenuActivity.this,
 						ProductviewActivity.class);
-				intent.putExtra("opentab", 1);
+				intent.putExtra("opentab", ProductviewActivity.PROMOTAB);
 				startActivity(intent);
 			}
 		});
