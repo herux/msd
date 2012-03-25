@@ -74,6 +74,7 @@ public class MainmenuActivity extends Activity {
 				Intent intent = new Intent();
 				intent.setClass(MainmenuActivity.this,
 						ProductviewActivity.class);
+				intent.putExtra("opentab", ProductviewActivity.PROMOTAB);
 				startActivity(intent);
 			}
 		});

@@ -229,7 +229,9 @@ public class ProductviewActivity extends BaseFragmentActivity {
 		}
 		}
 
-		Reload();
+		if (application.getProducts() == null) {
+			Reload();
+		}
 	}
 
 	public static class ProductFragment extends ListFragment {
