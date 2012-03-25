@@ -2,7 +2,6 @@ package com.mensa.salesdroid;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 
 import net.londatiga.android.ActionItem;
 import net.londatiga.android.QuickAction;
@@ -19,7 +18,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mensa.salesdroid.EditTextSearch.OnSearchFoundListener;
 
@@ -27,20 +25,21 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
 	Activity activity;
 	OnListItemClickListener onListItemClickListener;
 	final static int REFRESHITEM = 1;
+	private boolean withsearch;
 
 	public ProductsAdapter(Activity activity, int textViewResourceId,
 			ArrayList<Product> products) {
 		super(activity, textViewResourceId, products);
 		this.activity = activity;
 	}
-	
-	public void setOnListItemClickListener(OnListItemClickListener listener){
+
+	public void setOnListItemClickListener(OnListItemClickListener listener) {
 		onListItemClickListener = listener;
 	}
-	
-	public interface OnListItemClickListener{
+
+	public interface OnListItemClickListener {
 		public abstract void OnListItemClick(View view, int position);
-	} 
+	}
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
@@ -64,7 +63,7 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
 		labelharga.setText(sharga);
 		ImageView iv = (ImageView) row.findViewById(R.id.imageView1);
 
-		if (position == 0) {
+		if ((position == 0) && (isWithsearch())) {
 			rl.removeView(iv);
 			rl.removeView(label);
 			rl.removeView(labelharga);
@@ -123,18 +122,29 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
 				return false;
 			}
 		});
-		
+
 		row.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View view) {
-				if (onListItemClickListener!=null){
+				if (onListItemClickListener != null) {
 					onListItemClickListener.OnListItemClick(view, position);
 				}
 			}
 		});
 
 		return row;
+	}
+
+	public boolean isWithsearch() {
+		return withsearch;
+	}
+
+	public void setWithsearch(boolean withsearch) {
+		this.withsearch = withsearch;
+		if (withsearch) {
+			insert(new Product("", "", "", "Search", "", "", 0, 0, 0), 0);
+		}
 	}
 
 }

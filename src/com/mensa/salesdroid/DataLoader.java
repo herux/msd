@@ -8,12 +8,9 @@
 
 package com.mensa.salesdroid;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,9 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Application;
 import android.os.Environment;
-import android.text.format.DateFormat;
 import android.util.Log;
 
 public class DataLoader {
@@ -46,7 +41,6 @@ public class DataLoader {
 	public DataLoader(int... dlData) {
 		datalist = new BaseDataListObj[dlData.length];
 		this.dlData = dlData;
-		BaseDataListObj productfocus = (BaseDataListObj) new Products(); // productfocus
 		for (int i = 0; i < dlData.length; i++) {
 			try {
 				JSONObject jsonobj;
@@ -57,19 +51,6 @@ public class DataLoader {
 						String folder = MensaApplication.APP_DATAFOLDER + "/";
 						String datafolder = root + "/" + folder;
 
-						// -- product focus
-						FileInputStream jsonfile = new FileInputStream(
-								new File("/sdcard/"
-										+ MensaApplication.APP_DATAFOLDER + "/"
-										+ MensaApplication.FULLSYNC[3]));
-						String focus = MensaApplication
-								.getFileContent(jsonfile);
-						Log.d("mensa", "focus=" + focus);
-						JSONObject focusObj = new JSONObject(focus);
-						JSONArray jsonproductsfocus = focusObj
-								.getJSONArray("product_focus");
-						// -----------------
-
 						File dir = new File(datafolder);
 						File[] filelist = dir.listFiles();
 						for (int k = filelist.length - 1; k > 0; k--) {
@@ -77,7 +58,9 @@ public class DataLoader {
 									MensaApplication.PRODUCTSPAGEFILENAME)) {
 								FileInputStream productsfile = new FileInputStream(
 										filelist[k]);
-								Log.d("mensa", "file to read(i="+Integer.toString(i)+"): "+filelist[k].getName());
+								Log.d("mensa",
+										"file to read(i=" + Integer.toString(i)
+												+ "): " + filelist[k].getName());
 								String productSTR = MensaApplication
 										.getFileContent(productsfile);
 								jsonobj = new JSONObject(productSTR);
@@ -103,44 +86,6 @@ public class DataLoader {
 													.optDouble("HNA", 0));
 									product.setFileSource(filelist[k].getName());
 									((Products) products).addProduct(product);
-
-									// untuk productfocus
-									// -----------------------
-									for (int h = 0; h < focusObj.length(); h++) {
-										Calendar c = Calendar.getInstance();
-										Date d = c.getTime();
-										SimpleDateFormat formatter = new SimpleDateFormat(
-												"yyyy-MM-dd");
-										Date min = null;
-										Date max = null;
-										try {
-											min = formatter
-													.parse(jsonproductsfocus
-															.getJSONObject(h)
-															.getString(
-																	"START_DATE"));
-											max = formatter
-													.parse(jsonproductsfocus
-															.getJSONObject(h)
-															.getString(
-																	"END_DATE"));
-										} catch (ParseException e) {
-											e.printStackTrace();
-										}
-										if ((d.compareTo(min) >= 0 && d
-												.compareTo(max) <= 0)
-												&& (product.getPART_NO()
-														.equals(jsonproductsfocus
-																.getJSONObject(
-																		h)
-																.getString(
-																		"PART_NO")))) {
-											((Products) productfocus)
-													.addProduct(product);
-
-										}
-									}
-									// ----------------------------------------------------------------/
 								}
 								datalist[i] = products;
 							}
@@ -152,11 +97,147 @@ public class DataLoader {
 					break;
 				}
 				case dlPRODUCTSFOCUS: {
-					datalist[i] = productfocus; // productfocus
-					Log.d("mensa", "datalist[i="+Integer.toString(i)+"] productfocus: "+datalist[i].toString());
+					FileInputStream jsonfile = new FileInputStream(new File(
+							"/sdcard/" + MensaApplication.APP_DATAFOLDER + "/"
+									+ MensaApplication.FULLSYNC[3]));
+					String focus = MensaApplication.getFileContent(jsonfile);
+					Log.d("mensa", "focus=" + focus);
+					JSONObject focusObj = null;
+					try {
+						focusObj = new JSONObject(focus);
+					} catch (JSONException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					JSONArray jsonproductsfocus = null;
+					try {
+						jsonproductsfocus = focusObj
+								.getJSONArray("product_focus_stock");
+					} catch (JSONException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					BaseDataListObj productsfocus = (BaseDataListObj) new Products();
+					for (int h = 0; h < jsonproductsfocus.length(); h++) {
+						Calendar c = Calendar.getInstance();
+						Date d = c.getTime();
+						SimpleDateFormat formatter = new SimpleDateFormat(
+								"yyyy-MM-dd");
+						Date min = null;
+						Date max = null;
+						try {
+							try {
+								min = formatter.parse(jsonproductsfocus
+										.getJSONObject(h).getString(
+												"START_DATE"));
+								max = formatter
+										.parse(jsonproductsfocus.getJSONObject(
+												h).getString("END_DATE"));
+							} catch (ParseException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+						Product product = null;
+						if (d.compareTo(min) >= 0 && d.compareTo(max) <= 0) {
+							try {
+								product = new Product(jsonproductsfocus
+										.getJSONObject(h).getString(
+												"CONTRACT"), jsonproductsfocus
+										.getJSONObject(h).getString("DIV"),
+										jsonproductsfocus.getJSONObject(h)
+												.getString("PART_NO"),
+												jsonproductsfocus.getJSONObject(h)
+												.getString("DESCRIPTION"),
+										"",// jsonproducts.getJSONObject(h).getString("LOCATION_NO"),
+										"", // jsonproducts.getJSONObject(h).getString("LOT_BATCH_NO")
+										jsonproductsfocus.getJSONObject(h).getLong("QTY"),
+										0,// jsonproducts.getJSONObject(h).getLong("QTY_RESERVED"),
+										jsonproductsfocus.getJSONObject(h)
+												.optDouble("HNA", 0));
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							Log.d("mensa", "product to add=" + product.getDESCRIPTION());
+							((Products) productsfocus).addProduct(product);
+							Log.d("mensa", "productfocus1=" + productsfocus.toString());
+							Log.d("mensa", "productfocus2=" + ((Products) productsfocus).getProducts().get(0).getDESCRIPTION());
+						}
+					}
+					datalist[i] = productsfocus;
 					break;
 				}
 				case dlPRODUCTSPROMO: {
+					FileInputStream jsonfile = new FileInputStream(new File(
+							"/sdcard/" + MensaApplication.APP_DATAFOLDER + "/"
+									+ MensaApplication.FULLSYNC[8]));
+					String promo = MensaApplication.getFileContent(jsonfile);
+					JSONObject promoObj = null;
+					try {
+						promoObj = new JSONObject(promo);
+					} catch (JSONException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					JSONArray jsonproductspromo = null;
+					try {
+						jsonproductspromo = promoObj
+								.getJSONArray("product_promo_stock");
+					} catch (JSONException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					BaseDataListObj productspromo = (BaseDataListObj) new Products();
+					for (int h = 0; h < jsonproductspromo.length(); h++) {
+						Calendar c = Calendar.getInstance();
+						Date d = c.getTime();
+						SimpleDateFormat formatter = new SimpleDateFormat(
+								"yyyy-MM-dd");
+						Date min = null;
+						Date max = null;
+						try {
+							try {
+								min = formatter.parse(jsonproductspromo
+										.getJSONObject(h).getString(
+												"START_DATE"));
+								max = formatter
+										.parse(jsonproductspromo.getJSONObject(
+												h).getString("END_DATE"));
+							} catch (ParseException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+						Product product = null;
+						if (d.compareTo(min) >= 0 && d.compareTo(max) <= 0) {
+							try {
+								product = new Product(jsonproductspromo
+										.getJSONObject(h).getString(
+												"CONTRACT"), jsonproductspromo
+										.getJSONObject(h).getString("DIV"),
+										jsonproductspromo.getJSONObject(h)
+												.getString("PART_NO"),
+												jsonproductspromo.getJSONObject(h)
+												.getString("DESCRIPTION"),
+										"",// jsonproducts.getJSONObject(h).getString("LOCATION_NO"),
+										"", // jsonproducts.getJSONObject(h).getString("LOT_BATCH_NO")
+										jsonproductspromo.getJSONObject(h).getLong("QTY"),
+										0,// jsonproducts.getJSONObject(h).getLong("QTY_RESERVED"),
+										jsonproductspromo.getJSONObject(h)
+												.optDouble("HNA", 0));
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							((Products) productspromo).addProduct(product);
+						}
+					}
+					datalist[i] = productspromo;
 					break;
 				}
 				case dlPIUTANG: {
