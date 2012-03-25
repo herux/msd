@@ -10,7 +10,6 @@ package com.mensa.salesdroid;
 
 import java.util.ArrayList;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -20,6 +19,7 @@ import android.os.Message;
 import android.support.v4.app.ActionBar;
 import android.support.v4.app.ActionBar.Tab;
 import android.support.v4.app.ActionBar.TabListener;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
@@ -40,6 +40,13 @@ public class ProductviewActivity extends BaseFragmentActivity {
 	static MensaApplication application;
 	static final int LOADDATADIALOG = 0;
 	static boolean loaded = false;
+	static final int FOCUSTAB = 0;
+	static final int PROMOTAB = 1;
+	static final int ALLTAB = 2;
+	static final int proCAPTURORDER = 0;
+	static final int proBROWSER = 1;
+	static ProgressDialogFragment progressDialog;
+	static DialogFragment newFragment;
 
 	final static Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -57,14 +64,52 @@ public class ProductviewActivity extends BaseFragmentActivity {
 				}
 				adapter.notifyDataSetChanged();
 				loaded = true;
+				closeDialog();
 			}
 		}
 	};
 
-	private static void Reload() {
-		// showdialog
+	void Reload() {
+		showProgressDialog("Load Products", "Load data product, please wait...");
 		productsThread = new ProductsThread(handler);
 		productsThread.start();
+	}
+
+	public void showProgressDialog(String title, String message) {
+		newFragment = ProgressDialogFragment.newInstance(title, message);
+		newFragment.show(getSupportFragmentManager(), "progress dialog");
+	}
+
+	static void closeDialog() {
+		newFragment.dismiss();
+	}
+
+	public static class ProgressDialogFragment extends DialogFragment {
+
+		public static ProgressDialogFragment newInstance(String title,
+				String message) {
+			ProgressDialogFragment fragment = new ProgressDialogFragment();
+			Bundle args = new Bundle();
+			args.putString("title", title);
+			args.putString("message", message);
+			fragment.setArguments(args);
+
+			return fragment;
+		}
+
+		@Override
+		public ProgressDialog onCreateDialog(Bundle savedInstanceState) {
+			String title = getArguments().getString("title");
+			String message = getArguments().getString("message");
+
+			ProgressDialog progressDialog = new ProgressDialog(getActivity());
+			progressDialog.setTitle(title);
+			progressDialog.setMessage(message);
+
+			progressDialog.show();
+
+			return progressDialog;
+		}
 	}
 
 	@Override
@@ -167,20 +212,24 @@ public class ProductviewActivity extends BaseFragmentActivity {
 		});
 		actionbar.addTab(tabAll);
 		showTabsNav();
-		Reload();
-	}
 
-	@Override
-	protected Dialog onCreateDialog(int id) {
-		Dialog dialog = null;
-		switch (id) {
-		case LOADDATADIALOG: {
-			dialog = ProgressDialog.show(ProductviewActivity.this, "",
-					"Loading data product. Please wait...", true);
+		int tabIndex = getIntent().getIntExtra("opentab", FOCUSTAB);
+		switch (tabIndex) {
+		case FOCUSTAB: {
+			tabfocus.select();
+			break;
+		}
+		case PROMOTAB: {
+			tabPromo.select();
+			break;
+		}
+		case ALLTAB: {
+			tabAll.select();
 			break;
 		}
 		}
-		return dialog;
+
+		Reload();
 	}
 
 	public static class ProductFragment extends ListFragment {
