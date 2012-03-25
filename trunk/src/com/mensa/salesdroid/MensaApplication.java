@@ -37,9 +37,17 @@ public class MensaApplication extends Application {
 
 	static final String APP_DATAFOLDER = "mensadata";
 
-	static String[] FULLSYNC = { PRODUCTSFILENAME, CUSTOMERSFILENAME,
-			SALESMANSFILENAME, PRODUCTSFOCUSFILENAME, PIUTANGFILENAME,
-			ORDERTYPE, RETURNCAUSE, SALESORDERFILENAME, PRODUCTSPROMOFILENAME };
+	static String[] FULLSYNC = { 
+			PRODUCTSFILENAME, 
+			CUSTOMERSFILENAME,
+			SALESMANSFILENAME, 
+			PRODUCTSFOCUSFILENAME, 
+			PIUTANGFILENAME,
+			ORDERTYPE, 
+			RETURNCAUSE, 
+			SALESORDERFILENAME, 
+			PRODUCTSPROMOFILENAME 
+			};
 
 	static String[] FASTSYNC = { PRODUCTSFOCUSFILENAME, CUSTOMERSFILENAME,
 			PIUTANGFILENAME };
@@ -53,15 +61,16 @@ public class MensaApplication extends Application {
 			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3Byb2R1Y3Q=&uid=",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=Y2FsbF9wbGFu&uid=",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3NhbGVzbWFu",
-			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9mb2N1cw==&uid=",
+			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9mb2N1c19zdG9jaw==&uid=", 
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cGl1dGFuZ19jYWxscGxhbg==&uid=",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=Y3VzdF9vcmRlcl90eXBl",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cmV0dXJuX2NhdXNl",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cG9zdF9vcmRlcg==", // post_order
-			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9wcm9tbw==&uid=" };
+			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9wcm9tb19zdG9jaw==&uid=" }; 
 
 	private ArrayList<Product> products;
 	private ArrayList<Product> productsfocus;
+	private ArrayList<Product> productspromo;
 	private SalesOrder salesorder;
 	private ArrayList<SalesItem> salesitems;
 	private Returns returns;
@@ -254,6 +263,14 @@ public class MensaApplication extends Application {
 
 	public void setProductsfocus(ArrayList<Product> productsfocus) {
 		this.productsfocus = productsfocus;
+	}
+
+	public ArrayList<Product> getProductspromo() {
+		return productspromo;
+	}
+
+	public void setProductspromo(ArrayList<Product> productspromo) {
+		this.productspromo = productspromo;
 	}
 
 }

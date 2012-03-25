@@ -9,9 +9,6 @@
 package com.mensa.salesdroid;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-
-import com.mensa.salesdroid.ProductsAdapter.OnListItemClickListener;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -26,16 +23,16 @@ import android.support.v4.app.ActionBar.TabListener;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.mensa.salesdroid.ProductsAdapter.OnListItemClickListener;
 
 public class ProductviewActivity extends BaseFragmentActivity {
 	static ProductsThread productsThread;
@@ -51,7 +48,9 @@ public class ProductviewActivity extends BaseFragmentActivity {
 				productsThread.setState(BaseThread.STATE_DONE);
 				application.setProducts(productsThread.getProducts());
 				application.setProductsfocus(productsThread.getProductsfocus());
+				application.setProductspromo(productsThread.getProductspromo());
 
+				adapter.setWithsearch(false);
 				adapter.clear();
 				for (int i = 0; i < application.getProductsfocus().size(); i++) {
 					adapter.add(application.getProductsfocus().get(i));
@@ -93,6 +92,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
 				if (loaded) {
+					adapter.setWithsearch(false);
 					adapter.clear();
 					for (int i = 0; i < application.getProductsfocus().size(); i++) {
 						adapter.add(application.getProductsfocus().get(i));
@@ -121,8 +121,14 @@ public class ProductviewActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
-				// TODO Auto-generated method stub
-
+				if (loaded) {
+					adapter.setWithsearch(false);
+					adapter.clear();
+					for (int i = 0; i < application.getProductspromo().size(); i++) {
+						adapter.add(application.getProductspromo().get(i));
+					}
+					adapter.notifyDataSetChanged();
+				}
 			}
 
 			@Override
@@ -145,8 +151,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
-				application.addProduct(0, new Product("", "", "", "Search", "",
-						"", 0, 0, 0));
+				adapter.setWithsearch(true);
 				adapter.clear();
 				for (int i = 0; i < application.getProducts().size(); i++) {
 					adapter.add(application.getProducts().get(i));
@@ -188,8 +193,6 @@ public class ProductviewActivity extends BaseFragmentActivity {
 
 			if (application.getProducts() == null) {
 				application.setProducts(new ArrayList<Product>());
-				application.addProduct(0, new Product("", "", "", "", "", "",
-						0, 0, 0));
 			}
 			adapter = new ProductsAdapter(getActivity(), R.layout.productlist,
 					application.getProducts());
