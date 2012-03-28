@@ -1,5 +1,6 @@
 package com.mensa.salesdroid;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -7,10 +8,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.graphics.Bitmap.CompressFormat;
 import android.os.Environment;
+import android.util.Base64;
 
 public class Returns {
-	private String ReturnNo, datetimecheckin, salesid; 
+	private String ReturnNo, datetimecheckin, salesid;
 	private Customer customer;
 	private String coordinate;
 	private ArrayList<ReturnItem> returnitems;
@@ -63,7 +66,7 @@ public class Returns {
 	public void setCoordinate(String coordinate) {
 		this.coordinate = coordinate;
 	}
-	
+
 	public String saveToJSON() {
 		JSONObject returnhead = new JSONObject();
 		JSONObject returns = new JSONObject();
@@ -75,7 +78,13 @@ public class Returns {
 				item.put("qty", returnitems.get(i).getQty());
 				item.put("reason_code", returnitems.get(i).getDescription());
 				item.put("description", returnitems.get(i).getDescription());
-				item.put("pic", ""); //returnitems.get(i).getImage()
+
+				ByteArrayOutputStream bao = new ByteArrayOutputStream();
+				returnitems.get(i).getImage().compress(CompressFormat.JPEG, 90, bao);
+				byte[] ba = bao.toByteArray();
+				String ba1= Base64.encodeToString(ba, Base64.DEFAULT);
+				
+				item.put("pic", ba1); 
 				Items.put(i, item);
 			}
 			returns.put("returnnumber", getReturnNo());
@@ -84,11 +93,12 @@ public class Returns {
 			returns.put("customerid", getCustomer().getCUSTOMER_CODE());
 			returns.put("coordinate", getCoordinate());
 			returns.put("returndetail", Items);
-			
+
 			returnhead.put("returnhead", returns);
 			File root = Environment.getExternalStorageDirectory();
 			String folder = MensaApplication.APP_DATAFOLDER + "/";
-			File file = new File(root, folder + MensaApplication.RETURNORDERFILENAME + getReturnNo());
+			File file = new File(root, folder
+					+ MensaApplication.RETURNORDERFILENAME + getReturnNo());
 			MensaApplication.SaveStringToFile(file, returnhead.toString());
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block

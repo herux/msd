@@ -14,6 +14,7 @@ public class AddCustomerActivity extends BaseFragmentActivity {
 		actionbar.setDisplayHomeAsUpEnabled(false);
 		actionbar.setDisplayUseLogoEnabled(false);
 		actionbar.setSubtitle("Adding New Customer");
+		
 	}
 
 }
