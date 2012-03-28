@@ -50,24 +50,24 @@
             android:id="@+id/tvbarcode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Barcode Item"
+            android:text="Product Code"
             android:width="100px" />
 
-        <TextView
-            android:id="@+id/etbarcode"
+        <Button
+            android:id="@+id/btnbarcode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tvbarcode"
-            android:width="100px"
-            android:text="barcode here ..." />
+            android:width="100dip"
+            android:text="..." />
 
         <EditText
             android:id="@+id/etqty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/etbarcode"
-            android:layout_alignRight="@+id/etbarcode"
-            android:layout_below="@id/etbarcode"
+            android:layout_alignLeft="@id/btnbarcode"
+            android:layout_alignRight="@+id/btnbarcode"
+            android:layout_below="@id/btnbarcode"
             android:width="100px" />
         
         <TextView
@@ -82,18 +82,17 @@
         <Spinner 
             android:id="@+id/Spreturncause"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:drawSelectorOnTop="true"
             android:layout_below="@+id/etqty"
             android:layout_alignLeft="@id/etqty"
-            android:layout_alignParentRight="true"
-            android:width="100px"/>
+            android:layout_alignParentRight="true"/>
         
         <TextView
             android:id="@+id/tvqty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/etbarcode"
+            android:layout_below="@id/btnbarcode"
             android:layout_toLeftOf="@id/etqty"
             android:text="Qty"
             android:width="100px" />

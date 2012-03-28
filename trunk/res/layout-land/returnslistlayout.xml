@@ -69,7 +69,7 @@
     <FrameLayout
         android:id="@+id/flrow"
         android:layout_width="match_parent"
-        android:layout_height="290dip"
+        android:layout_height="130dip"
         android:layout_below="@+id/llcaptionhead" >
 
         <fragment
@@ -78,6 +78,23 @@
             android:layout_height="match_parent"
             class="com.mensa.salesdroid.InfoReturListActivity$ReturnItemsFragment" />
     </FrameLayout>
+    
+    <LinearLayout
+        android:id="@+id/llcaptionfoot"
+        android:layout_width="wrap_content"
+        android:layout_height="60dip"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/flrow"
+        android:orientation="horizontal" >
+        
+        <Button 
+            android:id="@+id/btnsubmit"
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="Submit"/>
+             
+        
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvreturnsdate"
