@@ -23,6 +23,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -47,6 +48,8 @@ public class ProductviewActivity extends BaseFragmentActivity {
 	static final int proBROWSER = 1;
 	static ProgressDialogFragment progressDialog;
 	static DialogFragment newFragment;
+	static int tabIndex;
+	static int proType;
 
 	final static Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -57,10 +60,31 @@ public class ProductviewActivity extends BaseFragmentActivity {
 				application.setProductsfocus(productsThread.getProductsfocus());
 				application.setProductspromo(productsThread.getProductspromo());
 
-				adapter.setWithsearch(false);
-				adapter.clear();
-				for (int i = 0; i < application.getProductsfocus().size(); i++) {
-					adapter.add(application.getProductsfocus().get(i));
+				switch (tabIndex){
+				case FOCUSTAB: {
+					adapter.setWithsearch(false);
+					adapter.clear();
+					for (int i = 0; i < application.getProductsfocus().size(); i++) {
+						adapter.add(application.getProductsfocus().get(i));
+					}
+					break;
+				}
+				case PROMOTAB: {
+					adapter.setWithsearch(false);
+					adapter.clear();
+					for (int i = 0; i < application.getProductspromo().size(); i++) {
+						adapter.add(application.getProductspromo().get(i));
+					}
+					break;
+				}
+				case ALLTAB: {
+					adapter.setWithsearch(true);
+					adapter.clear();
+					for (int i = 0; i < application.getProducts().size(); i++) {
+						adapter.add(application.getProducts().get(i));
+					}
+					break;
+				}
 				}
 				adapter.notifyDataSetChanged();
 				loaded = true;
@@ -136,6 +160,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
+				Log.d("mensa", "loaded:"+Boolean.toString(loaded));
 				if (loaded) {
 					adapter.setWithsearch(false);
 					adapter.clear();
@@ -166,6 +191,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
+				Log.d("mensa", "loaded:"+Boolean.toString(loaded));
 				if (loaded) {
 					adapter.setWithsearch(false);
 					adapter.clear();
@@ -196,12 +222,17 @@ public class ProductviewActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
-				adapter.setWithsearch(true);
-				adapter.clear();
-				for (int i = 0; i < application.getProducts().size(); i++) {
-					adapter.add(application.getProducts().get(i));
+				Log.d("mensa", "loaded:"+Boolean.toString(loaded));
+				if (loaded) {
+					adapter.setWithsearch(true);
+					adapter.clear();
+					Log.d("mensa", "getProducts size B:"+Integer.toString(application.getProducts().size()));
+					for (int i = 0; i < application.getProducts().size(); i++) {
+						adapter.add(application.getProducts().get(i));
+					}
+					Log.d("mensa", "getProducts size A:"+Integer.toString(application.getProducts().size()));
+					adapter.notifyDataSetChanged();
 				}
-				adapter.notifyDataSetChanged();
 			}
 
 			@Override
@@ -212,8 +243,8 @@ public class ProductviewActivity extends BaseFragmentActivity {
 		});
 		actionbar.addTab(tabAll);
 		showTabsNav();
-
-		int tabIndex = getIntent().getIntExtra("opentab", FOCUSTAB);
+		proType = getIntent().getIntExtra("protype", proCAPTURORDER);
+		tabIndex = getIntent().getIntExtra("opentab", FOCUSTAB);
 		switch (tabIndex) {
 		case FOCUSTAB: {
 			tabfocus.select();
@@ -229,9 +260,14 @@ public class ProductviewActivity extends BaseFragmentActivity {
 		}
 		}
 
-		if (application.getProducts() == null) {
+//		if (application.getProducts() != null){
+//			Log.d("mensa", "getProducts size:"+Integer.toString(application.getProducts().size()));
+//		}
+//		if ((application.getProducts() == null)||(application.getProducts().size() == 1)) {
 			Reload();
-		}
+//		}else{
+//			loaded = true;
+//		}
 	}
 
 	public static class ProductFragment extends ListFragment {
@@ -251,7 +287,19 @@ public class ProductviewActivity extends BaseFragmentActivity {
 
 				@Override
 				public void OnListItemClick(View view, int position) {
-					showDetails(position);
+					switch (proType){
+					case proCAPTURORDER: {
+						showDetails(position);
+						break;
+					}
+					case proBROWSER: {
+						Intent returnIntent = new Intent();
+					    returnIntent.putExtra("protype", position);
+					    getActivity().setResult(RESULT_OK, returnIntent);
+						getActivity().finish();
+						break;
+					}
+					}
 				}
 			});
 			setListAdapter(adapter);

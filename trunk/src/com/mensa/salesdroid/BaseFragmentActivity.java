@@ -1,5 +1,6 @@
 package com.mensa.salesdroid;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActionBar;
 import android.support.v4.app.FragmentActivity;
@@ -33,5 +34,5 @@ public class BaseFragmentActivity extends FragmentActivity {
 			ab.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		}
 	}
-
+	
 }

@@ -34,6 +34,7 @@ public class MensaApplication extends Application {
 	static final String PRODUCTSPAGEFILENAME = "products_";
 	static final String SALESMANSPAGEFILENAME = "salesmans_";
 	static final String SALESORDERFILENAME = "salesorder_";
+	static final String RETURNORDERFILENAME = "returnorder_";
 
 	static final String APP_DATAFOLDER = "mensadata";
 
@@ -46,7 +47,8 @@ public class MensaApplication extends Application {
 			ORDERTYPE, 
 			RETURNCAUSE, 
 			SALESORDERFILENAME, 
-			PRODUCTSPROMOFILENAME 
+			PRODUCTSPROMOFILENAME,
+			RETURNORDERFILENAME
 			};
 
 	static String[] FASTSYNC = { PRODUCTSFOCUSFILENAME, CUSTOMERSFILENAME,
@@ -66,7 +68,8 @@ public class MensaApplication extends Application {
 			"key=czRMZTU0dVRvTWF0MTBu&tab=Y3VzdF9vcmRlcl90eXBl",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cmV0dXJuX2NhdXNl",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cG9zdF9vcmRlcg==", // post_order
-			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9wcm9tb19zdG9jaw==&uid=" }; 
+			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9wcm9tb19zdG9jaw==&uid=",
+			"key=czRMZTU0dVRvTWF0MTBu&tab=cG9zdF9yZXR1cm4="}; // post return 
 
 	private ArrayList<Product> products;
 	private ArrayList<Product> productsfocus;
