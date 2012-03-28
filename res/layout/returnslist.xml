@@ -30,7 +30,7 @@
             android:id="@+id/tvdescrow"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="right|center_horizontal"
+            android:gravity="left|center_horizontal"
             android:text="Description" />
     </LinearLayout>
 

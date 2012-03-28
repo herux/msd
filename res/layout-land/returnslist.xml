@@ -14,7 +14,7 @@
 		<ImageView 
 		    android:id="@+id/ivproductrow"
 		    android:layout_width="100dip"
-		    android:layout_height="100dip"/>
+		    android:layout_height="60dip"/>
         <TextView
             android:id="@+id/tvproductcoderow"
             android:layout_width="150dip"
