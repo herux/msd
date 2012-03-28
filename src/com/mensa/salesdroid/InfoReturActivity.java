@@ -46,10 +46,12 @@ import android.widget.Toast;
 public class InfoReturActivity extends BaseFragmentActivity {
 	int CAMERA_PIC_REQUEST = 2;
 	int SELECT_PICTURE = 1;
+	int SELECT_PRODUCT = 3;
 	private String selectedImagePath;
 	static MensaApplication application;
 	static ImageView image;
 	Bitmap thumbnail;
+	Button btnBarcode;
 	Fragment fragment;
 	JSONArray rcCause;
 	int spinnerid = 0;
@@ -59,40 +61,41 @@ public class InfoReturActivity extends BaseFragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.inforeturlayout);
 		application = getMensaapplication();
-		
-		//----load json returncause
+
+		// ----load json returncause
 		FileInputStream jsonfile = null;
 		try {
-			jsonfile = new FileInputStream(
-					new File("/sdcard/"
-							+ MensaApplication.APP_DATAFOLDER + "/"
-							+ MensaApplication.FULLSYNC[6]));
+			jsonfile = new FileInputStream(new File("/sdcard/"
+					+ MensaApplication.APP_DATAFOLDER + "/"
+					+ MensaApplication.FULLSYNC[6]));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		try {
 			String rcContent = MensaApplication.getFileContent(jsonfile);
 			JSONObject rcObj = new JSONObject(rcContent);
 			rcCause = rcObj.getJSONArray("return_cause");
 			String[] returnCauses = new String[rcCause.length()];
 			for (int i = 0; i < rcCause.length(); i++) {
-				returnCauses[i] = rcCause.getJSONObject(i).getString("DESCRIPTION");
+				returnCauses[i] = rcCause.getJSONObject(i).getString(
+						"DESCRIPTION");
 			}
 			Spinner s = (Spinner) findViewById(R.id.Spreturncause);
 			s.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 				@Override
-				public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+				public void onItemSelected(AdapterView<?> parent, View v,
+						int position, long id) {
 					spinnerid = position;
 				}
 
 				@Override
 				public void onNothingSelected(AdapterView<?> parent) {
 					// TODO Auto-generated method stub
-					
+
 				}
-				
+
 			});
 			ArrayAdapter adapter = new ArrayAdapter(this,
 					android.R.layout.simple_spinner_dropdown_item, returnCauses);
@@ -100,7 +103,7 @@ public class InfoReturActivity extends BaseFragmentActivity {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		//----
+		// ----
 
 		ActionBar actionbar = getSupportActionBar();
 		actionbar.setDisplayHomeAsUpEnabled(false);
@@ -134,6 +137,20 @@ public class InfoReturActivity extends BaseFragmentActivity {
 			}
 		});
 
+		btnBarcode = (Button) findViewById(R.id.btnbarcode);
+		btnBarcode.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent();
+				intent.setClass(InfoReturActivity.this,
+						ProductviewActivity.class);
+				intent.putExtra("opentab", ProductviewActivity.ALLTAB);
+				intent.putExtra("protype", ProductviewActivity.proBROWSER);
+				startActivityForResult(intent, SELECT_PRODUCT);
+			}
+		});
+
 		Button btnsave = (Button) findViewById(R.id.btnsave);
 		btnsave.setOnClickListener(new OnClickListener() {
 
@@ -142,8 +159,11 @@ public class InfoReturActivity extends BaseFragmentActivity {
 				Returns returns = application.getReturns();
 				ArrayList<ReturnItem> ris = application.getReturnitems();
 				if (ris == null) {
-					returns = new Returns("ReturnNo", application
-							.getDateTimeStr(), application.getSalesid(),
+					returns = new Returns("RE"
+							+ application.getTimeInt()
+//							+ "."
+//							+ application.getCurrentCustomer().getCUSTOMER_CODE()
+							, application.getDateTimeStr(), application.getSalesid(),
 							application.getCurrentCustomer(), "");
 					ris = new ArrayList<ReturnItem>();
 				}
@@ -152,10 +172,10 @@ public class InfoReturActivity extends BaseFragmentActivity {
 				Spinner spinnerdesc = (Spinner) findViewById(R.id.Spreturncause);
 				ReturnItem ri = null;
 				try {
-					ri = new ReturnItem("ProductCode?", 
-							Float.parseFloat(etqty.getText().toString()), 
-							rcCause.getJSONObject(spinnerid).getString("RETURN_REASON"), 
-							thumbnail);
+					ri = new ReturnItem(btnBarcode.getText().toString(), Float
+							.parseFloat(etqty.getText().toString()), rcCause
+							.getJSONObject(spinnerid)
+							.getString("RETURN_REASON"), thumbnail);
 				} catch (NumberFormatException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -169,6 +189,7 @@ public class InfoReturActivity extends BaseFragmentActivity {
 				Intent list = new Intent(InfoReturActivity.this,
 						InfoReturListActivity.class);
 				startActivity(list);
+				finish();
 			}
 		});
 
@@ -235,6 +256,12 @@ public class InfoReturActivity extends BaseFragmentActivity {
 				thumbnail = (Bitmap) data.getExtras().get("data");
 				ImageView image = (ImageView) findViewById(R.id.ivImageRetur);
 				image.setImageBitmap(thumbnail);
+			}
+
+			if (requestCode == SELECT_PRODUCT) {
+				int productPos = data.getIntExtra("protype", -1);
+				btnBarcode.setText(application.getProducts().get(productPos)
+						.getPART_NO());
 			}
 		}
 	}
