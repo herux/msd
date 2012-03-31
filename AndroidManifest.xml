@@ -45,8 +45,7 @@
         <activity
             android:name=".InfoReturActivity"
             android:screenOrientation="portrait" />
-        <activity 
-            android:name=".InfoReturListActivity"/>
+        <activity android:name=".InfoReturListActivity" />
         <activity android:name=".CheckoutOrderActivity" />
         <activity
             android:name=".ListPiutangActivity"
@@ -55,6 +54,22 @@
             android:name=".AddCustomerActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".CalendarActivity" />
+        <activity android:name="com.exina.android.calendar.CalendarActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.PICK" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="vnd.android.cursor.dir/vnd.exina.android.calendar.date" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="vnd.android.cursor.dir/vnd.exina.android.calendar.date" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
