@@ -11,9 +11,12 @@ package com.mensa.salesdroid;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActionBar;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class CustomerMenuActivity extends BaseFragmentActivity {
@@ -28,6 +31,13 @@ public class CustomerMenuActivity extends BaseFragmentActivity {
 				+ getMensaapplication().getCurrentCustomer().getNAMA()
 				+ ") - Sales: "+getMensaapplication().getSalesid());
 
+		LinearLayout ll1 = (LinearLayout) findViewById(R.id.ll1);
+		ll1.getBackground().setAlpha(170);
+		LinearLayout ll2 = (LinearLayout) findViewById(R.id.ll2);
+		ll2.getBackground().setAlpha(170);
+		LinearLayout ll3 = (LinearLayout) findViewById(R.id.ll3);
+		ll3.getBackground().setAlpha(170);
+		
 		Button btninforeturn = (Button) findViewById(R.id.btn_inforeturn);
 		btninforeturn.setOnClickListener(new OnClickListener() {
 
@@ -61,9 +71,11 @@ public class CustomerMenuActivity extends BaseFragmentActivity {
 					Toast toast = Toast
 							.makeText(
 									CustomerMenuActivity.this,
-									"No product selected",
+									"Checkout without ordering product!.",
 									Toast.LENGTH_SHORT);
 					toast.show();
+					getMensaapplication().setCurrentCustomer(null);
+					finish();
 				} else {
 					Intent intent = new Intent();
 					intent.setClass(CustomerMenuActivity.this,
