@@ -7,16 +7,20 @@
     android:orientation="vertical" >
 
     <LinearLayout
+        android:id="@+id/ll0"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_weight="1"
         android:orientation="vertical"
         android:padding="6dip" >
 
         <LinearLayout
+            android:id="@+id/ll1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/roundedbkg"
             android:orientation="horizontal" >
 
             <Button
@@ -33,9 +37,11 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/roundedbkg"
             android:orientation="horizontal" >
 
             <Button
@@ -52,9 +58,11 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll3"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/roundedbkg"
             android:orientation="horizontal" >
 
             <Button
@@ -62,7 +70,6 @@
                 style="@style/CustomerButton"
                 android:drawableTop="@drawable/btncheckout"
                 android:text="Checkout" />
-
         </LinearLayout>
     </LinearLayout>
 

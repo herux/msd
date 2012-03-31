@@ -1,125 +1,192 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@drawable/background" >
+    android:layout_height="wrap_content" >
 
-    <TableLayout
+    <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" >
+        android:layout_height="fill_parent" >
 
-        <TableRow>
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
 
-            <TextView
-                android:id="@+id/tvcustname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:text="Name" />
+            <TableRow>
 
-            <EditText
-                android:id="@+id/etcustname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="180dip" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/tvcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="Code" />
 
-        <TableRow>
+                <EditText
+                    android:id="@+id/etcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    android:width="220dip" >
 
-            <TextView
-                android:id="@+id/tvcgroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:text="CGroup" />
+                    <requestFocus />
+                </EditText>
+            </TableRow>
 
-            <EditText
-                android:id="@+id/etcgroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="100dip" />
-        </TableRow>
+            <TableRow>
 
-        <TableRow>
+                <TextView
+                    android:id="@+id/tvname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="Name" />
 
-            <TextView
-                android:id="@+id/tvchain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:text="Chain" />
+                <EditText
+                    android:id="@+id/etname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    android:width="100dip" />
+            </TableRow>
 
-            <EditText
-                android:id="@+id/etchain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="100dip" />
-        </TableRow>
+            <TableRow>
 
-        <TableRow>
+                <TextView
+                    android:id="@+id/tvchain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="Chain" />
 
-            <TextView
-                android:id="@+id/tvnamakirim"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:text="Nama Kirim" />
+                <EditText
+                    android:id="@+id/etchain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    android:width="100dip" />
+            </TableRow>
 
-            <EditText
-                android:id="@+id/etnamakirim"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="100dip" />
-        </TableRow>
+            <TableRow>
 
-        <TableRow>
+                <TextView
+                    android:id="@+id/tvgrup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="Group" />
 
-            <TextView
-                android:id="@+id/tvalamatkirim"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:text="Alamat Kirim" />
+                <EditText
+                    android:id="@+id/etgrup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    android:width="100dip" />
+            </TableRow>
 
-            <EditText
-                android:id="@+id/etalamatkirim"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="100dip" />
-        </TableRow>
+            <TableRow>
 
-        <TableRow>
+                <TextView
+                    android:id="@+id/tvnamatagihan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="Bill Name" />
 
-            <TextView
-                android:id="@+id/tvnamatagihan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:text="Nama Tagihan" />
+                <EditText
+                    android:id="@+id/etnamatagihan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    android:width="100dip" />
+            </TableRow>
 
-            <EditText
-                android:id="@+id/etnamatagihan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="100dip" />
-        </TableRow>
+            <TableRow>
 
-        <TableRow>
+                <TextView
+                    android:id="@+id/tvalamattagihan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="Bill Addr" />
 
-            <TextView
-                android:id="@+id/tvalamattagihan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:text="alamat Tagihan" />
+                <EditText
+                    android:id="@+id/etalamattagihan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="false"
+                    android:imeOptions="actionNext"
+                    android:width="100dip" />
+            </TableRow>
 
-            <EditText
-                android:id="@+id/etalamattagihan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="100dip" />
-        </TableRow>
-    </TableLayout>
+            <TableRow>
 
-</RelativeLayout>
+                <TextView
+                    android:id="@+id/tvnamakirim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="Delivery Name" />
+
+                <EditText
+                    android:id="@+id/etnamakirim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    android:width="100dip" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/tvalamatkirim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="Delivery Addr." />
+
+                <EditText
+                    android:id="@+id/etalamatkirim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="false"
+                    android:imeOptions="actionNext"
+                    android:width="100dip" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/tvzipcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="Zip Code" />
+
+                <EditText
+                    android:id="@+id/etzipcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:numeric="integer"
+                    android:imeOptions="actionNext"
+                    android:width="100dip" />
+            </TableRow>
+
+            <TableRow>
+
+                <Button
+                    android:id="@+id/btnsubmit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:text="Submit" />
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+
+</LinearLayout>
