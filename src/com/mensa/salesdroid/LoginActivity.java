@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity {
@@ -25,6 +27,12 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.loginlayout);
+		
+		RelativeLayout rl1 = (RelativeLayout) findViewById(R.id.rl1);
+		rl1.getBackground().setAlpha(170);
+		RelativeLayout rl2 = (RelativeLayout) findViewById(R.id.rl2);
+		rl2.getBackground().setAlpha(170);
+		
 		final EditText etUsername = (EditText) findViewById(R.id.etUsername);
 		etUsername.setText("YGY1-CP-SRN");
 		final EditText etPassword = (EditText) findViewById(R.id.etPassword);
@@ -38,10 +46,8 @@ public class LoginActivity extends Activity {
 				String request = "http://simfoni.mbs.co.id/services.php?key=czRMZTU0dVRvTWF0MTBu&tab=bG9naW4=&uid="
 						+ etUsername.getText().toString()
 						+ "&pwd="
-						+ etPassword.getText().toString();
-				Log.d("mensa", "Login request  : "+request);
+						+ etPassword.getText().toString(); 
 				String response = http.executeHttpPost(request, "");
-				Log.d("mensa", "Login response :"+response);
 				if ((response.equals("null"))||(response.equals(""))){
 					Toast toast = Toast.makeText(LoginActivity.this,
 							"Can't connect to webservices, check your internet connection..",

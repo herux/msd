@@ -25,6 +25,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -178,15 +179,19 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			View v = inflater.inflate(R.layout.callplandetail, null);
-			TextView customerdesc = (TextView) v.findViewById(R.id.tvCustomer);
+			RelativeLayout rl2 = (RelativeLayout) v.findViewById(R.id.relativeLayout2);
+			rl2.getBackground().setAlpha(170);
+			RelativeLayout rl1 = (RelativeLayout) v.findViewById(R.id.relativeLayout1);
+			rl1.getBackground().setAlpha(170);
+			TextView customerdesc = (TextView) v.findViewById(R.id.tvCustomerValue);
 			customerdesc.setText(customers.get(getShownIndex())
 					.getNAMA());
 			TextView addresskirim = (TextView) v
-					.findViewById(R.id.tvAddressKirim);
+					.findViewById(R.id.tvdeliveryaddressValue);
 			addresskirim.setText(customers.get(getShownIndex())
-					.getNAMA());
+					.getALAMAT_KIRIM());
 			TextView addresstagih = (TextView) v
-					.findViewById(R.id.tvAddressTagih);
+					.findViewById(R.id.tvBillAddressValue);
 			addresstagih.setText(customers.get(getShownIndex())
 					.getALAMAT_KIRIM());
 			Button btnCheckin = (Button) v.findViewById(R.id.btnCheckin);
@@ -201,6 +206,7 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 						Intent intent = new Intent();
 						intent.setClass(getActivity(), CustomerMenuActivity.class);
 						startActivity(intent);
+						getActivity().finish();
 					} else {
 						showDialog();
 					}

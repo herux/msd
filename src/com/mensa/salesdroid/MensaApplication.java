@@ -18,8 +18,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import android.app.Activity;
 import android.app.Application;
 import android.os.Environment;
+import android.util.DisplayMetrics;
 
 public class MensaApplication extends Application {
 	static final String CUSTOMERSFILENAME = "customers.mbs";
@@ -35,6 +37,7 @@ public class MensaApplication extends Application {
 	static final String SALESMANSPAGEFILENAME = "salesmans_";
 	static final String SALESORDERFILENAME = "salesorder_";
 	static final String RETURNORDERFILENAME = "returnorder_";
+	static final String NEWCUSTFILENAME = "newcustomer_";
 
 	static final String APP_DATAFOLDER = "mensadata";
 
@@ -48,7 +51,8 @@ public class MensaApplication extends Application {
 			RETURNCAUSE, 
 			SALESORDERFILENAME, 
 			PRODUCTSPROMOFILENAME,
-			RETURNORDERFILENAME
+			RETURNORDERFILENAME,
+			NEWCUSTFILENAME
 			};
 
 	static String[] FASTSYNC = { PRODUCTSFOCUSFILENAME, CUSTOMERSFILENAME,
@@ -69,7 +73,8 @@ public class MensaApplication extends Application {
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cmV0dXJuX2NhdXNl",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cG9zdF9vcmRlcg==", // post_order
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9wcm9tb19zdG9jaw==&uid=",
-			"key=czRMZTU0dVRvTWF0MTBu&tab=cG9zdF9yZXR1cm4="}; // post return 
+			"key=czRMZTU0dVRvTWF0MTBu&tab=cG9zdF9yZXR1cm4=", // post return
+			"key=czRMZTU0dVRvTWF0MTBu&tab=bmV3X2N1c3RvbWVy"}; // newcustomer
 
 	private ArrayList<Product> products;
 	private ArrayList<Product> productsfocus;
@@ -85,6 +90,18 @@ public class MensaApplication extends Application {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
+	}
+	
+	public int getscreenWidth(Activity activity){
+		DisplayMetrics displaymetrics = new DisplayMetrics();
+		activity.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+		return displaymetrics.widthPixels;
+	}
+	
+	public int getscreenHeight(Activity activity){
+		DisplayMetrics displaymetrics = new DisplayMetrics();
+		activity.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+		return displaymetrics.heightPixels;
 	}
 
 	static public String getFileContent(FileInputStream filename) {

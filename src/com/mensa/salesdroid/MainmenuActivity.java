@@ -20,6 +20,7 @@ import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.mensa.salesdroid.DataSync.OnDataSyncListener;
@@ -35,6 +36,13 @@ public class MainmenuActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mainmenu);
 
+		LinearLayout ll1 = (LinearLayout) findViewById(R.id.ll1);
+		ll1.getBackground().setAlpha(170);
+		LinearLayout ll2 = (LinearLayout) findViewById(R.id.ll2);
+		ll2.getBackground().setAlpha(170);
+		LinearLayout ll3 = (LinearLayout) findViewById(R.id.ll3);
+		ll3.getBackground().setAlpha(170);
+		
 		Button btnProductview = (Button) findViewById(R.id.btn_productlist);
 		btnProductview.setOnClickListener(new OnClickListener() {
 
@@ -86,6 +94,19 @@ public class MainmenuActivity extends Activity {
 				Intent intent = new Intent();
 				intent.setClass(MainmenuActivity.this,
 						AddCustomerActivity.class);
+				startActivity(intent);
+			}
+		});
+		
+		Button btnCalendar = (Button) findViewById(R.id.btn_calendar);
+		btnCalendar.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+//				startActivity(new Intent(Intent.ACTION_VIEW).setDataAndType(null, com.exina.android.calendar.CalendarActivity.MIME_TYPE));
+				Intent intent = new Intent();
+				intent.setClass(MainmenuActivity.this,
+						com.exina.android.calendar.CalendarActivity.class);
 				startActivity(intent);
 			}
 		});
