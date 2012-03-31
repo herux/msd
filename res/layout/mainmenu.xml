@@ -14,6 +14,8 @@
         android:padding="6dip" >
 
         <LinearLayout
+            android:id="@+id/ll1"
+            android:background="@drawable/roundedbkg"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -33,6 +35,8 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll2"
+            android:background="@drawable/roundedbkg"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -52,6 +56,8 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll3"
+            android:background="@drawable/roundedbkg"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

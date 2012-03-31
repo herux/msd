@@ -1,94 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/widget0"
-	android:layout_width="fill_parent" 
-	android:layout_height="fill_parent"
-	android:background="@drawable/background"
-	xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget0"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background" >
 
-	<RelativeLayout
-	    android:id="@+id/widget30"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:layout_x="3dp"
-	    android:layout_y="-3dp" >
+    <RelativeLayout
+        android:id="@+id/widget30"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_x="3dp"
+        android:layout_y="-3dp" >
 
-	    <TextView
-	        android:id="@+id/textView1"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentTop="true"
-	        android:layout_centerHorizontal="true"
-	        android:layout_marginTop="71dp"
-	        android:text="SALES ORDER SYSTEM"
-	        android:textAppearance="?android:attr/textAppearanceLarge" />
+        <RelativeLayout
+            android:id="@+id/rl1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="29dp"
+            android:background="@drawable/roundedbkg" >
 
-	    <TextView
-	        android:id="@+id/textView2"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignBottom="@+id/textView1"
-	        android:layout_centerHorizontal="true"
-	        android:layout_marginBottom="32dp"
-	        android:text="MENSA BINASUKSES"
-	        android:textAppearance="?android:attr/textAppearanceSmall" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="19dp"
+                android:text="MENSA BINASUKSES"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-	    <EditText
-	        android:id="@+id/etPassword"
-	        android:layout_width="350px"
-	        android:layout_height="wrap_content"
-	        android:layout_alignLeft="@+id/textView1"
-	        android:layout_alignParentBottom="true"
-	        android:layout_alignRight="@+id/textView1"
-	        android:layout_marginBottom="104dp"
-	        android:gravity="center"
-	        android:password="true"
-	        android:textSize="18sp" />
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:text="SALES ORDER SYSTEM"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+        </RelativeLayout>
 
-	    <TextView
-	        android:id="@+id/lblPassword"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_above="@+id/etPassword"
-	        android:layout_alignLeft="@+id/etPassword"
-	        android:gravity="left"
-	        android:text="Password"
-	        android:textColor="#FFFFFF"
-	        android:textSize="18sp" />
+        <RelativeLayout
+            android:id="@+id/rl2"
+            android:layout_width="250dip"
+            android:layout_height="250dip"
+            android:layout_below="@+id/rl1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="31dp"
+            android:background="@drawable/roundedbkg" >
 
-	    <EditText
-	        android:id="@+id/etUsername"
-	        android:layout_width="350px"
-	        android:layout_height="wrap_content"
-	        android:layout_above="@+id/lblPassword"
-	        android:layout_alignLeft="@+id/lblPassword"
-	        android:layout_alignRight="@+id/etPassword"
-	        android:gravity="center"
-	        android:password="false"
-	        android:textSize="18sp" >
+            <TextView
+                android:id="@+id/lblUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="22dp"
+                android:gravity="left"
+                android:text="Username"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
 
-	        <requestFocus />
-	    </EditText>
+            <EditText
+                android:id="@+id/etUsername"
+                android:layout_width="200dip"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblUsername"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:password="false"
+                android:textSize="18sp" >
 
-	    <TextView
-	        android:id="@+id/lblUsername"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_above="@+id/etUsername"
-	        android:layout_alignLeft="@+id/etUsername"
-	        android:gravity="left"
-	        android:text="Username"
-	        android:textColor="#FFFFFF"
-	        android:textSize="18sp" />
+                <requestFocus />
+            </EditText>
 
-	    <Button
-	        android:id="@+id/btnLogin"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignTop="@+id/etPassword"
-	        android:layout_centerHorizontal="true"
-	        android:layout_marginTop="46dp"
-	        android:background="@drawable/btnlogin" />
+            <TextView
+                android:id="@+id/lblPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/etUsername"
+                android:layout_centerHorizontal="true"
+                android:gravity="left"
+                android:text="Password"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
 
-	</RelativeLayout>
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="200dip"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/etUsername"
+                android:layout_below="@+id/lblPassword"
+                android:gravity="center"
+                android:password="true"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/etPassword"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/btnlogin" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>
