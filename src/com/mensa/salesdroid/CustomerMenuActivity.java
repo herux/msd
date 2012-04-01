@@ -76,7 +76,11 @@ public class CustomerMenuActivity extends BaseFragmentActivity {
 					toast.show();
 					getMensaapplication().setCurrentCustomer(null);
 					finish();
+					Intent intent = new Intent();
+					intent.setClass(CustomerMenuActivity.this, MainmenuActivity.class);
+					startActivity(intent);
 				} else {
+					finish();
 					Intent intent = new Intent();
 					intent.setClass(CustomerMenuActivity.this,
 							CheckoutOrderActivity.class);

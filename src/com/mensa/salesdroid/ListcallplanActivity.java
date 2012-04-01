@@ -152,6 +152,7 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 							.get(getShownIndex()));
 					Toast toast = Toast.makeText(getActivity(), "Customer check, changed.!", Toast.LENGTH_SHORT);
 					toast.show();
+					getActivity().finish();
 					Intent intent = new Intent();
 					intent.setClass(getActivity(), CustomerMenuActivity.class);
 					startActivity(intent);
@@ -163,6 +164,7 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 				public void OnClick() {
 					Toast toast = Toast.makeText(getActivity(), "Re-Checkin", Toast.LENGTH_SHORT);
 					toast.show();
+					getActivity().finish();
 					Intent intent = new Intent();
 					intent.setClass(getActivity(), CustomerMenuActivity.class);
 					startActivity(intent);
@@ -203,10 +205,10 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 						application.setCurrentCustomer(customers
 								.get(getShownIndex()));
 						Log.d("mensa", "Checkin:"+application.getCurrentCustomer().getCUSTOMER_CODE()+":"+application.getCurrentCustomer().getNAMA());
+						getActivity().finish();
 						Intent intent = new Intent();
 						intent.setClass(getActivity(), CustomerMenuActivity.class);
 						startActivity(intent);
-						getActivity().finish();
 					} else {
 						showDialog();
 					}

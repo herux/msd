@@ -18,6 +18,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActionBar;
@@ -89,6 +90,9 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 						application.setSalesorder(null);
 						application.setSalesitems(null);
 						finish();
+						Intent intent = new Intent();
+						intent.setClass(CheckoutOrderActivity.this, MainmenuActivity.class);
+						startActivity(intent);
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
