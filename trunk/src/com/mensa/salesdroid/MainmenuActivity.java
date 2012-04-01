@@ -103,11 +103,7 @@ public class MainmenuActivity extends Activity {
 			
 			@Override
 			public void onClick(View arg0) {
-//				startActivity(new Intent(Intent.ACTION_VIEW).setDataAndType(null, com.exina.android.calendar.CalendarActivity.MIME_TYPE));
-				Intent intent = new Intent();
-				intent.setClass(MainmenuActivity.this,
-						com.exina.android.calendar.CalendarActivity.class);
-				startActivity(intent);
+				startActivity(new Intent(Intent.ACTION_VIEW).setDataAndType(null, MensaCalendarActivity.MIME_TYPE));
 			}
 		});
 	}
