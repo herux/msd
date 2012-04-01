@@ -1,16 +1,11 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/relativeLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+    <com.mensa.salesdroid.CalendarView
+        android:id="@+id/mensacalendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-        <GridView
-            android:id="@+id/gridView1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:numColumns="3" >
-        </GridView>
-
-    </RelativeLayout>
+</RelativeLayout>
