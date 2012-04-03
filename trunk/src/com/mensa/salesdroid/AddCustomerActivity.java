@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -54,7 +55,7 @@ public class AddCustomerActivity extends BaseFragmentActivity {
 				HttpClient httpc = new HttpClient();
 				try {
 					input = MensaApplication.mbs_url
-							+ MensaApplication.paths[10] + "&packet="
+							+ MensaApplication.fullsync_paths[10] + "&packet="
 							+ URLEncoder.encode(input, "UTF-8");
 					Log.d("mensa", "url: "+input);
 				} catch (UnsupportedEncodingException e) {
@@ -97,6 +98,7 @@ public class AddCustomerActivity extends BaseFragmentActivity {
 
 	public String saveToJSON() {
 		JSONObject newcustomer = new JSONObject();
+		JSONArray customers = new JSONArray();
 		JSONObject cust_prop = new JSONObject();
 		try {
 			String salescode = getMensaapplication().getSalesid();
@@ -112,10 +114,11 @@ public class AddCustomerActivity extends BaseFragmentActivity {
 			cust_prop.put("delivery_name", etdelname.getText().toString());
 			cust_prop.put("delivery_addr", etdeladdr.getText().toString());
 			cust_prop.put("zip_code", etzipcode.getText().toString());
-			cust_prop.put("coordinate", "");
+			cust_prop.put("coordinate", null);
 			cust_prop.put("send_status", 0);
 
-			newcustomer.put("new_customer", cust_prop);
+			customers.put(0, cust_prop);
+			newcustomer.put("new_customer", customers);
 			File root = Environment.getExternalStorageDirectory();
 			String folder = MensaApplication.APP_DATAFOLDER + "/";
 			File file = new File(root, folder

@@ -55,26 +55,35 @@ public class MensaApplication extends Application {
 			NEWCUSTFILENAME
 			};
 
-	static String[] FASTSYNC = { PRODUCTSFOCUSFILENAME, CUSTOMERSFILENAME,
-			PIUTANGFILENAME };
-
-	static String[] RPOSYNC = {
-
-	};
-
 	static final String mbs_url = "http://simfoni.mbs.co.id/services.php?";
-	static final String[] paths = {
+	static final String[] fullsync_paths = {
 			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3Byb2R1Y3Q=&uid=",
-			"key=czRMZTU0dVRvTWF0MTBu&tab=Y2FsbF9wbGFu&uid=",
+			"key=czRMZTU0dVRvTWF0MTBu&tab=Y2FsbF9wbGFu&uid=", //CUSTOMERSFILENAME
 			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3NhbGVzbWFu",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9mb2N1c19zdG9jaw==&uid=", 
-			"key=czRMZTU0dVRvTWF0MTBu&tab=cGl1dGFuZ19jYWxscGxhbg==&uid=",
+			"key=czRMZTU0dVRvTWF0MTBu&tab=cGl1dGFuZ19jYWxscGxhbg==&uid=", //PIUTANGFILENAME
 			"key=czRMZTU0dVRvTWF0MTBu&tab=Y3VzdF9vcmRlcl90eXBl",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cmV0dXJuX2NhdXNl",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cG9zdF9vcmRlcg==", // post_order
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9wcm9tb19zdG9jaw==&uid=",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cG9zdF9yZXR1cm4=", // post return
 			"key=czRMZTU0dVRvTWF0MTBu&tab=bmV3X2N1c3RvbWVy"}; // newcustomer
+	
+	static String[] FASTSYNC = { 
+		PRODUCTSFOCUSFILENAME,
+		PRODUCTSPROMOFILENAME,
+		CUSTOMERSFILENAME,
+		PIUTANGFILENAME };
+	static final String[] fastsync_paths = {
+			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9mb2N1c19zdG9jaw==&uid=",
+			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9wcm9tb19zdG9jaw==&uid=",
+			"key=czRMZTU0dVRvTWF0MTBu&tab=Y2FsbF9wbGFu&uid=",
+			"key=czRMZTU0dVRvTWF0MTBu&tab=cGl1dGFuZ19jYWxscGxhbg==&uid="
+			};
+	
+	static String[] PENDSYNC = {
+		
+	};
 
 	private ArrayList<Product> products;
 	private ArrayList<Product> productsfocus;

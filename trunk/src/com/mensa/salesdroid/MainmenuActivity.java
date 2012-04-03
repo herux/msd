@@ -132,6 +132,7 @@ public class MainmenuActivity extends Activity {
 					showDialog(SYNCDIALOG);
 					MensaApplication app = (MensaApplication) getApplication();
 					sync = new DataSync(handler, app);
+					sync.setSyncMethod(item);
 					sync.setOnDataSyncListener(new OnDataSyncListener() {
 	
 						@Override
