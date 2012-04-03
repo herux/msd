@@ -55,7 +55,7 @@ public class InfoReturListActivity extends BaseFragmentActivity {
 				HttpClient httpc = new HttpClient();
 				try {
 					input = MensaApplication.mbs_url
-							+ MensaApplication.paths[9] + "&packet="
+							+ MensaApplication.fullsync_paths[9] + "&packet="
 							+ URLEncoder.encode(input, "UTF-8");
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
