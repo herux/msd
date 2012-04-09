@@ -50,6 +50,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 	static DialogFragment newFragment;
 	static int tabIndex;
 	static int proType;
+	static ArrayList<Product> products;
 
 	final static Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -63,28 +64,23 @@ public class ProductviewActivity extends BaseFragmentActivity {
 				switch (tabIndex){
 				case FOCUSTAB: {
 					adapter.setWithsearch(false);
-					adapter.clear();
-					for (int i = 0; i < application.getProductsfocus().size(); i++) {
-						adapter.add(application.getProductsfocus().get(i));
-					}
+					products = application.getProductsfocus();
 					break;
 				}
 				case PROMOTAB: {
 					adapter.setWithsearch(false);
-					adapter.clear();
-					for (int i = 0; i < application.getProductspromo().size(); i++) {
-						adapter.add(application.getProductspromo().get(i));
-					}
+					products = application.getProductspromo();
 					break;
 				}
 				case ALLTAB: {
 					adapter.setWithsearch(true);
-					adapter.clear();
-					for (int i = 0; i < application.getProducts().size(); i++) {
-						adapter.add(application.getProducts().get(i));
-					}
+					products = application.getProducts();
 					break;
 				}
+				}
+				adapter.clear();
+				for (int i = 0; i < products.size(); i++) {
+					adapter.add(products.get(i));
 				}
 				adapter.notifyDataSetChanged();
 				loaded = true;
@@ -160,12 +156,12 @@ public class ProductviewActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
-				Log.d("mensa", "loaded:"+Boolean.toString(loaded));
 				if (loaded) {
 					adapter.setWithsearch(false);
+					products = application.getProductsfocus();
 					adapter.clear();
-					for (int i = 0; i < application.getProductsfocus().size(); i++) {
-						adapter.add(application.getProductsfocus().get(i));
+					for (int i = 0; i < products.size(); i++) {
+						adapter.add(products.get(i));
 					}
 					adapter.notifyDataSetChanged();
 				}
@@ -194,9 +190,10 @@ public class ProductviewActivity extends BaseFragmentActivity {
 				Log.d("mensa", "loaded:"+Boolean.toString(loaded));
 				if (loaded) {
 					adapter.setWithsearch(false);
+					products = application.getProductspromo();
 					adapter.clear();
-					for (int i = 0; i < application.getProductspromo().size(); i++) {
-						adapter.add(application.getProductspromo().get(i));
+					for (int i = 0; i < products.size(); i++) {
+						adapter.add(products.get(i));
 					}
 					adapter.notifyDataSetChanged();
 				}
@@ -222,15 +219,13 @@ public class ProductviewActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
-				Log.d("mensa", "loaded:"+Boolean.toString(loaded));
 				if (loaded) {
 					adapter.setWithsearch(true);
+					products = application.getProducts();
 					adapter.clear();
-					Log.d("mensa", "getProducts size B:"+Integer.toString(application.getProducts().size()));
-					for (int i = 0; i < application.getProducts().size(); i++) {
-						adapter.add(application.getProducts().get(i));
+					for (int i = 0; i < products.size(); i++) {
+						adapter.add(products.get(i));
 					}
-					Log.d("mensa", "getProducts size A:"+Integer.toString(application.getProducts().size()));
 					adapter.notifyDataSetChanged();
 				}
 			}
@@ -278,11 +273,10 @@ public class ProductviewActivity extends BaseFragmentActivity {
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
 
-			if (application.getProducts() == null) {
-				application.setProducts(new ArrayList<Product>());
+			if (products == null) {
+				products = new ArrayList<Product>();
 			}
-			adapter = new ProductsAdapter(getActivity(), R.layout.productlist,
-					application.getProducts());
+			adapter = new ProductsAdapter(getActivity(), R.layout.productlist, products);
 			adapter.setOnListItemClickListener(new OnListItemClickListener() {
 
 				@Override
@@ -380,8 +374,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			View v = inflater.inflate(R.layout.productdetail, null);
 			TextView productdesc = (TextView) v
 					.findViewById(R.id.tvProductDetail);
-			productdesc.setText(application.getProducts().get(getShownIndex())
-					.getDESCRIPTION());
+			productdesc.setText(products.get(getShownIndex()).getDESCRIPTION());
 
 			final TextView tvqty = (TextView) v.findViewById(R.id.edtQty);
 			tvqty.setWidth(50);
@@ -401,9 +394,9 @@ public class ProductviewActivity extends BaseFragmentActivity {
 					if (sis == null) {
 						sis = new ArrayList<SalesItem>();
 					}
-					SalesItem si = new SalesItem(application.getProducts().get(
+					SalesItem si = new SalesItem(products.get(
 							idx), Integer.parseInt(tvqty.getText().toString()),
-							application.getProducts().get(idx).getPRICE());
+							products.get(idx).getPRICE());
 					sis.add(si);
 					application.setSalesitems(sis);
 
@@ -431,8 +424,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 					application.setSalesorder(so);
 
 					Toast toast = Toast.makeText(getActivity(), "Product "
-							+ application.getProducts().get(idx)
-									.getDESCRIPTION()
+							+ products.get(idx).getDESCRIPTION()
 							+ " successfully add to basket", Toast.LENGTH_LONG);
 					toast.show();
 					if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {

@@ -79,12 +79,15 @@ public class Returns {
 				item.put("reason_code", returnitems.get(i).getDescription());
 				item.put("description", returnitems.get(i).getDescription());
 
-				ByteArrayOutputStream bao = new ByteArrayOutputStream();
-				returnitems.get(i).getImage().compress(CompressFormat.JPEG, 90, bao);
-				byte[] ba = bao.toByteArray();
-				String ba1= Base64.encodeToString(ba, Base64.DEFAULT);
+				String bas = "";
+				if (returnitems.get(i).getImage() != null){
+					ByteArrayOutputStream bao = new ByteArrayOutputStream();
+					returnitems.get(i).getImage().compress(CompressFormat.JPEG, 90, bao);
+					byte[] ba = bao.toByteArray();
+					bas= Base64.encodeToString(ba, Base64.DEFAULT);
+				}
 				
-				item.put("pic", ba1); 
+				item.put("pic", bas); 
 				Items.put(i, item);
 			}
 			returns.put("returnnumber", getReturnNo());
