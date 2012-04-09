@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/rlreturns_rf"
+        android:layout_width="wrap_content"
+        android:layout_height="70dip" >
+
+        <TextView
+            android:id="@+id/tvreturnsnum_rf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Returns Num." />
+
+        <TextView
+            android:id="@+id/tvreturnsnum_value_rf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tvreturnsnum_rf"
+            android:text="value" />
+
+        <TextView
+            android:id="@+id/tvreturnsdate_rf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvreturnsnum_rf"
+            android:text="Returns Date." />
+
+        <TextView
+            android:id="@+id/tvreturnsdate_value_rf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvreturnsnum_value_rf"
+            android:layout_toRightOf="@+id/tvreturnsdate_rf"
+            android:text="value" />
+
+        <TextView
+            android:id="@+id/tvreturnssalesid_rf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvreturnsdate_rf"
+            android:text="Salesman." />
+
+        <TextView
+            android:id="@+id/tvsalesid_value_rf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvreturnsdate_value_rf"
+            android:layout_toRightOf="@+id/tvreturnssalesid_rf"
+            android:text="value" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/llcaptionhead_rf"
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/rlreturns_rf"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/tvproductcode_rf"
+            android:layout_width="150dip"
+            android:layout_height="wrap_content"
+            android:background="@drawable/columnhead"
+            android:gravity="center_vertical"
+            android:text="Product Code" />
+
+        <TextView
+            android:id="@+id/tvqty_rf"
+            android:layout_width="70dip"
+            android:layout_height="wrap_content"
+            android:background="@drawable/columnhead"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Qty" />
+
+        <TextView
+            android:id="@+id/tvdescription_rf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/columnhead"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Description" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/flrow_rf"
+        android:layout_width="match_parent"
+        android:layout_height="180dip"
+        android:layout_below="@+id/llcaptionhead_rf" >
+
+        <fragment
+            android:id="@+id/titles_rf"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            class="com.mensa.salesdroid.CheckoutOrderActivity$ReturnItemsListFragment" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/llcaptionfoot_rf"
+        android:layout_width="wrap_content"
+        android:layout_height="60dip"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/flrow_rf"
+        android:orientation="horizontal" >
+        
+    </LinearLayout>
+
+</RelativeLayout>
