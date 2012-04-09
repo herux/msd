@@ -67,25 +67,11 @@ public class CustomerMenuActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onClick(View arg0) {
-				if (getMensaapplication().getSalesitems() == null) {
-					Toast toast = Toast
-							.makeText(
-									CustomerMenuActivity.this,
-									"Checkout without ordering product!.",
-									Toast.LENGTH_SHORT);
-					toast.show();
-					getMensaapplication().setCurrentCustomer(null);
-					finish();
-					Intent intent = new Intent();
-					intent.setClass(CustomerMenuActivity.this, MainmenuActivity.class);
-					startActivity(intent);
-				} else {
 					finish();
 					Intent intent = new Intent();
 					intent.setClass(CustomerMenuActivity.this,
 							CheckoutOrderActivity.class);
 					startActivity(intent);
-				}
 			}
 		});
 
