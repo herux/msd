@@ -14,25 +14,36 @@ import java.net.URLEncoder;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
-import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActionBar;
+import android.support.v4.app.ActionBar.Tab;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class CheckoutOrderActivity extends BaseFragmentActivity {
 	static SalesItemsAdapter adapter;
+	static ReturnItemAdapter adapterRI;
 	static MensaApplication application;
+	ViewPager mViewPager;
+	TabsAdapter mTabsAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,72 +51,138 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 
 		application = getMensaapplication();
 		setContentView(R.layout.checkoutlayout);
-		TextView tvtotal = (TextView) findViewById(R.id.tvgrandtotal);
-		NumberFormat nf = NumberFormat.getInstance();
-		tvtotal.setText(nf.format(application.getSalesorder().getTotal()));
-		TextView tvordernum = (TextView) findViewById(R.id.tvordernum_value);
-		tvordernum.setText(application.getSalesorder().getOrdernumber());
-		TextView tvorderdate = (TextView) findViewById(R.id.tvorderdate_value);
-		tvorderdate.setText(application.getSalesorder().getDates());
-		TextView tvsalesid = (TextView) findViewById(R.id.tvsalesid_value);
-		tvsalesid.setText(application.getSalesorder().getSalesmanid());
-		Button btnsubmit = (Button) findViewById(R.id.btnsubmit);
-		btnsubmit.getBackground().setAlpha(200);
-		btnsubmit.setOnClickListener(new OnClickListener() {
+		Button btnSubmit = (Button) findViewById(R.id.btnsubmit);
+		btnSubmit.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View arg0){
-				application.getSalesorder().setSalesitems(
-						application.getSalesitems());
-				String input = Compression.encodeBase64(application
-						.getSalesorder().saveToJSON());
-				HttpClient httpc = new HttpClient();
-				try {
-					input = MensaApplication.mbs_url
-							+ MensaApplication.fullsync_paths[7] + "&packet="
-							+ URLEncoder.encode(input, "UTF-8");
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-					Toast toast = Toast.makeText(
-							CheckoutOrderActivity.this, "Transaction Failed, error: "+e.getMessage(),
-							Toast.LENGTH_LONG);
-					toast.show();
-				}
-				String response = httpc.executeHttpPost(input, "");
-				Log.d("mensa", "response= " + response);
-
-				try {
-					JSONObject statusObj = new JSONObject(response);
-					String status = statusObj.getString("status");
-					if (status.equals("OK")) {
-						Toast toast = Toast.makeText(
-								CheckoutOrderActivity.this, statusObj.getString("description"),
+			public void onClick(View arg0) {
+				if (application.getSalesitems() != null) {
+					application.getSalesorder().setSalesitems(
+							application.getSalesitems());
+					String input = Compression.encodeBase64(application
+							.getSalesorder().saveToJSON());
+					HttpClient httpc = new HttpClient();
+					try {
+						input = MensaApplication.mbs_url
+								+ MensaApplication.fullsync_paths[7]
+								+ "&packet="
+								+ URLEncoder.encode(input, "UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+						Toast toast = Toast.makeText(CheckoutOrderActivity.this,
+								"Transaction Failed, error: " + e.getMessage(),
 								Toast.LENGTH_LONG);
 						toast.show();
-						// delete file disini
-						File root = Environment.getExternalStorageDirectory();
-						String folder = MensaApplication.APP_DATAFOLDER + "/";
-						File file = new File(root, folder + MensaApplication.SALESORDERFILENAME + application.getSalesorder().getOrdernumber());
-						file.delete();
-						application.setSalesorder(null);
-						application.setSalesitems(null);
-						finish();
-						Intent intent = new Intent();
-						intent.setClass(CheckoutOrderActivity.this, MainmenuActivity.class);
-						startActivity(intent);
 					}
-				} catch (JSONException e) {
-					e.printStackTrace();
-					Toast toast = Toast.makeText(
-							CheckoutOrderActivity.this, "Transaction Failed, error: "+e.getMessage(),
-							Toast.LENGTH_LONG);
-					toast.show();
+					String response = httpc.executeHttpPost(input, "");
+					Log.d("mensa", "response= " + response);
+
+					try {
+						JSONObject statusObj = new JSONObject(response);
+						String status = statusObj.getString("status");
+						if (status.equals("OK")) {
+							Toast toast = Toast.makeText(CheckoutOrderActivity.this,
+									statusObj.getString("description"),
+									Toast.LENGTH_LONG);
+							toast.show();
+							// delete file disini
+							File root = Environment
+									.getExternalStorageDirectory();
+							String folder = MensaApplication.APP_DATAFOLDER
+									+ "/";
+							File file = new File(root, folder
+									+ MensaApplication.SALESORDERFILENAME
+									+ application.getSalesorder()
+											.getOrdernumber());
+							file.delete();
+							application.setSalesorder(null);
+							application.setSalesitems(null);
+							Intent intent = new Intent();
+							intent.setClass(CheckoutOrderActivity.this,
+									MainmenuActivity.class);
+							startActivity(intent);
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+						Toast toast = Toast.makeText(CheckoutOrderActivity.this,
+								"Submit Transaction Order failed, error: " + e.getMessage(),
+								Toast.LENGTH_LONG);
+						toast.show();
+					}
+				}
+				if (application.getReturnitems() != null) {
+					application.getReturns().setReturnitems(
+							application.getReturnitems());
+					String input = Compression.encodeBase64(application
+							.getReturns().saveToJSON());
+					HttpClient httpc = new HttpClient();
+					try {
+						input = MensaApplication.mbs_url
+								+ MensaApplication.fullsync_paths[9]
+								+ "&packet="
+								+ URLEncoder.encode(input, "UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+						Toast toast = Toast.makeText(
+								CheckoutOrderActivity.this,
+								"Submit Transaction Return failed, error: " + e.getMessage(),
+								Toast.LENGTH_LONG);
+						toast.show();
+					}
+					String response = httpc.executeHttpPost(input, "");
+					Log.d("mensa", "response= " + response);
+
+					try {
+						JSONObject statusObj = new JSONObject(response);
+						String status = statusObj.getString("status");
+						if (status.equals("OK")) {
+							Toast toast = Toast.makeText(
+									CheckoutOrderActivity.this,
+									statusObj.getString("description"),
+									Toast.LENGTH_LONG);
+							toast.show();
+							// delete file disini
+							File root = Environment
+									.getExternalStorageDirectory();
+							String folder = MensaApplication.APP_DATAFOLDER
+									+ "/";
+							File file = new File(root, folder
+									+ MensaApplication.RETURNORDERFILENAME
+									+ application.getReturns().getReturnNo());
+							file.delete();
+							application.setReturns(null);
+							application.setReturnitems(null);
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+						Toast toast = Toast.makeText(
+								CheckoutOrderActivity.this,
+								"Transaction Failed, error: " + e.getMessage(),
+								Toast.LENGTH_LONG);
+						toast.show();
+					}
 				}
 			}
 		});
 
 		final ActionBar ab = getSupportActionBar();
 		ab.setSubtitle("Checkout");
+		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		mViewPager = (ViewPager) findViewById(R.id.pager);
+		mTabsAdapter = new TabsAdapter(this, getSupportActionBar(), mViewPager);
+
+		Tab tabOrder = ab.newTab();
+		tabOrder.setText("Order");
+		mTabsAdapter.addTab(tabOrder, OrderFragment.class);
+
+		Tab tabRetur = ab.newTab();
+		tabRetur.setText("Return");
+		mTabsAdapter.addTab(tabRetur, ReturnFragment.class);
+
+		if (savedInstanceState != null) {
+			getSupportActionBar().setSelectedNavigationItem(
+					savedInstanceState.getInt("index"));
+		}
 	}
 
 	public static class SalesItemsFragment extends ListFragment {
@@ -119,6 +196,209 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 
 		}
 
+	}
+
+	public static class ReturnItemsListFragment extends ListFragment {
+
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			adapterRI = new ReturnItemAdapter(getActivity(),
+					R.layout.returnslist, application.getReturnitems());
+			setListAdapter(adapterRI);
+		}
+
+	}
+
+	public static class ReturnFragment extends Fragment {
+		public static ReturnFragment newInstance(int index) {
+			ReturnFragment rf = new ReturnFragment();
+
+			Bundle args = new Bundle();
+			args.putInt("index", index);
+			rf.setArguments(args);
+
+			return rf;
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View v = inflater.inflate(R.layout.returnfragment, null);
+			TextView lblreturnnum = (TextView) v
+					.findViewById(R.id.tvreturnsnum_value_rf);
+			lblreturnnum.setText(application.getReturns().getReturnNo());
+			TextView lblreturndate = (TextView) v
+					.findViewById(R.id.tvreturnsdate_value_rf);
+			lblreturndate
+					.setText(application.getReturns().getDatetimecheckin());
+			TextView lblsales = (TextView) v
+					.findViewById(R.id.tvsalesid_value_rf);
+			lblsales.setText(application.getReturns().getSalesid());
+			return v;
+		}
+	}
+
+	public static class OrderFragment extends Fragment {
+
+		public static OrderFragment newInstance(int index) {
+			OrderFragment of = new OrderFragment();
+
+			Bundle args = new Bundle();
+			args.putInt("index", index);
+			of.setArguments(args);
+
+			return of;
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View v = inflater.inflate(R.layout.orderfragment, null);
+			TextView tvtotal = (TextView) v.findViewById(R.id.tvgrandtotal);
+			NumberFormat nf = NumberFormat.getInstance();
+			tvtotal.setText(nf.format(application.getSalesorder().getTotal()));
+			TextView tvordernum = (TextView) v
+					.findViewById(R.id.tvordernum_value);
+			tvordernum.setText(application.getSalesorder().getOrdernumber());
+			TextView tvorderdate = (TextView) v
+					.findViewById(R.id.tvorderdate_value);
+			tvorderdate.setText(application.getSalesorder().getDates());
+			TextView tvsalesid = (TextView) v
+					.findViewById(R.id.tvsalesid_value);
+			tvsalesid.setText(application.getSalesorder().getSalesmanid());
+			// Button btnsubmit = (Button) v.findViewById(R.id.btnsubmit);
+			// btnsubmit.setOnClickListener(new OnClickListener() {
+			//
+			// @Override
+			// public void onClick(View arg0){
+			// application.getSalesorder().setSalesitems(
+			// application.getSalesitems());
+			// String input = Compression.encodeBase64(application
+			// .getSalesorder().saveToJSON());
+			// HttpClient httpc = new HttpClient();
+			// try {
+			// input = MensaApplication.mbs_url
+			// + MensaApplication.fullsync_paths[7] + "&packet="
+			// + URLEncoder.encode(input, "UTF-8");
+			// } catch (UnsupportedEncodingException e) {
+			// e.printStackTrace();
+			// Toast toast = Toast.makeText(
+			// getActivity(), "Transaction Failed, error: "+e.getMessage(),
+			// Toast.LENGTH_LONG);
+			// toast.show();
+			// }
+			// String response = httpc.executeHttpPost(input, "");
+			// Log.d("mensa", "response= " + response);
+			//
+			// try {
+			// JSONObject statusObj = new JSONObject(response);
+			// String status = statusObj.getString("status");
+			// if (status.equals("OK")) {
+			// Toast toast = Toast.makeText(
+			// getActivity(), statusObj.getString("description"),
+			// Toast.LENGTH_LONG);
+			// toast.show();
+			// // delete file disini
+			// File root = Environment.getExternalStorageDirectory();
+			// String folder = MensaApplication.APP_DATAFOLDER + "/";
+			// File file = new File(root, folder +
+			// MensaApplication.SALESORDERFILENAME +
+			// application.getSalesorder().getOrdernumber());
+			// file.delete();
+			// application.setSalesorder(null);
+			// application.setSalesitems(null);
+			// getActivity().finish();
+			// Intent intent = new Intent();
+			// intent.setClass(getActivity(), MainmenuActivity.class);
+			// startActivity(intent);
+			// }
+			// } catch (JSONException e) {
+			// e.printStackTrace();
+			// Toast toast = Toast.makeText(
+			// getActivity(), "Transaction Failed, error: "+e.getMessage(),
+			// Toast.LENGTH_LONG);
+			// toast.show();
+			// }
+			// }
+			// });
+			//
+			// Button btncancel = (Button) v.findViewById(R.id.btncancel);
+			// btncancel.setOnClickListener(new OnClickListener() {
+			//
+			// @Override
+			// public void onClick(View arg0) {
+			// application.setSalesorder(null);
+			// application.setSalesitems(null);
+			// application.setReturns(null);
+			// application.setReturnitems(null);
+			// getActivity().finish();
+			// }
+			// });
+			return v;
+		}
+
+	}
+
+	public static class TabsAdapter extends FragmentPagerAdapter implements
+			ViewPager.OnPageChangeListener, ActionBar.TabListener {
+		private final Context mContext;
+		private final ActionBar mActionBar;
+		private final ViewPager mViewPager;
+		private final ArrayList<String> mTabs = new ArrayList<String>();
+
+		public TabsAdapter(FragmentActivity activity, ActionBar actionBar,
+				ViewPager pager) {
+			super(activity.getSupportFragmentManager());
+			mContext = activity;
+			mActionBar = actionBar;
+			mViewPager = pager;
+			mViewPager.setAdapter(this);
+			mViewPager.setOnPageChangeListener(this);
+		}
+
+		public void addTab(ActionBar.Tab tab, Class<?> clss) {
+			mTabs.add(clss.getName());
+			mActionBar.addTab(tab.setTabListener(this));
+			notifyDataSetChanged();
+		}
+
+		@Override
+		public int getCount() {
+			return mTabs.size();
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			return Fragment.instantiate(mContext, mTabs.get(position), null);
+		}
+
+		@Override
+		public void onPageScrolled(int position, float positionOffset,
+				int positionOffsetPixels) {
+		}
+
+		@Override
+		public void onPageSelected(int position) {
+			mActionBar.setSelectedNavigationItem(position);
+		}
+
+		@Override
+		public void onPageScrollStateChanged(int state) {
+		}
+
+		@Override
+		public void onTabSelected(Tab tab, FragmentTransaction ft) {
+			mViewPager.setCurrentItem(tab.getPosition());
+		}
+
+		@Override
+		public void onTabReselected(Tab tab, FragmentTransaction ft) {
+		}
+
+		@Override
+		public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+		}
 	}
 
 }
