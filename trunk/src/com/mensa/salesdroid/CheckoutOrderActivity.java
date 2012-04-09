@@ -69,7 +69,8 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 								+ URLEncoder.encode(input, "UTF-8");
 					} catch (UnsupportedEncodingException e) {
 						e.printStackTrace();
-						Toast toast = Toast.makeText(CheckoutOrderActivity.this,
+						Toast toast = Toast.makeText(
+								CheckoutOrderActivity.this,
 								"Transaction Failed, error: " + e.getMessage(),
 								Toast.LENGTH_LONG);
 						toast.show();
@@ -81,7 +82,8 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 						JSONObject statusObj = new JSONObject(response);
 						String status = statusObj.getString("status");
 						if (status.equals("OK")) {
-							Toast toast = Toast.makeText(CheckoutOrderActivity.this,
+							Toast toast = Toast.makeText(
+									CheckoutOrderActivity.this,
 									statusObj.getString("description"),
 									Toast.LENGTH_LONG);
 							toast.show();
@@ -104,9 +106,10 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
-						Toast toast = Toast.makeText(CheckoutOrderActivity.this,
-								"Submit Transaction Order failed, error: " + e.getMessage(),
-								Toast.LENGTH_LONG);
+						Toast toast = Toast.makeText(
+								CheckoutOrderActivity.this,
+								"Submit Transaction Order failed, error: "
+										+ e.getMessage(), Toast.LENGTH_LONG);
 						toast.show();
 					}
 				}
@@ -125,8 +128,8 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 						e.printStackTrace();
 						Toast toast = Toast.makeText(
 								CheckoutOrderActivity.this,
-								"Submit Transaction Return failed, error: " + e.getMessage(),
-								Toast.LENGTH_LONG);
+								"Submit Transaction Return failed, error: "
+										+ e.getMessage(), Toast.LENGTH_LONG);
 						toast.show();
 					}
 					String response = httpc.executeHttpPost(input, "");
@@ -162,6 +165,8 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 						toast.show();
 					}
 				}
+				application.setCurrentCustomer(null);
+				finish();
 			}
 		});
 
@@ -190,8 +195,15 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
+			ArrayList<SalesItem> si;
+			if (application.getSalesitems() != null) {
+				si = application.getSalesitems();
+			} else {
+				si = new ArrayList<SalesItem>();
+			}
+
 			adapter = new SalesItemsAdapter(getActivity(),
-					R.layout.checkoutorder, application.getSalesitems());
+					R.layout.checkoutorder, si);
 			setListAdapter(adapter);
 
 		}
@@ -203,8 +215,14 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
+			ArrayList<ReturnItem> ri;
+			if (application.getReturnitems() != null) {
+				ri = application.getReturnitems();
+			} else {
+				ri = new ArrayList<ReturnItem>();
+			}
 			adapterRI = new ReturnItemAdapter(getActivity(),
-					R.layout.returnslist, application.getReturnitems());
+					R.layout.returnslist, ri);
 			setListAdapter(adapterRI);
 		}
 
@@ -225,16 +243,18 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			View v = inflater.inflate(R.layout.returnfragment, null);
-			TextView lblreturnnum = (TextView) v
-					.findViewById(R.id.tvreturnsnum_value_rf);
-			lblreturnnum.setText(application.getReturns().getReturnNo());
-			TextView lblreturndate = (TextView) v
-					.findViewById(R.id.tvreturnsdate_value_rf);
-			lblreturndate
-					.setText(application.getReturns().getDatetimecheckin());
-			TextView lblsales = (TextView) v
-					.findViewById(R.id.tvsalesid_value_rf);
-			lblsales.setText(application.getReturns().getSalesid());
+			if (application.getReturnitems() != null) {
+				TextView lblreturnnum = (TextView) v
+						.findViewById(R.id.tvreturnsnum_value_rf);
+				lblreturnnum.setText(application.getReturns().getReturnNo());
+				TextView lblreturndate = (TextView) v
+						.findViewById(R.id.tvreturnsdate_value_rf);
+				lblreturndate.setText(application.getReturns()
+						.getDatetimecheckin());
+				TextView lblsales = (TextView) v
+						.findViewById(R.id.tvsalesid_value_rf);
+				lblsales.setText(application.getReturns().getSalesid());
+			}
 			return v;
 		}
 	}
@@ -255,86 +275,22 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			View v = inflater.inflate(R.layout.orderfragment, null);
-			TextView tvtotal = (TextView) v.findViewById(R.id.tvgrandtotal);
-			NumberFormat nf = NumberFormat.getInstance();
-			tvtotal.setText(nf.format(application.getSalesorder().getTotal()));
-			TextView tvordernum = (TextView) v
-					.findViewById(R.id.tvordernum_value);
-			tvordernum.setText(application.getSalesorder().getOrdernumber());
-			TextView tvorderdate = (TextView) v
-					.findViewById(R.id.tvorderdate_value);
-			tvorderdate.setText(application.getSalesorder().getDates());
-			TextView tvsalesid = (TextView) v
-					.findViewById(R.id.tvsalesid_value);
-			tvsalesid.setText(application.getSalesorder().getSalesmanid());
-			// Button btnsubmit = (Button) v.findViewById(R.id.btnsubmit);
-			// btnsubmit.setOnClickListener(new OnClickListener() {
-			//
-			// @Override
-			// public void onClick(View arg0){
-			// application.getSalesorder().setSalesitems(
-			// application.getSalesitems());
-			// String input = Compression.encodeBase64(application
-			// .getSalesorder().saveToJSON());
-			// HttpClient httpc = new HttpClient();
-			// try {
-			// input = MensaApplication.mbs_url
-			// + MensaApplication.fullsync_paths[7] + "&packet="
-			// + URLEncoder.encode(input, "UTF-8");
-			// } catch (UnsupportedEncodingException e) {
-			// e.printStackTrace();
-			// Toast toast = Toast.makeText(
-			// getActivity(), "Transaction Failed, error: "+e.getMessage(),
-			// Toast.LENGTH_LONG);
-			// toast.show();
-			// }
-			// String response = httpc.executeHttpPost(input, "");
-			// Log.d("mensa", "response= " + response);
-			//
-			// try {
-			// JSONObject statusObj = new JSONObject(response);
-			// String status = statusObj.getString("status");
-			// if (status.equals("OK")) {
-			// Toast toast = Toast.makeText(
-			// getActivity(), statusObj.getString("description"),
-			// Toast.LENGTH_LONG);
-			// toast.show();
-			// // delete file disini
-			// File root = Environment.getExternalStorageDirectory();
-			// String folder = MensaApplication.APP_DATAFOLDER + "/";
-			// File file = new File(root, folder +
-			// MensaApplication.SALESORDERFILENAME +
-			// application.getSalesorder().getOrdernumber());
-			// file.delete();
-			// application.setSalesorder(null);
-			// application.setSalesitems(null);
-			// getActivity().finish();
-			// Intent intent = new Intent();
-			// intent.setClass(getActivity(), MainmenuActivity.class);
-			// startActivity(intent);
-			// }
-			// } catch (JSONException e) {
-			// e.printStackTrace();
-			// Toast toast = Toast.makeText(
-			// getActivity(), "Transaction Failed, error: "+e.getMessage(),
-			// Toast.LENGTH_LONG);
-			// toast.show();
-			// }
-			// }
-			// });
-			//
-			// Button btncancel = (Button) v.findViewById(R.id.btncancel);
-			// btncancel.setOnClickListener(new OnClickListener() {
-			//
-			// @Override
-			// public void onClick(View arg0) {
-			// application.setSalesorder(null);
-			// application.setSalesitems(null);
-			// application.setReturns(null);
-			// application.setReturnitems(null);
-			// getActivity().finish();
-			// }
-			// });
+			if (application.getSalesitems() != null) {
+				TextView tvtotal = (TextView) v.findViewById(R.id.tvgrandtotal);
+				NumberFormat nf = NumberFormat.getInstance();
+				tvtotal.setText(nf.format(application.getSalesorder()
+						.getTotal()));
+				TextView tvordernum = (TextView) v
+						.findViewById(R.id.tvordernum_value);
+				tvordernum
+						.setText(application.getSalesorder().getOrdernumber());
+				TextView tvorderdate = (TextView) v
+						.findViewById(R.id.tvorderdate_value);
+				tvorderdate.setText(application.getSalesorder().getDates());
+				TextView tvsalesid = (TextView) v
+						.findViewById(R.id.tvsalesid_value);
+				tvsalesid.setText(application.getSalesorder().getSalesmanid());
+			}
 			return v;
 		}
 

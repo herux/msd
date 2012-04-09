@@ -48,53 +48,12 @@ public class InfoReturListActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onClick(View arg0) {
-				application.getReturns().setReturnitems(
-						application.getReturnitems());
-				String input = Compression.encodeBase64(application
-						.getReturns().saveToJSON());
-				HttpClient httpc = new HttpClient();
-				try {
-					input = MensaApplication.mbs_url
-							+ MensaApplication.fullsync_paths[9] + "&packet="
-							+ URLEncoder.encode(input, "UTF-8");
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-					Toast toast = Toast.makeText(InfoReturListActivity.this,
-							"Transaction Failed, error: " + e.getMessage(),
-							Toast.LENGTH_LONG);
-					toast.show();
-				}
-				String response = httpc.executeHttpPost(input, "");
-				Log.d("mensa", "response= " + response);
-
-				try {
-					JSONObject statusObj = new JSONObject(response);
-					String status = statusObj.getString("status");
-					if (status.equals("OK")) {
-						Toast toast = Toast.makeText(
-								InfoReturListActivity.this,
-								statusObj.getString("description"),
-								Toast.LENGTH_LONG);
-						toast.show();
-						// delete file disini
-						File root = Environment.getExternalStorageDirectory();
-						String folder = MensaApplication.APP_DATAFOLDER + "/";
-						File file = new File(root, folder
-								+ MensaApplication.RETURNORDERFILENAME
-								+ application.getReturns().getReturnNo());
-						file.delete();
-						application.setReturns(null);
-						application.setReturnitems(null);
-						
-						finish();
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
-					Toast toast = Toast.makeText(InfoReturListActivity.this,
-							"Transaction Failed, error: " + e.getMessage(),
-							Toast.LENGTH_LONG);
-					toast.show();
-				}
+				application.getReturns().setReturnitems(application.getReturnitems());
+				Intent intent = new Intent();
+				intent.setClass(InfoReturListActivity.this,
+						CustomerMenuActivity.class);
+				startActivity(intent);
+				finish();
 			}
 		});
 
