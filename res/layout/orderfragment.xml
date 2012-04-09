@@ -1,29 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
-        android:layout_width="fill_parent"
-        android:layout_height="200dip" />
-    
-    <Button 
-        android:id="@+id/btnsubmit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/pager"
-        android:text="Submit"/>
-    <Button 
-        android:id="@+id/btncancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/pager"
-        android:layout_toRightOf="@+id/btnsubmit"
-        android:text="Cancel"/>
-
-</RelativeLayout>
-<!-- <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
@@ -74,11 +50,12 @@
             android:layout_toRightOf="@+id/tvsalesid"
             android:layout_below="@+id/tvorderdate_value"
             android:text="value" />
+
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/llcaptionhead"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="30dip"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/rlsalesorder"
@@ -86,19 +63,11 @@
 
         <TextView
             android:id="@+id/tvname"
-            android:layout_width="200dip"
+            android:layout_width="150dip"
             android:layout_height="wrap_content"
             android:background="@drawable/columnhead"
             android:gravity="center_vertical"
             android:text="Product Name" />
-
-        <TextView
-            android:id="@+id/tvprice"
-            android:layout_width="100dip"
-            android:layout_height="wrap_content"
-            android:background="@drawable/columnhead"
-            android:gravity="center_vertical|center_horizontal"
-            android:text="Price" />
 
         <TextView
             android:id="@+id/tvqty"
@@ -110,17 +79,18 @@
 
         <TextView
             android:id="@+id/tvtotal"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="@drawable/columnhead"
             android:gravity="center_vertical|center_horizontal"
-            android:text="SubTotal" />
+            android:text="Total" />
     </LinearLayout>
 
     <FrameLayout
         android:id="@+id/flrow"
         android:layout_width="match_parent"
-        android:layout_height="100dip"
+        android:layout_height="180dip"
         android:layout_below="@+id/llcaptionhead" >
 
         <fragment
@@ -132,30 +102,17 @@
 
     <LinearLayout
         android:id="@+id/llfooter"
-        android:layout_width="fill_parent"
-        android:layout_height="60dip"
+        android:layout_width="wrap_content"
+        android:layout_height="150dip"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/flrow"
         android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/btnsubmit"
-            android:layout_width="100dip"
-            android:layout_height="wrap_content"
-            android:text="Submit" />
-        
-        <Button 
-            android:id="@+id/btncancel"
-            android:layout_width="100dip"
-            android:layout_height="wrap_content"
-            android:text="Cancel"/>
-
         <TextView
-            android:id="@+id/tvprice"
-            android:layout_width="100dip"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|center_horizontal" />
-
+            android:id="@+id/tvname"
+            android:layout_width="150dip"
+            android:layout_height="wrap_content"/>
+        
         <TextView
             android:id="@+id/tvqty"
             android:layout_width="70dip"
@@ -163,11 +120,12 @@
 
         <TextView
             android:id="@+id/tvgrandtotal"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/columnhead"
             android:gravity="center_vertical|right"
             android:text="Total" />
     </LinearLayout>
-</RelativeLayout> -->
+
+</RelativeLayout>
