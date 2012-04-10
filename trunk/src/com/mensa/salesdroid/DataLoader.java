@@ -84,7 +84,7 @@ public class DataLoader {
 											0,// jsonproducts.getJSONObject(j).getLong("QTY_RESERVED"),
 											jsonproducts.getJSONObject(j)
 													.optDouble("HNA", 0));
-									product.setFileSource(filelist[k].getName());
+									product.setFileSource(filelist[k].getAbsolutePath());
 									((Products) products).addProduct(product);
 								}
 								datalist[i] = products;
@@ -161,10 +161,9 @@ public class DataLoader {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							Log.d("mensa", "product to add=" + product.getDESCRIPTION());
+							product.setFileSource("/sdcard/" + MensaApplication.APP_DATAFOLDER + "/"
+									+ MensaApplication.FULLSYNC[3]);
 							((Products) productsfocus).addProduct(product);
-							Log.d("mensa", "productfocus1=" + productsfocus.toString());
-							Log.d("mensa", "productfocus2=" + ((Products) productsfocus).getProducts().get(0).getDESCRIPTION());
 						}
 					}
 					datalist[i] = productsfocus;
@@ -234,6 +233,8 @@ public class DataLoader {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
+							product.setFileSource("/sdcard/" + MensaApplication.APP_DATAFOLDER + "/"
+									+ MensaApplication.FULLSYNC[8]);
 							((Products) productspromo).addProduct(product);
 						}
 					}

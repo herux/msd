@@ -1,13 +1,21 @@
 package com.mensa.salesdroid;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import net.londatiga.android.ActionItem;
 import net.londatiga.android.QuickAction;
 import net.londatiga.android.QuickAction.OnActionItemClickListener;
 import android.app.Activity;
 import android.content.res.Configuration;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mensa.salesdroid.EditTextSearch.OnSearchFoundListener;
 
@@ -55,12 +64,14 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
 		}
 		TextView label = (TextView) row.findViewById(R.id.tvTable);
 		label.setText("Name. " + getItem(position).getDESCRIPTION());
+		TextView lblqty = (TextView) row.findViewById(R.id.tvQty);
+		lblqty.setText("Qty. "+getItem(position).getQTY_ONHAND());
 		TextView partno = (TextView) row.findViewById(R.id.tvCode);
 		partno.setText("PartNo. " + getItem(position).getPART_NO());
 		TextView labelharga = (TextView) row.findViewById(R.id.tvHarga);
 		NumberFormat nf = NumberFormat.getInstance();
 		String sharga = nf.format(getItem(position).getPRICE());
-		labelharga.setText(sharga);
+		labelharga.setText("Price. "+sharga);
 		ImageView iv = (ImageView) row.findViewById(R.id.imageView1);
 
 		if ((position == 0) && (isWithsearch())) {
@@ -68,6 +79,7 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
 			rl.removeView(label);
 			rl.removeView(labelharga);
 			rl.removeView(partno);
+			rl.removeView(lblqty);
 			final EditTextSearch etSearch = new EditTextSearch(activity);
 			if (row.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 				etSearch.setBackgroundResource(R.drawable.searchbkgland);
@@ -109,7 +121,55 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
 			@Override
 			public void onItemClick(QuickAction source, int pos, int actionId) {
 				if (actionId == REFRESHITEM) {
-
+					HttpClient http = new HttpClient();
+					String response = http
+							.executeHttpPost(
+									"http://simfoni.mbs.co.id/services.php?key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9zdG9jaw==&uid="
+											+ ((MensaApplication) activity
+													.getApplication())
+													.getSalesid()
+											+ "&part_no="
+											+ getItem(position).getPART_NO(),
+									"");
+					Log.d("mensa", "response : "+response);
+					if (!response.equals("null")){
+						try {
+							JSONObject psObj = new JSONObject(response);
+							JSONArray psArr = psObj.getJSONArray("product_stock");
+							getItem(position).setDESCRIPTION(psArr.getJSONObject(0).getString("DESCRIPTION"));
+							getItem(position).setPRICE(psArr.getJSONObject(0).optDouble("HNA", 0)); 
+							getItem(position).setQTY_ONHAND(psArr.getJSONObject(0).optInt("QTY", 0));
+							notifyDataSetChanged();
+							Toast toast = Toast.makeText(activity, "Product "+getItem(position).getDESCRIPTION()+ " updated!.", Toast.LENGTH_SHORT);
+							toast.show();
+							
+							FileInputStream jsonfile = null;
+							try {
+								Log.d("mensa", "file name: "+getItem(position).getFileSource());
+								jsonfile = new FileInputStream(new File(getItem(position).getFileSource()));
+							} catch (FileNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							String productSTR = ((MensaApplication)activity.getApplication())
+									.getFileContent(jsonfile);
+							psObj = new JSONObject(productSTR);
+							JSONArray jsonproducts = psObj
+									.getJSONArray("master_product");
+							for (int i = 0; i < jsonproducts.length(); i++) {
+								if(getItem(position).getPART_NO().equals(jsonproducts.getJSONObject(i).getString("PART_NO"))){
+									jsonproducts.getJSONObject(i).put("QTY_ONHAND", getItem(position).getQTY_ONHAND());
+									jsonproducts.getJSONObject(i).put("HNA", getItem(position).getPRICE());
+									break;
+								}
+							}
+							File file = new File(getItem(position).getFileSource());
+							((MensaApplication)activity.getApplication()).SaveStringToFile(file, psObj.toString());
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} 
+					}
 				}
 				qa.dismiss();
 			}
