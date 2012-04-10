@@ -51,5 +51,15 @@
         android:text="Harga"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/titlemaincolor" />
+    
+    <TextView
+        android:id="@+id/tvQty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvHarga"
+        android:layout_toLeftOf="@+id/imageView2"
+        android:text="Qty"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/titlemaincolor" />
 
 </RelativeLayout>
