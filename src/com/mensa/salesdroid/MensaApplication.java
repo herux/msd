@@ -32,6 +32,7 @@ public class MensaApplication extends Application {
 	static final String PIUTANGFILENAME = "piutangs.mbs";
 	static final String ORDERTYPE = "ordertype.mbs";
 	static final String RETURNCAUSE = "returncause.mbs";
+	static final String CUSTGROUP = "customersgroup.mbs";
 
 	static final String PRODUCTSPAGEFILENAME = "products_";
 	static final String SALESMANSPAGEFILENAME = "salesmans_";
@@ -52,7 +53,8 @@ public class MensaApplication extends Application {
 			SALESORDERFILENAME, 
 			PRODUCTSPROMOFILENAME,
 			RETURNORDERFILENAME,
-			NEWCUSTFILENAME
+			NEWCUSTFILENAME,
+			CUSTGROUP
 			};
 
 	static final String mbs_url = "http://simfoni.mbs.co.id/services.php?";
@@ -67,18 +69,25 @@ public class MensaApplication extends Application {
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cG9zdF9vcmRlcg==", // post_order
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9wcm9tb19zdG9jaw==&uid=",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cG9zdF9yZXR1cm4=", // post return
-			"key=czRMZTU0dVRvTWF0MTBu&tab=bmV3X2N1c3RvbWVy"}; // newcustomer
+			"key=czRMZTU0dVRvTWF0MTBu&tab=bmV3X2N1c3RvbWVy", // newcustomer
+			"key=czRMZTU0dVRvTWF0MTBu&tab=Y3VzdF9ncnA"}; // customersgroup 
 	
 	static String[] FASTSYNC = { 
 		PRODUCTSFOCUSFILENAME,
 		PRODUCTSPROMOFILENAME,
 		CUSTOMERSFILENAME,
-		PIUTANGFILENAME };
+		PIUTANGFILENAME,
+		CUSTGROUP,
+		ORDERTYPE, 
+		RETURNCAUSE};
 	static final String[] fastsync_paths = {
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9mb2N1c19zdG9jaw==&uid=",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9wcm9tb19zdG9jaw==&uid=",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=Y2FsbF9wbGFu&uid=",
-			"key=czRMZTU0dVRvTWF0MTBu&tab=cGl1dGFuZ19jYWxscGxhbg==&uid="
+			"key=czRMZTU0dVRvTWF0MTBu&tab=cGl1dGFuZ19jYWxscGxhbg==&uid=",
+			"key=czRMZTU0dVRvTWF0MTBu&tab=Y3VzdF9ncnA&uid=",
+			"key=czRMZTU0dVRvTWF0MTBu&tab=Y3VzdF9vcmRlcl90eXBl&uid=",
+			"key=czRMZTU0dVRvTWF0MTBu&tab=cmV0dXJuX2NhdXNl&uid="
 			};
 	
 	static String[] PENDSYNC = {
