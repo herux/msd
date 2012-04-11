@@ -76,13 +76,19 @@
                     android:gravity="right"
                     android:text="Group" />
 
-                <EditText
+                <Spinner 
+            		android:id="@+id/spgrup"
+            		android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:width="100dip"/>
+                <!--  <EditText
                     android:id="@+id/etgrup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:imeOptions="actionNext"
-                    android:width="100dip" />
+                    android:width="100dip" />-->
             </TableRow>
 
             <TableRow>

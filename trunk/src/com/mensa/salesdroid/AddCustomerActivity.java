@@ -1,6 +1,8 @@
 package com.mensa.salesdroid;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -14,13 +16,19 @@ import android.support.v4.app.ActionBar;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 public class AddCustomerActivity extends BaseFragmentActivity {
-	EditText etcode, etname, etchain, etgroup, etbillname, etbilladdr,
-			etdelname, etdeladdr, etzipcode;
+	EditText etcode, etname, etchain, etbillname, etbilladdr, etdelname,
+			etdeladdr, etzipcode;
+	Spinner spgrup;
+	String groupid;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +43,50 @@ public class AddCustomerActivity extends BaseFragmentActivity {
 		etcode = (EditText) findViewById(R.id.etcode);
 		etname = (EditText) findViewById(R.id.etname);
 		etchain = (EditText) findViewById(R.id.etchain);
-		etgroup = (EditText) findViewById(R.id.etgrup);
+
+		// ----load json returncause
+		FileInputStream jsonfile = null;
+		try {
+			jsonfile = new FileInputStream(new File("/sdcard/"
+					+ MensaApplication.APP_DATAFOLDER + "/"
+					+ MensaApplication.FULLSYNC[11]));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			String rcContent = MensaApplication.getFileContent(jsonfile);
+			JSONObject rcObj = new JSONObject(rcContent);
+			JSONArray rcGroup = rcObj.getJSONArray("mob_customer_group");
+			String[] groups  = new String[rcGroup.length()];
+			final String[] groupids= new String[rcGroup.length()];
+			for (int i = 0; i < rcGroup.length(); i++) {
+				groups[i]  = rcGroup.getJSONObject(i).getString("DESCRIPTION");
+				groupids[i]= rcGroup.getJSONObject(i).getString("CUST_GRP");
+			}
+			spgrup = (Spinner) findViewById(R.id.spgrup);
+			spgrup.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View v,
+						int position, long id) {
+					groupid = groupids[position];
+				}
+
+				@Override
+				public void onNothingSelected(AdapterView<?> parent) {
+					// TODO Auto-generated method stub
+
+				}
+
+			});
+			ArrayAdapter adapter = new ArrayAdapter(this,
+					android.R.layout.simple_spinner_dropdown_item, groups);
+			spgrup.setAdapter(adapter);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		// ----
 
 		etbillname = (EditText) findViewById(R.id.etnamatagihan);
 		etbilladdr = (EditText) findViewById(R.id.etalamattagihan);
@@ -50,14 +101,14 @@ public class AddCustomerActivity extends BaseFragmentActivity {
 			@Override
 			public void onClick(View arg0) {
 				String json = saveToJSON();
-				Log.d("mensa", "json: "+json);
+				Log.d("mensa", "json: " + json);
 				String input = Compression.encodeBase64(json);
 				HttpClient httpc = new HttpClient();
 				try {
 					input = MensaApplication.mbs_url
 							+ MensaApplication.fullsync_paths[10] + "&packet="
 							+ URLEncoder.encode(input, "UTF-8");
-					Log.d("mensa", "url: "+input);
+					Log.d("mensa", "url: " + input);
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 					Toast toast = Toast.makeText(AddCustomerActivity.this,
@@ -108,7 +159,7 @@ public class AddCustomerActivity extends BaseFragmentActivity {
 			cust_prop.put("new_cust_code", etcode.getText().toString());
 			cust_prop.put("cust_name", etname.getText().toString());
 			cust_prop.put("cust_chain", etchain.getText().toString());
-			cust_prop.put("cust_group", etgroup.getText().toString());
+			cust_prop.put("cust_group", groupid);
 			cust_prop.put("bill_name", etbillname.getText().toString());
 			cust_prop.put("bill_addr", etbilladdr.getText().toString());
 			cust_prop.put("delivery_name", etdelname.getText().toString());

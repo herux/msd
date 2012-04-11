@@ -115,7 +115,7 @@ public class MainmenuActivity extends Activity {
 		case SYNCDIALOG: {
 			progressDialog = new ProgressDialog(MainmenuActivity.this);
 			progressDialog.setTitle("Data Synchronization");
-			progressDialog.setMessage(MensaApplication.FULLSYNC[0]);
+//			progressDialog.setMessage(MensaApplication.FULLSYNC[0]);
 			progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 			progressDialog.setMax(MensaApplication.FULLSYNC.length);
 			ret = progressDialog;
