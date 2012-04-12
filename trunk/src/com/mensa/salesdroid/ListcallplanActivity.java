@@ -124,6 +124,7 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 				intent.setClass(getActivity(), ListcallplanDetailActivity.class);
 				intent.putExtra("index", index);
 				startActivity(intent);
+				getActivity().finish();
 			}
 		}
 

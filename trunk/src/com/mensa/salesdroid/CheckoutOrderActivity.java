@@ -44,6 +44,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 	static MensaApplication application;
 	ViewPager mViewPager;
 	TabsAdapter mTabsAdapter;
+	static final int CHECKOUT_DIALOG = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +60,9 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 				if (application.getSalesitems() != null) {
 					application.getSalesorder().setSalesitems(
 							application.getSalesitems());
-					String input = Compression.encodeBase64(application
-							.getSalesorder().saveToJSON());
+					String input = application.getSalesorder().saveToJSON();
+					Log.d("mensa", "request: "+input);
+					input = Compression.encodeBase64(input);
 					HttpClient httpc = new HttpClient();
 					try {
 						input = MensaApplication.mbs_url
@@ -99,10 +101,6 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 							file.delete();
 							application.setSalesorder(null);
 							application.setSalesitems(null);
-							Intent intent = new Intent();
-							intent.setClass(CheckoutOrderActivity.this,
-									MainmenuActivity.class);
-							startActivity(intent);
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -116,8 +114,9 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 				if (application.getReturnitems() != null) {
 					application.getReturns().setReturnitems(
 							application.getReturnitems());
-					String input = Compression.encodeBase64(application
-							.getReturns().saveToJSON());
+					String input = application.getReturns().saveToJSON();
+					Log.d("mensa", "request: "+input);
+					input = Compression.encodeBase64(input);
 					HttpClient httpc = new HttpClient();
 					try {
 						input = MensaApplication.mbs_url
@@ -166,6 +165,30 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 					}
 				}
 				application.setCurrentCustomer(null);
+				Intent intent = new Intent();
+				intent.setClass(CheckoutOrderActivity.this,
+						MainmenuActivity.class);
+				startActivity(intent);
+				finish();
+			}
+		});
+		
+		Button btnCancel = (Button) findViewById(R.id.btncancel);
+		btnCancel.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				application.setCurrentCustomer(null);
+				application.setSalesorder(null);
+				application.setSalesitems(null);
+				application.setReturnitems(null);
+				application.setReturns(null);
+				Toast toast = Toast.makeText(CheckoutOrderActivity.this, "Cancel Order and/or Return", Toast.LENGTH_SHORT);
+				toast.show();
+				Intent intent = new Intent();
+				intent.setClass(CheckoutOrderActivity.this,
+						MainmenuActivity.class);
+				startActivity(intent);
 				finish();
 			}
 		});
