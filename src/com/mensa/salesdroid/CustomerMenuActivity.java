@@ -67,7 +67,6 @@ public class CustomerMenuActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onClick(View arg0) {
-					finish();
 					Intent intent = new Intent();
 					intent.setClass(CustomerMenuActivity.this,
 							CheckoutOrderActivity.class);

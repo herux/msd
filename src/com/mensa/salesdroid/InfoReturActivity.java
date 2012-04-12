@@ -185,11 +185,13 @@ public class InfoReturActivity extends BaseFragmentActivity {
 				}
 				ris.add(ri);
 				application.setReturnitems(ris);
-
-				Intent list = new Intent(InfoReturActivity.this,
-						InfoReturListActivity.class);
-				startActivity(list);
+				application.getReturns().setReturnitems(ris);
+				Toast toast = Toast.makeText(InfoReturActivity.this, "Data return successfully saved!", Toast.LENGTH_SHORT);
+				toast.show();
 				finish();
+				Intent list = new Intent(InfoReturActivity.this,
+						InfoReturActivity.class);
+				startActivity(list);
 			}
 		});
 
@@ -214,29 +216,29 @@ public class InfoReturActivity extends BaseFragmentActivity {
 
 		@Override
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-			MenuItem returnlist = menu.add("Returns List");
-			returnlist.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-			returnlist
-					.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-
-						@Override
-						public boolean onMenuItemClick(MenuItem item) {
-							if (application.getReturnitems() != null) {
-								Intent newret = new Intent(getActivity(),
-										InfoReturListActivity.class);
-								startActivity(newret);
-								getActivity().finish();
-							} else {
-								Toast toast = Toast
-										.makeText(
-												getActivity(),
-												"List is still empty, please fill in at least one",
-												Toast.LENGTH_LONG);
-								toast.show();
-							}
-							return false;
-						}
-					});
+//			MenuItem returnlist = menu.add("Returns List");
+//			returnlist.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+//			returnlist
+//					.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+//
+//						@Override
+//						public boolean onMenuItemClick(MenuItem item) {
+//							if (application.getReturnitems() != null) {
+//								Intent newret = new Intent(getActivity(),
+//										InfoReturListActivity.class);
+//								startActivity(newret);
+//								getActivity().finish();
+//							} else {
+//								Toast toast = Toast
+//										.makeText(
+//												getActivity(),
+//												"List is still empty, please fill in at least one",
+//												Toast.LENGTH_LONG);
+//								toast.show();
+//							}
+//							return false;
+//						}
+//					});
 		}
 
 	}

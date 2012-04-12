@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,7 +62,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 				application.setProductsfocus(productsThread.getProductsfocus());
 				application.setProductspromo(productsThread.getProductspromo());
 
-				switch (tabIndex){
+				switch (tabIndex) {
 				case FOCUSTAB: {
 					adapter.setWithsearch(false);
 					products = application.getProductsfocus();
@@ -187,7 +188,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
-				Log.d("mensa", "loaded:"+Boolean.toString(loaded));
+				Log.d("mensa", "loaded:" + Boolean.toString(loaded));
 				if (loaded) {
 					adapter.setWithsearch(false);
 					products = application.getProductspromo();
@@ -255,14 +256,10 @@ public class ProductviewActivity extends BaseFragmentActivity {
 		}
 		}
 
-//		if (application.getProducts() != null){
-//			Log.d("mensa", "getProducts size:"+Integer.toString(application.getProducts().size()));
-//		}
-//		if ((application.getProducts() == null)||(application.getProducts().size() == 1)) {
+		if ((application.getProducts() == null)
+				&& (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)) {
 			Reload();
-//		}else{
-//			loaded = true;
-//		}
+		}
 	}
 
 	public static class ProductFragment extends ListFragment {
@@ -276,20 +273,21 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			if (products == null) {
 				products = new ArrayList<Product>();
 			}
-			adapter = new ProductsAdapter(getActivity(), R.layout.productlist, products);
+			adapter = new ProductsAdapter(getActivity(), R.layout.productlist,
+					products);
 			adapter.setOnListItemClickListener(new OnListItemClickListener() {
 
 				@Override
 				public void OnListItemClick(View view, int position) {
-					switch (proType){
+					switch (proType) {
 					case proCAPTURORDER: {
 						showDetails(position);
 						break;
 					}
 					case proBROWSER: {
 						Intent returnIntent = new Intent();
-					    returnIntent.putExtra("protype", position);
-					    getActivity().setResult(RESULT_OK, returnIntent);
+						returnIntent.putExtra("protype", position);
+						getActivity().setResult(RESULT_OK, returnIntent);
 						getActivity().finish();
 						break;
 					}
@@ -374,7 +372,13 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			View v = inflater.inflate(R.layout.productdetail, null);
 			TextView productdesc = (TextView) v
 					.findViewById(R.id.tvProductDetail);
-			productdesc.setText(products.get(getShownIndex()).getDESCRIPTION());
+			if (products.size()>0){
+				productdesc.setText(products.get(getShownIndex()).getDESCRIPTION());
+			}else{
+				productdesc.setText("Description");
+			}
+			ImageView iv = (ImageView) v.findViewById(R.id.imgProduct);
+			iv.setImageDrawable(getResources().getDrawable(R.drawable.box));
 
 			final TextView tvqty = (TextView) v.findViewById(R.id.edtQty);
 			tvqty.setWidth(50);
@@ -394,9 +398,9 @@ public class ProductviewActivity extends BaseFragmentActivity {
 					if (sis == null) {
 						sis = new ArrayList<SalesItem>();
 					}
-					SalesItem si = new SalesItem(products.get(
-							idx), Integer.parseInt(tvqty.getText().toString()),
-							products.get(idx).getPRICE());
+					SalesItem si = new SalesItem(products.get(idx), Integer
+							.parseInt(tvqty.getText().toString()), products
+							.get(idx).getPRICE());
 					sis.add(si);
 					application.setSalesitems(sis);
 
