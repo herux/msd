@@ -22,8 +22,10 @@ import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,7 +51,7 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
 	public interface OnListItemClickListener {
 		public abstract void OnListItemClick(View view, int position);
 	}
-
+	
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 
@@ -215,7 +217,7 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
 				}
 			}
 		});
-
+		
 		return row;
 	}
 
