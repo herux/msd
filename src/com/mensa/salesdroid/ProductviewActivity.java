@@ -28,6 +28,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver.OnScrollChangedListener;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -256,15 +258,27 @@ public class ProductviewActivity extends BaseFragmentActivity {
 		}
 		}
 
-		if ((application.getProducts() == null)
-				&& (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)) {
+//		if ((application.getProducts() == null)
+//				&& (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)) {
 			Reload();
-		}
+//		}
 	}
 
-	public static class ProductFragment extends ListFragment {
+	public static class ProductFragment extends ProductsListFragment {
 		boolean mDualPane;
 		int mCurCheckPosition = 0;
+
+		@Override
+		public void onScroll(AbsListView view, int firstVisibleItem,
+				int visibleItemCount, int totalItemCount) {
+			super.onScroll(view, firstVisibleItem, visibleItemCount,
+					totalItemCount);
+			if (visibleItemCount == 20) {
+				Toast toast = Toast.makeText(getActivity(), "20",
+						Toast.LENGTH_SHORT);
+				toast.show();
+			}
+		}
 
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
@@ -372,9 +386,10 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			View v = inflater.inflate(R.layout.productdetail, null);
 			TextView productdesc = (TextView) v
 					.findViewById(R.id.tvProductDetail);
-			if (products.size()>0){
-				productdesc.setText(products.get(getShownIndex()).getDESCRIPTION());
-			}else{
+			if (products.size() > 0) {
+				productdesc.setText(products.get(getShownIndex())
+						.getDESCRIPTION());
+			} else {
 				productdesc.setText("Description");
 			}
 			ImageView iv = (ImageView) v.findViewById(R.id.imgProduct);
