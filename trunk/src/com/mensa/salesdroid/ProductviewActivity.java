@@ -264,21 +264,21 @@ public class ProductviewActivity extends BaseFragmentActivity {
 //		}
 	}
 
-	public static class ProductFragment extends ProductsListFragment {
+	public static class ProductFragment extends ListFragment {
 		boolean mDualPane;
 		int mCurCheckPosition = 0;
 
-		@Override
-		public void onScroll(AbsListView view, int firstVisibleItem,
-				int visibleItemCount, int totalItemCount) {
-			super.onScroll(view, firstVisibleItem, visibleItemCount,
-					totalItemCount);
-			if (visibleItemCount == 20) {
-				Toast toast = Toast.makeText(getActivity(), "20",
-						Toast.LENGTH_SHORT);
-				toast.show();
-			}
-		}
+//		@Override
+//		public void onScroll(AbsListView view, int firstVisibleItem,
+//				int visibleItemCount, int totalItemCount) {
+//			super.onScroll(view, firstVisibleItem, visibleItemCount,
+//					totalItemCount);
+//			if (visibleItemCount == 20) {
+//				Toast toast = Toast.makeText(getActivity(), "20",
+//						Toast.LENGTH_SHORT);
+//				toast.show();
+//			}
+//		}
 
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
