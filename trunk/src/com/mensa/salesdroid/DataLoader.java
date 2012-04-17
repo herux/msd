@@ -36,6 +36,7 @@ public class DataLoader {
 	private boolean ExtStorageAvailable = false;
 	private boolean ExtStorageWriteable = false;
 	private BaseDataListObj[] datalist;
+	private int page;
 	String state = Environment.getExternalStorageState();
 
 	public DataLoader(int... dlData) {
@@ -53,41 +54,51 @@ public class DataLoader {
 
 						File dir = new File(datafolder);
 						File[] filelist = dir.listFiles();
+						int p = 0;
 						for (int k = filelist.length - 1; k > 0; k--) {
 							if (filelist[k].getName().contains(
 									MensaApplication.PRODUCTSPAGEFILENAME)) {
-								FileInputStream productsfile = new FileInputStream(
-										filelist[k]);
-								Log.d("mensa",
-										"file to read(i=" + Integer.toString(i)
-												+ "): " + filelist[k].getName());
-								String productSTR = MensaApplication
-										.getFileContent(productsfile);
-								jsonobj = new JSONObject(productSTR);
-								JSONArray jsonproducts = jsonobj
-										.getJSONArray("master_product");
+								if (p == page) {
+									FileInputStream productsfile = new FileInputStream(
+											filelist[k]);
+									Log.d("mensa",
+											"file to read(i="
+													+ Integer.toString(i)
+													+ "): "
+													+ filelist[k].getName());
+									String productSTR = MensaApplication
+											.getFileContent(productsfile);
+									jsonobj = new JSONObject(productSTR);
+									JSONArray jsonproducts = jsonobj
+											.getJSONArray("master_product");
 
-								Product product;
-								BaseDataListObj products = (BaseDataListObj) new Products();
-								for (int j = 0; j < jsonproducts.length(); j++) {
-									product = new Product(jsonproducts
-											.getJSONObject(j).getString(
-													"CONTRACT"), jsonproducts
-											.getJSONObject(j).getString("DIV"),
-											jsonproducts.getJSONObject(j)
-													.getString("PART_NO"),
-											jsonproducts.getJSONObject(j)
-													.getString("DESCRIPTION"),
-											"",// jsonproducts.getJSONObject(j).getString("LOCATION_NO"),
-											"", // jsonproducts.getJSONObject(j).getString("LOT_BATCH_NO")
-											0, // jsonproducts.getJSONObject(j).getLong("QTY_ONHAND"),
-											0,// jsonproducts.getJSONObject(j).getLong("QTY_RESERVED"),
-											jsonproducts.getJSONObject(j)
-													.optDouble("HNA", 0));
-									product.setFileSource(filelist[k].getAbsolutePath());
-									((Products) products).addProduct(product);
+									Product product;
+									BaseDataListObj products = (BaseDataListObj) new Products();
+									for (int j = 0; j < jsonproducts.length(); j++) {
+										product = new Product(jsonproducts
+												.getJSONObject(j).getString(
+														"CONTRACT"),
+												jsonproducts.getJSONObject(j)
+														.getString("DIV"),
+												jsonproducts.getJSONObject(j)
+														.getString("PART_NO"),
+												jsonproducts.getJSONObject(j)
+														.getString(
+																"DESCRIPTION"),
+												"",// jsonproducts.getJSONObject(j).getString("LOCATION_NO"),
+												"", // jsonproducts.getJSONObject(j).getString("LOT_BATCH_NO")
+												0, // jsonproducts.getJSONObject(j).getLong("QTY_ONHAND"),
+												0,// jsonproducts.getJSONObject(j).getLong("QTY_RESERVED"),
+												jsonproducts.getJSONObject(j)
+														.optDouble("HNA", 0));
+										product.setFileSource(filelist[k]
+												.getAbsolutePath());
+										((Products) products)
+												.addProduct(product);
+									}
+									datalist[i] = products;
 								}
-								datalist[i] = products;
+								p = p + 1;
 							}
 						}
 
@@ -143,25 +154,26 @@ public class DataLoader {
 						Product product = null;
 						if (d.compareTo(min) >= 0 && d.compareTo(max) <= 0) {
 							try {
-								product = new Product(jsonproductsfocus
-										.getJSONObject(h).getString(
-												"CONTRACT"), jsonproductsfocus
-										.getJSONObject(h).getString("DIV"),
+								product = new Product(
+										jsonproductsfocus.getJSONObject(h)
+												.getString("CONTRACT"),
+										jsonproductsfocus.getJSONObject(h)
+												.getString("DIV"),
 										jsonproductsfocus.getJSONObject(h)
 												.getString("PART_NO"),
-												jsonproductsfocus.getJSONObject(h)
-												.getString("DESCRIPTION"),
-										"",// jsonproducts.getJSONObject(h).getString("LOCATION_NO"),
+										jsonproductsfocus.getJSONObject(h)
+												.getString("DESCRIPTION"), "",// jsonproducts.getJSONObject(h).getString("LOCATION_NO"),
 										"", // jsonproducts.getJSONObject(h).getString("LOT_BATCH_NO")
-										jsonproductsfocus.getJSONObject(h).getLong("QTY"),
-										0,// jsonproducts.getJSONObject(h).getLong("QTY_RESERVED"),
+										jsonproductsfocus.getJSONObject(h)
+												.getLong("QTY"), 0,// jsonproducts.getJSONObject(h).getLong("QTY_RESERVED"),
 										jsonproductsfocus.getJSONObject(h)
 												.optDouble("HNA", 0));
 							} catch (JSONException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							product.setFileSource("/sdcard/" + MensaApplication.APP_DATAFOLDER + "/"
+							product.setFileSource("/sdcard/"
+									+ MensaApplication.APP_DATAFOLDER + "/"
 									+ MensaApplication.FULLSYNC[3]);
 							((Products) productsfocus).addProduct(product);
 						}
@@ -215,25 +227,26 @@ public class DataLoader {
 						Product product = null;
 						if (d.compareTo(min) >= 0 && d.compareTo(max) <= 0) {
 							try {
-								product = new Product(jsonproductspromo
-										.getJSONObject(h).getString(
-												"CONTRACT"), jsonproductspromo
-										.getJSONObject(h).getString("DIV"),
+								product = new Product(
+										jsonproductspromo.getJSONObject(h)
+												.getString("CONTRACT"),
+										jsonproductspromo.getJSONObject(h)
+												.getString("DIV"),
 										jsonproductspromo.getJSONObject(h)
 												.getString("PART_NO"),
-												jsonproductspromo.getJSONObject(h)
-												.getString("DESCRIPTION"),
-										"",// jsonproducts.getJSONObject(h).getString("LOCATION_NO"),
+										jsonproductspromo.getJSONObject(h)
+												.getString("DESCRIPTION"), "",// jsonproducts.getJSONObject(h).getString("LOCATION_NO"),
 										"", // jsonproducts.getJSONObject(h).getString("LOT_BATCH_NO")
-										jsonproductspromo.getJSONObject(h).getLong("QTY"),
-										0,// jsonproducts.getJSONObject(h).getLong("QTY_RESERVED"),
+										jsonproductspromo.getJSONObject(h)
+												.getLong("QTY"), 0,// jsonproducts.getJSONObject(h).getLong("QTY_RESERVED"),
 										jsonproductspromo.getJSONObject(h)
 												.optDouble("HNA", 0));
 							} catch (JSONException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							product.setFileSource("/sdcard/" + MensaApplication.APP_DATAFOLDER + "/"
+							product.setFileSource("/sdcard/"
+									+ MensaApplication.APP_DATAFOLDER + "/"
 									+ MensaApplication.FULLSYNC[8]);
 							((Products) productspromo).addProduct(product);
 						}
@@ -344,6 +357,14 @@ public class DataLoader {
 
 	public boolean isExtStorageWriteable() {
 		return ExtStorageWriteable;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
 	}
 
 }

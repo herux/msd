@@ -53,6 +53,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 	static DialogFragment newFragment;
 	static int tabIndex;
 	static int proType;
+	static int page = 0;
 	static ArrayList<Product> products;
 
 	final static Handler handler = new Handler() {
@@ -64,37 +65,42 @@ public class ProductviewActivity extends BaseFragmentActivity {
 				application.setProductsfocus(productsThread.getProductsfocus());
 				application.setProductspromo(productsThread.getProductspromo());
 
+				ArrayList<Product> tmpProduct = new ArrayList<Product>();
 				switch (tabIndex) {
 				case FOCUSTAB: {
 					adapter.setWithsearch(false);
-					products = application.getProductsfocus();
+					tmpProduct = application.getProductsfocus();
 					break;
 				}
 				case PROMOTAB: {
 					adapter.setWithsearch(false);
-					products = application.getProductspromo();
+					tmpProduct = application.getProductspromo();
 					break;
 				}
 				case ALLTAB: {
 					adapter.setWithsearch(true);
-					products = application.getProducts();
+					tmpProduct = application.getProducts();
 					break;
 				}
 				}
 				adapter.clear();
+				tmpProduct.addAll(products);
+				products = tmpProduct;
 				for (int i = 0; i < products.size(); i++) {
 					adapter.add(products.get(i));
 				}
 				adapter.notifyDataSetChanged();
 				loaded = true;
 				closeDialog();
+				page = page + 1;
 			}
 		}
 	};
 
-	void Reload() {
+	public void Reload(int page) {
 		showProgressDialog("Load Products", "Load data product, please wait...");
 		productsThread = new ProductsThread(handler);
+		productsThread.setPage(page);
 		productsThread.start();
 	}
 
@@ -159,6 +165,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
+				tabIndex = FOCUSTAB;
 				if (loaded) {
 					adapter.setWithsearch(false);
 					products = application.getProductsfocus();
@@ -191,6 +198,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
 				Log.d("mensa", "loaded:" + Boolean.toString(loaded));
+				tabIndex = PROMOTAB;
 				if (loaded) {
 					adapter.setWithsearch(false);
 					products = application.getProductspromo();
@@ -222,6 +230,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
+				tabIndex = ALLTAB;
 				if (loaded) {
 					adapter.setWithsearch(true);
 					products = application.getProducts();
@@ -258,27 +267,31 @@ public class ProductviewActivity extends BaseFragmentActivity {
 		}
 		}
 
-//		if ((application.getProducts() == null)
-//				&& (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)) {
-			Reload();
-//		}
+		Reload(page);
 	}
 
-	public static class ProductFragment extends ListFragment {
+	public static class ProductFragment extends ProductsListFragment {
 		boolean mDualPane;
 		int mCurCheckPosition = 0;
 
-//		@Override
-//		public void onScroll(AbsListView view, int firstVisibleItem,
-//				int visibleItemCount, int totalItemCount) {
-//			super.onScroll(view, firstVisibleItem, visibleItemCount,
-//					totalItemCount);
-//			if (visibleItemCount == 20) {
-//				Toast toast = Toast.makeText(getActivity(), "20",
+		@Override
+		public void onScroll(AbsListView view, int firstVisibleItem,
+				int visibleItemCount, int totalItemCount) {
+			super.onScroll(view, firstVisibleItem, visibleItemCount,
+					totalItemCount);
+			if ((firstVisibleItem + visibleItemCount == totalItemCount)
+					&& (totalItemCount > visibleItemCount) && (loaded)) {
+//				Toast toast = Toast.makeText(getActivity(),
+//						"firstVisibleItem:" + firstVisibleItem
+//								+ " visibleItemCount:" + visibleItemCount
+//								+ " totalItemCount" + totalItemCount,
 //						Toast.LENGTH_SHORT);
 //				toast.show();
-//			}
-//		}
+				Log.d("mensa", "page: " + page);
+				loaded = false;
+				((ProductviewActivity) getActivity()).Reload(page);
+			}
+		}
 
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
