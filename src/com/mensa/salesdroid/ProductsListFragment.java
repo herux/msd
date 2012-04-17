@@ -27,5 +27,5 @@ public class ProductsListFragment extends ListFragment implements ListView.OnScr
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 }

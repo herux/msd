@@ -8,6 +8,7 @@ public class ProductsThread extends BaseThread {
 	private ArrayList<Product> products;
 	private ArrayList<Product> productsfocus = new ArrayList<Product>();
 	private ArrayList<Product> productspromo = new ArrayList<Product>();
+	private int page;
 
 	public ProductsThread(Handler h) {
 		super(h);
@@ -21,6 +22,7 @@ public class ProductsThread extends BaseThread {
 		datatypes[2] = DataLoader.dlPRODUCTSPROMO;
 		
 		DataLoader dtproducts = new DataLoader(datatypes);
+		dtproducts.setPage(page);
 		Products products = (Products) dtproducts.getDatalist()[0];
 		Products productsfocus = (Products) dtproducts.getDatalist()[1];
 		Products productspromo = (Products) dtproducts.getDatalist()[2];
@@ -39,6 +41,14 @@ public class ProductsThread extends BaseThread {
 	
 	public ArrayList<Product> getProductspromo() {
 		return productspromo;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
 	}
 
 }
