@@ -281,13 +281,6 @@ public class ProductviewActivity extends BaseFragmentActivity {
 					totalItemCount);
 			if ((firstVisibleItem + visibleItemCount == totalItemCount)
 					&& (totalItemCount > visibleItemCount) && (loaded)) {
-//				Toast toast = Toast.makeText(getActivity(),
-//						"firstVisibleItem:" + firstVisibleItem
-//								+ " visibleItemCount:" + visibleItemCount
-//								+ " totalItemCount" + totalItemCount,
-//						Toast.LENGTH_SHORT);
-//				toast.show();
-				Log.d("mensa", "page: " + page);
 				loaded = false;
 				((ProductviewActivity) getActivity()).Reload(page);
 			}

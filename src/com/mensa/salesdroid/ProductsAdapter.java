@@ -60,9 +60,9 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
 		RelativeLayout rl = (RelativeLayout) row
 				.findViewById(R.id.relativeLayout1);
 		if ((position % 2) == 0) {
-			rl.setBackgroundResource(R.drawable.productlistrow);
+			rl.setBackgroundResource(R.drawable.customerlistrow);
 		} else {
-			rl.setBackgroundResource(R.drawable.productlistrow1);
+			rl.setBackgroundResource(R.drawable.customerlistrow1);
 		}
 		TextView label = (TextView) row.findViewById(R.id.tvTable);
 		label.setText("Name. " + getItem(position).getDESCRIPTION());
@@ -74,7 +74,6 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
 		NumberFormat nf = NumberFormat.getInstance();
 		String sharga = nf.format(getItem(position).getPRICE());
 		labelharga.setText("Price. " + sharga);
-		ImageView iv = (ImageView) row.findViewById(R.id.imageView1);
 
 		if (activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			lblqty.setText(Float.toString(getItem(position).getQTY_ONHAND())); 
@@ -84,7 +83,6 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
 		}
 
 		if ((position == 0) && (isWithsearch())) {
-			rl.removeView(iv);
 			rl.removeView(label);
 			rl.removeView(labelharga);
 			rl.removeView(partno);

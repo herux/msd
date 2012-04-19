@@ -59,7 +59,7 @@ public class MensaApplication extends Application {
 
 	static final String mbs_url = "http://simfoni.mbs.co.id/services.php?";
 	static final String[] fullsync_paths = {
-			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3Byb2R1Y3Q=&uid=",
+			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3Byb2R1Y3Q=&uid=", //PRODUCTSFILENAME
 			"key=czRMZTU0dVRvTWF0MTBu&tab=Y2FsbF9wbGFu&uid=", //CUSTOMERSFILENAME
 			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3NhbGVzbWFu",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9mb2N1c19zdG9jaw==&uid=", 
@@ -67,7 +67,7 @@ public class MensaApplication extends Application {
 			"key=czRMZTU0dVRvTWF0MTBu&tab=Y3VzdF9vcmRlcl90eXBl",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cmV0dXJuX2NhdXNl",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cG9zdF9vcmRlcg==", // post_order
-			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9wcm9tb19zdG9jaw==&uid=",
+			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9wcm9tb19zdG9jaw==&uid=", //PRODUCTSPROMOFILENAME
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cG9zdF9yZXR1cm4=", // post return
 			"key=czRMZTU0dVRvTWF0MTBu&tab=bmV3X2N1c3RvbWVy", // newcustomer
 			"key=czRMZTU0dVRvTWF0MTBu&tab=Y3VzdF9ncnA"}; // customersgroup 
@@ -103,6 +103,7 @@ public class MensaApplication extends Application {
 	private ArrayList<ReturnItem> returnitems;
 	private Customer currentCustomer;
 	private String salesid;
+	private String longitudelatitude;
 
 	@Override
 	public void onCreate() {
@@ -309,6 +310,14 @@ public class MensaApplication extends Application {
 
 	public void setProductspromo(ArrayList<Product> productspromo) {
 		this.productspromo = productspromo;
+	}
+
+	public String getLongitudelatitude() {
+		return longitudelatitude;
+	}
+
+	public void setLongitudelatitude(String longitudelatitude) {
+		this.longitudelatitude = longitudelatitude;
 	}
 
 }
