@@ -60,6 +60,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 				if (application.getSalesitems() != null) {
 					application.getSalesorder().setSalesitems(
 							application.getSalesitems());
+					application.getSalesorder().setCoordinate(application.getLongitudelatitude());
 					String input = application.getSalesorder().saveToJSON();
 					Log.d("mensa", "request: "+input);
 					input = Compression.encodeBase64(input);
@@ -114,6 +115,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 				if (application.getReturnitems() != null) {
 					application.getReturns().setReturnitems(
 							application.getReturnitems());
+					application.getReturns().setCoordinate(application.getLongitudelatitude());
 					String input = application.getReturns().saveToJSON();
 					Log.d("mensa", "request: "+input);
 					input = Compression.encodeBase64(input);

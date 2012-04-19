@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.mensa.salesdroid.AlertFragmentDialog.OnClickNegativeButtonListener;
 import com.mensa.salesdroid.AlertFragmentDialog.OnClickPositiveButtonListener;
+import com.mensa.salesdroid.GPSLocationListener.OnGPSLocationChanged;
 
 public class ListcallplanActivity extends BaseFragmentActivity {
 	double LATITUDE = 37.42233;
@@ -46,11 +47,21 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 		application = getMensaapplication();
 		setContentView(R.layout.listcallplan);
 
-		LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		CustomerLocationListener locListener = new CustomerLocationListener();
-		locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
-				locListener);
-
+		final LocationManager mlocManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+		final GPSLocationListener mlocListener = new GPSLocationListener();
+		mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
+		mlocListener.setOnGPSLocationChanged(new OnGPSLocationChanged() {
+			
+			@Override
+			public void OnLatAndLongChanged(double longitude, double latitude) {
+				String longitudelatitude = Double.toString(longitude)+","+Double.toString(latitude);
+				application.setLongitudelatitude(longitudelatitude);
+				mlocManager.removeUpdates(mlocListener);
+				Toast toast = Toast.makeText(ListcallplanActivity.this, "location: "+longitudelatitude, Toast.LENGTH_LONG);
+				toast.show();
+			}
+		});
+		
 		final ActionBar actionbar = getSupportActionBar();
 		actionbar.setDisplayHomeAsUpEnabled(false);
 		actionbar.setDisplayUseLogoEnabled(false);

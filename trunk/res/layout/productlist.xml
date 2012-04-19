@@ -3,63 +3,59 @@
     android:id="@+id/relativeLayout1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/backgrndselectlist3" >
+    android:background="@drawable/list" >
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="100dip"
-        android:layout_height="100dip"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/box" />
+    <!--
+         <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvCode"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/btnarrow" />
+    -->
 
     <TextView
         android:id="@+id/tvTable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/imageView1"
         android:text="Table"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/titlemaincolor" />
-
-    <TextView
-        android:id="@+id/tvHarga"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageView1"
-        android:layout_alignLeft="@+id/tvTable"
-        android:text="Harga"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/titlemaincolor" />
 
     <TextView
         android:id="@+id/tvCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/tvQty"
-        android:layout_toRightOf="@+id/imageView1"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvTable"
         android:text="PartNo"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/titlemaincolor" />
-    
+
+    <TextView
+        android:id="@+id/tvHarga"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvCode"
+        android:layout_alignBottom="@+id/tvCode"
+        android:layout_alignParentRight="true"
+        android:text="Harga"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/titlemaincolor" />
+
     <TextView
         android:id="@+id/tvQty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/tvHarga"
-        android:layout_toRightOf="@+id/imageView1"
+        android:layout_alignBaseline="@+id/tvHarga"
+        android:layout_alignBottom="@+id/tvHarga"
+        android:layout_marginRight="24dp"
+        android:layout_toLeftOf="@+id/tvHarga"
         android:text="Qty"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/titlemaincolor" />
-
-    <!-- <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/tvCode"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/btnarrow" /> -->
 
 </RelativeLayout>
