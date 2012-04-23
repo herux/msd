@@ -94,6 +94,7 @@ public class MensaApplication extends Application {
 		
 	};
 
+	private ArrayList<Product> productsearchs;
 	private ArrayList<Product> products;
 	private ArrayList<Product> productsfocus;
 	private ArrayList<Product> productspromo;
@@ -318,6 +319,14 @@ public class MensaApplication extends Application {
 
 	public void setLongitudelatitude(String longitudelatitude) {
 		this.longitudelatitude = longitudelatitude;
+	}
+
+	public ArrayList<Product> getProductsearchs() {
+		return productsearchs;
+	}
+
+	public void setProductsearchs(ArrayList<Product> productsearchs) {
+		this.productsearchs = productsearchs;
 	}
 
 }

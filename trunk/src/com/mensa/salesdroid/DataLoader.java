@@ -28,6 +28,7 @@ public class DataLoader {
 	public static final int dlCUSTOMERS = 1;
 	public static final int dlSALESMANS = 2;
 	public static final int dlPRODUCTSFOCUS = 3;
+	public static final int dlPRODUCTSSEARCH = 5;
 	public static final int dlPRODUCTSPROMO = 8;
 	public static final int dlSALESORDER = 7;
 	public static final int dlPIUTANG = 4;
@@ -37,6 +38,7 @@ public class DataLoader {
 	private boolean ExtStorageWriteable = false;
 	private BaseDataListObj[] datalist;
 	private int page;
+	public static String textToSearch = "";
 	String state = Environment.getExternalStorageState();
 
 	public DataLoader(int... dlData) {
@@ -105,6 +107,72 @@ public class DataLoader {
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
+					break;
+				}
+				case dlPRODUCTSSEARCH: {
+					Log.d("mensa", "Search product");
+					try {
+						File root = Environment.getExternalStorageDirectory();
+						String folder = MensaApplication.APP_DATAFOLDER + "/";
+						String datafolder = root + "/" + folder;
+
+						File dir = new File(datafolder);
+						File[] filelist = dir.listFiles();
+						for (int k = filelist.length - 1; k > 0; k--) {
+							if (filelist[k].getName().contains(
+									MensaApplication.PRODUCTSPAGEFILENAME)) {
+								FileInputStream productsfile = new FileInputStream(
+										filelist[k]);
+								String productSTR = MensaApplication
+										.getFileContent(productsfile);
+								if (!productSTR.contains(textToSearch)) {
+									Log.d("mensa", "continue");
+									continue;
+								}
+								jsonobj = new JSONObject(productSTR);
+								JSONArray jsonproducts = jsonobj
+										.getJSONArray("master_product");
+
+								Product product;
+								BaseDataListObj products = (BaseDataListObj) new Products();
+								for (int j = 0; j < jsonproducts.length(); j++) {
+									Log.d("mensa", "productDesc: "
+											+ jsonproducts.getJSONObject(j)
+													.getString("DESCRIPTION"));
+									if (jsonproducts.getJSONObject(j)
+											.getString("DESCRIPTION")
+											.contains(textToSearch)) {
+
+										product = new Product(jsonproducts
+												.getJSONObject(j).getString(
+														"CONTRACT"),
+												jsonproducts.getJSONObject(j)
+														.getString("DIV"),
+												jsonproducts.getJSONObject(j)
+														.getString("PART_NO"),
+												jsonproducts.getJSONObject(j)
+														.getString(
+																"DESCRIPTION"),
+												"",// jsonproducts.getJSONObject(j).getString("LOCATION_NO"),
+												"", // jsonproducts.getJSONObject(j).getString("LOT_BATCH_NO")
+												0, // jsonproducts.getJSONObject(j).getLong("QTY_ONHAND"),
+												0,// jsonproducts.getJSONObject(j).getLong("QTY_RESERVED"),
+												jsonproducts.getJSONObject(j)
+														.optDouble("HNA", 0));
+										product.setFileSource(filelist[k]
+												.getAbsolutePath());
+										((Products) products)
+												.addProduct(product);
+									}
+								}
+								datalist[i] = products;
+							}
+						}
+
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+
 					break;
 				}
 				case dlPRODUCTSFOCUS: {

@@ -11,73 +11,80 @@ package com.mensa.salesdroid;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.text.TextUtils;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnKeyListener;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
-public class EditTextSearch extends EditText implements OnKeyListener {
-	OnSearchFoundListener onSearchFoundListener;
-	private ArrayList<Object> objtosearch;
+public class EditTextSearch extends RelativeLayout {
+	OnSearchClickListener onSearchClickListener;
+	private int textColor = android.R.color.black;
+	private EditText textSearch;
+	private Button btnSearch;
 
-	public EditTextSearch(Context context) {
+	public EditTextSearch(final Context context) {
 		super(context);
-		this.setOnKeyListener(this);
-		this.setSingleLine(true);
-	}
-
-	public EditTextSearch(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-
-		this.setOnKeyListener(this);
-	}
-
-	public EditTextSearch(Context context, AttributeSet attrs) {
-		super(context, attrs);
-
-		this.setOnKeyListener(this);
-	}
-
-	public void SetOnSearchFoundListener(OnSearchFoundListener listener) {
-		onSearchFoundListener = listener;
-	}
-
-	@Override
-	public boolean onKey(View v, int keyCode, KeyEvent event) {
-		if (event.getAction() == KeyEvent.ACTION_DOWN)
-			return false;
-		ArrayList<Object> objlist = new ArrayList<Object>();
-		String username = getText().toString().toLowerCase();
-		if (!TextUtils.isEmpty(username)) {
-			for (int i = 0; i < objtosearch.size(); i++) {
-				if (objtosearch.get(i).equals(username)) {
-					// objlist.add(object);
-					if (i >= 5) {
-						break;
-					}
+		LayoutInflater layoutInflater = (LayoutInflater)context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		layoutInflater.inflate(R.layout.edittextsearch, this);
+		textSearch = (EditText) findViewById(R.id.etSearch);
+		textSearch.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				textSearch.setText("");
+			}
+		});
+		textSearch.setOnFocusChangeListener(new OnFocusChangeListener() {
+			
+			@Override
+			public void onFocusChange(View arg0, boolean hasFocus) {
+				if ((!hasFocus)&&(textSearch.getText().equals(""))||(textSearch.getText().equals("Search"))){
+					textSearch.setText("Search");
 				}
 			}
-			if (onSearchFoundListener != null) {
-				onSearchFoundListener.OnSearchFound(objlist);
+		});
+		btnSearch  = (Button) findViewById(R.id.btnSearch);
+		btnSearch.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				if (onSearchClickListener!=null){
+					onSearchClickListener.OnSearchClick(arg0);
+				}
 			}
-		}
-
-		return false;
-
+		});
+	}
+	
+	public void setOnSearchClickListener(OnSearchClickListener listener){
+		onSearchClickListener = listener;
+	}
+	
+	public interface OnSearchClickListener{
+		public abstract void OnSearchClick(View arg0);
+	}
+	
+	public int getTextColor() {
+		return textColor;
 	}
 
-	public ArrayList<Object> getObjtosearch() {
-		return objtosearch;
+	public void setTextColor(int textColor) {
+		textSearch.setTextColor(textColor);
+		this.textColor = textColor;
 	}
 
-	public void setObjtosearch(ArrayList<Object> objtosearch) {
-		this.objtosearch = objtosearch;
+
+	public String getText() {
+		return textSearch.getText().toString();
 	}
 
-	public interface OnSearchFoundListener {
-		public abstract void OnSearchFound(ArrayList<Object> objlist);
+	public void setText(String text) {
+		this.textSearch.setText(text);
 	}
 
 }
