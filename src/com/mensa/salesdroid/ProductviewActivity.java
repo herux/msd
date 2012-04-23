@@ -36,6 +36,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mensa.salesdroid.ProductsAdapter.OnItemSearchClickListener;
 import com.mensa.salesdroid.ProductsAdapter.OnListItemClickListener;
 
 public class ProductviewActivity extends BaseFragmentActivity {
@@ -61,46 +62,76 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			int total = msg.arg1;
 			if (total >= 0) {
 				productsThread.setState(BaseThread.STATE_DONE);
-				application.setProducts(productsThread.getProducts());
-				application.setProductsfocus(productsThread.getProductsfocus());
-				application.setProductspromo(productsThread.getProductspromo());
-
 				ArrayList<Product> tmpProduct = new ArrayList<Product>();
-				switch (tabIndex) {
-				case FOCUSTAB: {
+				switch (productsThread.getLoadType()) {
+				case ProductsThread.LOADPRODUCT: {
+					application.setProducts(productsThread.getProducts());
+					application.setProductsfocus(productsThread
+							.getProductsfocus());
+					application.setProductspromo(productsThread
+							.getProductspromo());
+
+					switch (tabIndex) {
+					case FOCUSTAB: {
+						adapter.setWithsearch(false);
+						tmpProduct = application.getProductsfocus();
+						break;
+					}
+					case PROMOTAB: {
+						adapter.setWithsearch(false);
+						tmpProduct = application.getProductspromo();
+						break;
+					}
+					case ALLTAB: {
+						adapter.setWithsearch(true);
+						tmpProduct = application.getProducts();
+						break;
+					}
+					}
+					
+					adapter.clear();
+					tmpProduct.addAll(products);
+					products = tmpProduct;
+					for (int i = 0; i < products.size(); i++) {
+						adapter.add(products.get(i));
+					}
+					adapter.notifyDataSetChanged();
+					loaded = true;
+					closeDialog();
+					page = page + 1;
+					break;
+				}
+				case ProductsThread.SEARCHPRODUCT: {
+					if (productsThread.getProductssearch()!=null){
+						application.setProductsearchs(productsThread
+								.getProductssearch());
+					}else{
+						application.setProductsearchs(new ArrayList<Product>());
+					}
 					adapter.setWithsearch(false);
-					tmpProduct = application.getProductsfocus();
+					tmpProduct = application.getProductsearchs();
+					
+					adapter.clear();
+					products = tmpProduct;
+					for (int i = 0; i < products.size(); i++) {
+						adapter.add(products.get(i));
+					}
+					adapter.notifyDataSetChanged();
+					loaded = true;
+					closeDialog();
 					break;
 				}
-				case PROMOTAB: {
-					adapter.setWithsearch(false);
-					tmpProduct = application.getProductspromo();
-					break;
 				}
-				case ALLTAB: {
-					adapter.setWithsearch(true);
-					tmpProduct = application.getProducts();
-					break;
-				}
-				}
-				adapter.clear();
-				tmpProduct.addAll(products);
-				products = tmpProduct;
-				for (int i = 0; i < products.size(); i++) {
-					adapter.add(products.get(i));
-				}
-				adapter.notifyDataSetChanged();
-				loaded = true;
-				closeDialog();
-				page = page + 1;
 			}
 		}
 	};
 
-	public void Reload(int page) {
-		showProgressDialog("Load Products", "Load data product, please wait...");
-		productsThread = new ProductsThread(handler);
+	public void Reload(int page, int loadType, String textToSearch,
+			String title, String msg) {
+		showProgressDialog(title, msg);
+		productsThread = new ProductsThread(handler, loadType);
 		productsThread.setPage(page);
+		productsThread.setTextToSearch(textToSearch);
 		productsThread.start();
 	}
 
@@ -244,8 +275,16 @@ public class ProductviewActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onTabReselected(Tab tab, FragmentTransaction ft) {
-				// TODO Auto-generated method stub
-
+				tabIndex = ALLTAB;
+				if (loaded) {
+					adapter.setWithsearch(true);
+					products = application.getProducts();
+					adapter.clear();
+					for (int i = 0; i < products.size(); i++) {
+						adapter.add(products.get(i));
+					}
+					adapter.notifyDataSetChanged();
+				}
 			}
 		});
 		actionbar.addTab(tabAll);
@@ -267,7 +306,8 @@ public class ProductviewActivity extends BaseFragmentActivity {
 		}
 		}
 
-		Reload(page);
+		Reload(page, ProductsThread.LOADPRODUCT, "", "Load Products",
+				"Load data product, please wait...");
 	}
 
 	public static class ProductFragment extends ProductsListFragment {
@@ -279,10 +319,14 @@ public class ProductviewActivity extends BaseFragmentActivity {
 				int visibleItemCount, int totalItemCount) {
 			super.onScroll(view, firstVisibleItem, visibleItemCount,
 					totalItemCount);
-			if ((firstVisibleItem + visibleItemCount == totalItemCount)
-					&& (totalItemCount > visibleItemCount) && (loaded)) {
-				loaded = false;
-				((ProductviewActivity) getActivity()).Reload(page);
+			if (productsThread.getLoadType() != ProductsThread.SEARCHPRODUCT) {
+				if ((firstVisibleItem + visibleItemCount == totalItemCount)
+						&& (totalItemCount > visibleItemCount) && (loaded)) {
+					loaded = false;
+					((ProductviewActivity) getActivity()).Reload(page,
+							ProductsThread.LOADPRODUCT, "", "Load Products",
+							"Load data product, please wait...");
+				}
 			}
 		}
 
@@ -312,6 +356,21 @@ public class ProductviewActivity extends BaseFragmentActivity {
 						break;
 					}
 					}
+				}
+			});
+			adapter.setOnItemSearchClickListener(new OnItemSearchClickListener() {
+
+				@Override
+				public void OnItemSearchClick(View view) {
+					if (adapter.getTextSearch()==null){
+						Log.d("mensa", "adapter.getTextSearch() = null");
+					}
+					 if (!adapter.getTextSearch().equals("Search")) {
+					((ProductviewActivity) getActivity()).Reload(page,
+							ProductsThread.SEARCHPRODUCT, adapter.getTextSearch(),
+							"Search Products",
+							"Searching data product, keyword : "+adapter.getTextSearch());
+					 }
 				}
 			});
 			setListAdapter(adapter);

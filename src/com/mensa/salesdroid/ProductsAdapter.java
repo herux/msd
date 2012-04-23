@@ -6,37 +6,37 @@ import java.io.FileNotFoundException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+import net.londatiga.android.ActionItem;
+import net.londatiga.android.QuickAction;
+import net.londatiga.android.QuickAction.OnActionItemClickListener;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import net.londatiga.android.ActionItem;
-import net.londatiga.android.QuickAction;
-import net.londatiga.android.QuickAction.OnActionItemClickListener;
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnFocusChangeListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mensa.salesdroid.EditTextSearch.OnSearchFoundListener;
+import com.mensa.salesdroid.EditTextSearch.OnSearchClickListener;
 
 public class ProductsAdapter extends ArrayAdapter<Product> {
 	Activity activity;
 	OnListItemClickListener onListItemClickListener;
+	OnItemSearchClickListener onItemSearchClickListener;
 	final static int REFRESHITEM = 1;
 	private boolean withsearch;
+	private EditTextSearch etSearch;
+	private String textSearch;
 
 	public ProductsAdapter(Activity activity, int textViewResourceId,
 			ArrayList<Product> products) {
@@ -50,6 +50,14 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
 
 	public interface OnListItemClickListener {
 		public abstract void OnListItemClick(View view, int position);
+	}
+	
+	public void setOnItemSearchClickListener(OnItemSearchClickListener listener) {
+		onItemSearchClickListener = listener;
+	}
+	
+	public interface OnItemSearchClickListener {
+		public abstract void OnItemSearchClick(View view);
 	}
 	
 	@Override
@@ -87,32 +95,20 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
 			rl.removeView(labelharga);
 			rl.removeView(partno);
 			rl.removeView(lblqty);
-			final EditTextSearch etSearch = new EditTextSearch(activity);
+			etSearch = new EditTextSearch(activity);
 			if (row.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 				etSearch.setBackgroundResource(R.drawable.searchbkgland);
 			} else {
 				etSearch.setBackgroundResource(R.drawable.searchbkg);
 			}
 			etSearch.setTextColor(R.color.titlemaincolor);
-			etSearch.setText("Search");
-			etSearch.setOnFocusChangeListener(new OnFocusChangeListener() {
-
+			etSearch.setOnSearchClickListener(new OnSearchClickListener() {
+				
 				@Override
-				public void onFocusChange(View arg0, boolean hasFocus) {
-					if (hasFocus == true) {
-						etSearch.setText("");
-					} else {
-						if (etSearch.getText().equals("")) {
-							etSearch.setText("Search");
-						}
+				public void OnSearchClick(View arg0) {
+					if (onItemSearchClickListener!=null){
+						onItemSearchClickListener.OnItemSearchClick(arg0);
 					}
-				}
-			});
-			etSearch.SetOnSearchFoundListener(new OnSearchFoundListener() {
-
-				@Override
-				public void OnSearchFound(ArrayList<Object> objlist) {
-					// hasil pencarian set lewat sini
 				}
 			});
 			rl.addView(etSearch);
@@ -228,6 +224,14 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
 		if (withsearch) {
 			insert(new Product("", "", "", "Search", "", "", 0, 0, 0), 0);
 		}
+	}
+
+	public String getTextSearch() {
+		return etSearch.getText();
+	}
+
+	public void setTextSearch(String textSearch) {
+		etSearch.setText(textSearch);
 	}
 
 }

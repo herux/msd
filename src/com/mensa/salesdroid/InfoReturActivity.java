@@ -156,42 +156,51 @@ public class InfoReturActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onClick(View arg0) {
-				Returns returns = application.getReturns();
-				ArrayList<ReturnItem> ris = application.getReturnitems();
-				if (ris == null) {
-					returns = new Returns("RE"
-							+ application.getTimeInt()
-//							+ "."
-//							+ application.getCurrentCustomer().getCUSTOMER_CODE()
-							, application.getDateTimeStr(), application.getSalesid(),
-							application.getCurrentCustomer(), "");
-					ris = new ArrayList<ReturnItem>();
+				if (!btnBarcode.getText().toString().equals("...")) {
+					Returns returns = application.getReturns();
+					ArrayList<ReturnItem> ris = application.getReturnitems();
+					if (ris == null) {
+						returns = new Returns("RE" + application.getTimeInt()
+						// + "."
+						// + application.getCurrentCustomer().getCUSTOMER_CODE()
+								, application.getDateTimeStr(), application
+										.getSalesid(), application
+										.getCurrentCustomer(), "");
+						ris = new ArrayList<ReturnItem>();
+					}
+					application.setReturns(returns);
+					EditText etqty = (EditText) findViewById(R.id.etqty);
+					Spinner spinnerdesc = (Spinner) findViewById(R.id.Spreturncause);
+					ReturnItem ri = null;
+					try {
+						ri = new ReturnItem(btnBarcode.getText().toString(),
+								Float.parseFloat(etqty.getText().toString()),
+								rcCause.getJSONObject(spinnerid).getString(
+										"RETURN_REASON"), thumbnail);
+					} catch (NumberFormatException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					ris.add(ri);
+					application.setReturnitems(ris);
+					application.getReturns().setReturnitems(ris);
+					Toast toast = Toast.makeText(InfoReturActivity.this,
+							"Data return successfully saved!",
+							Toast.LENGTH_SHORT);
+					toast.show();
+					finish();
+					Intent list = new Intent(InfoReturActivity.this,
+							InfoReturActivity.class);
+					startActivity(list);
+				}else{
+					Toast toast = Toast.makeText(InfoReturActivity.this,
+							"Null productcode is not allowed!.",
+							Toast.LENGTH_SHORT);
+					toast.show();
 				}
-				application.setReturns(returns);
-				EditText etqty = (EditText) findViewById(R.id.etqty);
-				Spinner spinnerdesc = (Spinner) findViewById(R.id.Spreturncause);
-				ReturnItem ri = null;
-				try {
-					ri = new ReturnItem(btnBarcode.getText().toString(), Float
-							.parseFloat(etqty.getText().toString()), rcCause
-							.getJSONObject(spinnerid)
-							.getString("RETURN_REASON"), thumbnail);
-				} catch (NumberFormatException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				ris.add(ri);
-				application.setReturnitems(ris);
-				application.getReturns().setReturnitems(ris);
-				Toast toast = Toast.makeText(InfoReturActivity.this, "Data return successfully saved!", Toast.LENGTH_SHORT);
-				toast.show();
-				finish();
-				Intent list = new Intent(InfoReturActivity.this,
-						InfoReturActivity.class);
-				startActivity(list);
 			}
 		});
 
@@ -216,29 +225,29 @@ public class InfoReturActivity extends BaseFragmentActivity {
 
 		@Override
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//			MenuItem returnlist = menu.add("Returns List");
-//			returnlist.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-//			returnlist
-//					.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-//
-//						@Override
-//						public boolean onMenuItemClick(MenuItem item) {
-//							if (application.getReturnitems() != null) {
-//								Intent newret = new Intent(getActivity(),
-//										InfoReturListActivity.class);
-//								startActivity(newret);
-//								getActivity().finish();
-//							} else {
-//								Toast toast = Toast
-//										.makeText(
-//												getActivity(),
-//												"List is still empty, please fill in at least one",
-//												Toast.LENGTH_LONG);
-//								toast.show();
-//							}
-//							return false;
-//						}
-//					});
+			// MenuItem returnlist = menu.add("Returns List");
+			// returnlist.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+			// returnlist
+			// .setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			//
+			// @Override
+			// public boolean onMenuItemClick(MenuItem item) {
+			// if (application.getReturnitems() != null) {
+			// Intent newret = new Intent(getActivity(),
+			// InfoReturListActivity.class);
+			// startActivity(newret);
+			// getActivity().finish();
+			// } else {
+			// Toast toast = Toast
+			// .makeText(
+			// getActivity(),
+			// "List is still empty, please fill in at least one",
+			// Toast.LENGTH_LONG);
+			// toast.show();
+			// }
+			// return false;
+			// }
+			// });
 		}
 
 	}
