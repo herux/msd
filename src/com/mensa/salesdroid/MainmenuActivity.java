@@ -8,6 +8,8 @@
 
 package com.mensa.salesdroid;
 
+import java.util.Calendar;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -103,7 +105,13 @@ public class MainmenuActivity extends Activity {
 			
 			@Override
 			public void onClick(View arg0) {
-				startActivity(new Intent(Intent.ACTION_VIEW).setDataAndType(null, MensaCalendarActivity.MIME_TYPE));
+				Intent intent = new Intent();
+				intent.setClass(MainmenuActivity.this,
+						CalendarView.class);
+				Calendar calendar = Calendar.getInstance();
+				intent.putExtra("date", calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH));
+	    		startActivityForResult(intent, 1);
+//				startActivity(intent);
 			}
 		});
 	}
