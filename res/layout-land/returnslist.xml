@@ -11,6 +11,13 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/llcaptionhead"
         android:orientation="horizontal" >
+        
+        <CheckBox 
+            android:id="@+id/cball"
+            android:layout_width="40dip"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text=""/>
 		<ImageView 
 		    android:id="@+id/ivproductrow"
 		    android:layout_width="100dip"
@@ -20,7 +27,7 @@
             android:layout_width="150dip"
             android:layout_height="wrap_content"
             android:gravity="center_vertical|center_horizontal"
-            android:text="Product Code" />
+            android:text="Product Name" />
 
         <TextView
             android:id="@+id/tvqtyrow"

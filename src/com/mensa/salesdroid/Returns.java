@@ -3,6 +3,7 @@ package com.mensa.salesdroid;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.zip.Deflater;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,7 +11,7 @@ import org.json.JSONObject;
 
 import android.graphics.Bitmap.CompressFormat;
 import android.os.Environment;
-import android.util.Base64;
+import org.apache.commons.codec.binary.Base64;
 
 public class Returns {
 	private String ReturnNo, datetimecheckin, salesid;
@@ -80,14 +81,32 @@ public class Returns {
 				item.put("description", returnitems.get(i).getDescription());
 
 				String bas = "";
-				if (returnitems.get(i).getImage() != null){
+				if (returnitems.get(i).getImage() != null) {
+					
+//					byte[] originalBytes = ba;
+//
+//					Deflater deflater = new Deflater();
+//					deflater.setInput(originalBytes);
+//					deflater.finish();
+//
+//					ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//					byte[] buf = new byte[8192];
+//					while (!deflater.finished()) {
+//						int byteCount = deflater.deflate(buf);
+//						baos.write(buf, 0, byteCount);
+//					}
+//					deflater.end();
+
+//					byte[] compressedBytes = baos.toByteArray();
+//					bas = Base64.encodeToString(ba, Base64.DEFAULT);
+					
 					ByteArrayOutputStream bao = new ByteArrayOutputStream();
-					returnitems.get(i).getImage().compress(CompressFormat.JPEG, 90, bao);
-					byte[] ba = bao.toByteArray();
-					bas= Base64.encodeToString(ba, Base64.DEFAULT);
+					returnitems.get(i).getImage()
+							.compress(CompressFormat.JPEG, 90, bao);
+					bas = new String(Base64.encodeBase64(bao.toByteArray()));
 				}
 				
-				item.put("pic", bas); 
+				item.put("pic", new StringBuilder(bas));
 				Items.put(i, item);
 			}
 			returns.put("returnnumber", getReturnNo());

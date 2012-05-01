@@ -11,10 +11,17 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/llcaptionhead"
         android:orientation="horizontal" >
+        
+        <CheckBox 
+            android:id="@+id/cball_co"
+            android:layout_width="40dip"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text=""/>
 
         <TextView
             android:id="@+id/tvnamerow"
-            android:layout_width="150dip"
+            android:layout_width="110dip"
             android:layout_height="wrap_content"
             android:gravity="left|center_horizontal"
             android:text="Product Name" />

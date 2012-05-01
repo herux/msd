@@ -59,14 +59,22 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/rlreturns_rf"
         android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/tvproductcode_rf"
-            android:layout_width="150dip"
+        
+        <CheckBox 
+            android:id="@+id/cball_rf"
+            android:layout_width="40dip"
             android:layout_height="wrap_content"
             android:background="@drawable/columnhead"
             android:gravity="center_vertical"
-            android:text="Product Code" />
+            android:text=""/>
+
+        <TextView
+            android:id="@+id/tvproductcode_rf"
+            android:layout_width="110dip"
+            android:layout_height="wrap_content"
+            android:background="@drawable/columnhead"
+            android:gravity="center_vertical"
+            android:text="Product Name" />
 
         <TextView
             android:id="@+id/tvqty_rf"

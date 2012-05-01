@@ -15,11 +15,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 public class SalesItemsAdapter extends ArrayAdapter<SalesItem> {
 	Activity activity;
 	final QuickAction qa;
+	private CheckBox[] cbs;
 	
 	private static final int DELETE = 1;
 	private static final int CHAQTY = 2;
@@ -50,6 +52,16 @@ public class SalesItemsAdapter extends ArrayAdapter<SalesItem> {
 				qa.dismiss();
 			}
 		});
+		
+		cbs = new CheckBox[getCount()];
+	}
+	
+	public void setChecked(int itemPosition, boolean checked){
+		cbs[itemPosition].setChecked(checked);
+	}
+	
+	public boolean isChecked(int itemPosition){
+		return cbs[itemPosition].isChecked();
 	}
 
 	@Override
@@ -66,6 +78,7 @@ public class SalesItemsAdapter extends ArrayAdapter<SalesItem> {
 		String stotharga = nf.format(totharga);
 		TextView lbltotal = (TextView) row.findViewById(R.id.tvtotalrow);
 		lbltotal.setText(stotharga);
+		cbs[position] = (CheckBox) row.findViewById(R.id.cball_co);
 		if (activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			TextView lblprice = (TextView) row.findViewById(R.id.tvpricerow);
 			Double price = getItem(position).getHarga();

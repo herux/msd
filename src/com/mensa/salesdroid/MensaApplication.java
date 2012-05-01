@@ -165,7 +165,7 @@ public class MensaApplication extends Application {
 		return filelist;
 	}
 
-	static public String getDateTimeStr() {
+	public String getDateTimeStr() {
 		Calendar c = Calendar.getInstance();
 		int day = c.get(Calendar.DAY_OF_MONTH);
 		int month = c.get(Calendar.MONTH);
