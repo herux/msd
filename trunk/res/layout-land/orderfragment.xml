@@ -59,10 +59,18 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/rlsalesorder"
         android:orientation="horizontal" >
+        
+        <CheckBox 
+            android:id="@+id/cball_or"
+            android:layout_width="40dip"
+            android:layout_height="wrap_content"
+            android:background="@drawable/columnhead"
+            android:gravity="center_vertical"
+            android:text=""/>
 
         <TextView
             android:id="@+id/tvname"
-            android:layout_width="200dip"
+            android:layout_width="160dip"
             android:layout_height="wrap_content"
             android:background="@drawable/columnhead"
             android:gravity="center_vertical"

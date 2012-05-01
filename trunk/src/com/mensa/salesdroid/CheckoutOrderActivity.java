@@ -35,6 +35,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,9 +63,10 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 				if (application.getSalesitems() != null) {
 					application.getSalesorder().setSalesitems(
 							application.getSalesitems());
-					application.getSalesorder().setCoordinate(application.getLongitudelatitude());
+					application.getSalesorder().setCoordinate(
+							application.getLongitudelatitude());
 					String input = application.getSalesorder().saveToJSON();
-					Log.d("mensa", "request: "+input);
+					Log.d("mensa", "request: " + input);
 					input = Compression.encodeBase64(input);
 					HttpClient httpc = new HttpClient();
 					try {
@@ -115,9 +119,10 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 				if (application.getReturnitems() != null) {
 					application.getReturns().setReturnitems(
 							application.getReturnitems());
-					application.getReturns().setCoordinate(application.getLongitudelatitude());
+					application.getReturns().setCoordinate(
+							application.getLongitudelatitude());
 					String input = application.getReturns().saveToJSON();
-					Log.d("mensa", "request: "+input);
+					Log.d("mensa", "request: " + input);
 					input = Compression.encodeBase64(input);
 					HttpClient httpc = new HttpClient();
 					try {
@@ -166,6 +171,50 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 						toast.show();
 					}
 				}
+
+				// ----------checkout
+				JSONObject checkoutObj = new JSONObject();
+				String salescode = getMensaapplication().getSalesid();
+				String[] branches = salescode.split("-");
+				try {
+					checkoutObj.put("CABANG", branches[0]);
+					checkoutObj.put("SALESMAN_CODE", getMensaapplication()
+							.getSalesid());
+					checkoutObj.put("CUSTOMER_CODE", getMensaapplication()
+							.getCurrentCustomer());
+					checkoutObj.put("STATUS", "?");
+					checkoutObj.put("WAKTU", getMensaapplication()
+							.getDateTimeStr());
+					checkoutObj.put("KOORDINAT", getMensaapplication()
+							.getLongitudelatitude());
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				String input = Compression.encodeBase64(checkoutObj.toString());
+				HttpClient httpc = new HttpClient();
+				try {
+					input = "http://simfoni.mbs.co.id/services.php?key=czRMZTU0dVRvTWF0MTBu&tab=bW9iX2NoZWNrX2lu"
+							+ "&packet=" + URLEncoder.encode(input, "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+					Toast toast = Toast.makeText(CheckoutOrderActivity.this,
+							"Submit Checkout failed, error: " + e.getMessage(),
+							Toast.LENGTH_LONG);
+					toast.show();
+				}
+				String response = httpc.executeHttpPost(input, "");
+				Log.d("mensa", "response= " + response);
+				if (response.equals("null")) {
+					Toast toast = Toast.makeText(CheckoutOrderActivity.this,
+							"Submit Checkout failed, error: null response",
+							Toast.LENGTH_LONG);
+					toast.show();
+				}
+
+				// ------------------
+
 				application.setCurrentCustomer(null);
 				Intent intent = new Intent();
 				intent.setClass(CheckoutOrderActivity.this,
@@ -174,10 +223,10 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 				finish();
 			}
 		});
-		
+
 		Button btnCancel = (Button) findViewById(R.id.btncancel);
 		btnCancel.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				application.setCurrentCustomer(null);
@@ -185,7 +234,8 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 				application.setSalesitems(null);
 				application.setReturnitems(null);
 				application.setReturns(null);
-				Toast toast = Toast.makeText(CheckoutOrderActivity.this, "Cancel Order and/or Return", Toast.LENGTH_SHORT);
+				Toast toast = Toast.makeText(CheckoutOrderActivity.this,
+						"Cancel Order and/or Return", Toast.LENGTH_SHORT);
 				toast.show();
 				Intent intent = new Intent();
 				intent.setClass(CheckoutOrderActivity.this,
@@ -279,6 +329,17 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 				TextView lblsales = (TextView) v
 						.findViewById(R.id.tvsalesid_value_rf);
 				lblsales.setText(application.getReturns().getSalesid());
+				CheckBox cb = (CheckBox) v.findViewById(R.id.cball_rf);
+				cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+					@Override
+					public void onCheckedChanged(CompoundButton arg0,
+							boolean arg1) {
+						for (int i = 0; i < adapterRI.getCount(); i++) {
+							adapterRI.setChecked(i, arg1);
+						}
+					}
+				});
 			}
 			return v;
 		}
@@ -315,6 +376,19 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 				TextView tvsalesid = (TextView) v
 						.findViewById(R.id.tvsalesid_value);
 				tvsalesid.setText(application.getSalesorder().getSalesmanid());
+				CheckBox cb = (CheckBox) v.findViewById(R.id.cball_or);
+				cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+					@Override
+					public void onCheckedChanged(CompoundButton arg0,
+							boolean arg1) {
+						if (adapter != null) {
+							for (int i = 0; i < adapter.getCount(); i++) {
+								adapter.setChecked(i, arg1);
+							}
+						}
+					}
+				});
 			}
 			return v;
 		}

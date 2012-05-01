@@ -29,8 +29,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
-import android.support.v4.view.MenuItem.OnMenuItemClickListener;
+import android.util.Log;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -55,6 +54,7 @@ public class InfoReturActivity extends BaseFragmentActivity {
 	Fragment fragment;
 	JSONArray rcCause;
 	int spinnerid = 0;
+	String selectedProductName = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -174,9 +174,10 @@ public class InfoReturActivity extends BaseFragmentActivity {
 					ReturnItem ri = null;
 					try {
 						ri = new ReturnItem(btnBarcode.getText().toString(),
-								Float.parseFloat(etqty.getText().toString()),
-								rcCause.getJSONObject(spinnerid).getString(
-										"RETURN_REASON"), thumbnail);
+								selectedProductName, Float.parseFloat(etqty
+										.getText().toString()), rcCause
+										.getJSONObject(spinnerid).getString(
+												"RETURN_REASON"), thumbnail);
 					} catch (NumberFormatException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -195,7 +196,7 @@ public class InfoReturActivity extends BaseFragmentActivity {
 					Intent list = new Intent(InfoReturActivity.this,
 							InfoReturActivity.class);
 					startActivity(list);
-				}else{
+				} else {
 					Toast toast = Toast.makeText(InfoReturActivity.this,
 							"Null productcode is not allowed!.",
 							Toast.LENGTH_SHORT);
@@ -273,6 +274,8 @@ public class InfoReturActivity extends BaseFragmentActivity {
 				int productPos = data.getIntExtra("protype", -1);
 				btnBarcode.setText(application.getProducts().get(productPos)
 						.getPART_NO());
+				selectedProductName = application.getProducts().get(productPos)
+						.getDESCRIPTION();
 			}
 		}
 	}

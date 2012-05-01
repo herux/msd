@@ -3,13 +3,16 @@ package com.mensa.salesdroid;
 import android.graphics.Bitmap;
 
 public class ReturnItem {
-	private String productcode; 
-	private float qty; 
-	private String description; 
+	private String productcode;
+	private String productname;
+	private float qty;
+	private String description;
 	private Bitmap image;
-	
-	public ReturnItem(String productcode, float qty, String description, Bitmap image) {
+
+	public ReturnItem(String productcode, String productname, float qty,
+			String description, Bitmap image) {
 		this.setProductcode(productcode);
+		this.setProductname(productname);
 		this.setQty(qty);
 		this.setDescription(description);
 		this.setImage(image);
@@ -46,7 +49,13 @@ public class ReturnItem {
 	public void setImage(Bitmap image) {
 		this.image = image;
 	}
-	
-	
+
+	public String getProductname() {
+		return productname;
+	}
+
+	public void setProductname(String productname) {
+		this.productname = productname;
+	}
 
 }

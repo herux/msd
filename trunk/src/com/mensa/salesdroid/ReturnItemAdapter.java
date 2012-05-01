@@ -9,11 +9,13 @@ import net.londatiga.android.QuickAction.OnActionItemClickListener;
 
 import android.app.Activity;
 import android.content.res.Configuration;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +23,7 @@ public class ReturnItemAdapter extends ArrayAdapter<ReturnItem> {
 	Activity activity;
 	final QuickAction qa;
 	private static final int DELETE = 1;
+	private CheckBox[] cbs;
 
 	public ReturnItemAdapter(final Activity activity, int textViewResourceId,
 			List<ReturnItem> returnitems) {
@@ -41,6 +44,15 @@ public class ReturnItemAdapter extends ArrayAdapter<ReturnItem> {
 				qa.dismiss();
 			}
 		});
+		cbs = new CheckBox[getCount()];
+	}
+	
+	public boolean isChecked(int itemPosition){
+		return cbs[itemPosition].isChecked();
+	}
+	
+	public void setChecked(int itemPosition, boolean checked){
+		cbs[itemPosition].setChecked(checked);
 	}
 	
 	@Override
@@ -48,11 +60,12 @@ public class ReturnItemAdapter extends ArrayAdapter<ReturnItem> {
 		LayoutInflater inflater = activity.getLayoutInflater();
 		View row = inflater.inflate(R.layout.returnslist, parent, false);
 		TextView tvproductcode = (TextView) row.findViewById(R.id.tvproductcoderow);
-		tvproductcode.setText(getItem(position).getProductcode());
+		tvproductcode.setText(getItem(position).getProductname());
 		TextView tvqty = (TextView) row.findViewById(R.id.tvqtyrow);
 		tvqty.setText(Float.toString(getItem(position).getQty()));
 		TextView tvdesc = (TextView) row.findViewById(R.id.tvdescrow);
 		tvdesc.setText(getItem(position).getDescription());
+		cbs[position] = (CheckBox) row.findViewById(R.id.cball);
 		if (activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			ImageView ivproduct = (ImageView) row.findViewById(R.id.ivproductrow);
 			ivproduct.setImageBitmap(getItem(position).getImage());

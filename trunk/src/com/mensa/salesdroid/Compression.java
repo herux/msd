@@ -1,10 +1,13 @@
 package com.mensa.salesdroid;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
+import android.graphics.Bitmap;
 import android.util.Base64;
 
 public class Compression {
@@ -20,6 +23,36 @@ public class Compression {
 			e.printStackTrace();
 		}
 		return base64;
+	}
+	
+	public static String imageToString(Bitmap bmp){
+		ByteArrayOutputStream bao = new ByteArrayOutputStream();
+
+		bmp.compress(Bitmap.CompressFormat.JPEG, 90, bao);
+
+        byte [] ba = bao.toByteArray();
+
+        String ba1=Base64.encodeToString(ba, Base64.DEFAULT);
+        return ba1;
+	}
+	
+	public static String Compress(String sIN) {
+		String res = null;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream(sIN.length());
+		DeflaterOutputStream dis = new DeflaterOutputStream(baos);
+		try {
+			dis.write(sIN.getBytes());
+			dis.close();
+			byte[] compressed = baos.toByteArray();
+			baos.close();
+			byte[] encode = Base64.encode(compressed, Base64.DEFAULT);
+			res = new String(encode);
+			return res;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return res;
 	}
 
 	public static String Decompress(String sIN) {
