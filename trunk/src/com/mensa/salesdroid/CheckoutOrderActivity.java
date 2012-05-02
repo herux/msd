@@ -66,14 +66,13 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 					application.getSalesorder().setCoordinate(
 							application.getLongitudelatitude());
 					String input = application.getSalesorder().saveToJSON();
+					String url = "";
 					Log.d("mensa", "request: " + input);
 					input = Compression.encodeBase64(input);
 					HttpClient httpc = new HttpClient();
 					try {
-						input = MensaApplication.mbs_url
-								+ MensaApplication.fullsync_paths[7]
-								+ "&packet="
-								+ URLEncoder.encode(input, "UTF-8");
+						url = MensaApplication.mbs_url + MensaApplication.fullsync_paths[7];
+						input = "packet=" + URLEncoder.encode(input, "UTF-8");
 					} catch (UnsupportedEncodingException e) {
 						e.printStackTrace();
 						Toast toast = Toast.makeText(
@@ -82,7 +81,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 								Toast.LENGTH_LONG);
 						toast.show();
 					}
-					String response = httpc.executeHttpPost(input, "");
+					String response = httpc.executeHttpPost(url, input);
 					Log.d("mensa", "response= " + response);
 
 					try {
@@ -122,15 +121,13 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 					application.getReturns().setCoordinate(
 							application.getLongitudelatitude());
 					String input = application.getReturns().saveToJSON();
-//					input = input.replace("\\", "");
+					String url = "";
 					Log.d("mensa", "request: " + input);
 					input = Compression.encodeBase64(input);
 					HttpClient httpc = new HttpClient();
 					try {
-						input = MensaApplication.mbs_url
-								+ MensaApplication.fullsync_paths[9]
-								+ "&packet="
-								+ URLEncoder.encode(input, "UTF-8");
+						url = MensaApplication.mbs_url + MensaApplication.fullsync_paths[9]; 
+						input = "packet=" + URLEncoder.encode(input, "UTF-8");
 					} catch (UnsupportedEncodingException e) {
 						e.printStackTrace();
 						Toast toast = Toast.makeText(
@@ -139,7 +136,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 										+ e.getMessage(), Toast.LENGTH_LONG);
 						toast.show();
 					}
-					String response = httpc.executeHttpPost(input, "");
+					String response = httpc.executeHttpPost(url, input);
 					Log.d("mensa", "response= " + response);
 
 					try {
