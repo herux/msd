@@ -122,6 +122,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 					application.getReturns().setCoordinate(
 							application.getLongitudelatitude());
 					String input = application.getReturns().saveToJSON();
+//					input = input.replace("\\", "");
 					Log.d("mensa", "request: " + input);
 					input = Compression.encodeBase64(input);
 					HttpClient httpc = new HttpClient();
