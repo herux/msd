@@ -2,16 +2,18 @@ package com.mensa.salesdroid;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
 import java.util.ArrayList;
-import java.util.zip.Deflater;
 
+import org.apache.commons.codec.binary.Base64;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.graphics.Bitmap.CompressFormat;
 import android.os.Environment;
-import org.apache.commons.codec.binary.Base64;
+import android.util.Log;
 
 public class Returns {
 	private String ReturnNo, datetimecheckin, salesid;
@@ -67,7 +69,7 @@ public class Returns {
 	public void setCoordinate(String coordinate) {
 		this.coordinate = coordinate;
 	}
-
+	
 	public String saveToJSON() {
 		JSONObject returnhead = new JSONObject();
 		JSONObject returns = new JSONObject();
@@ -105,8 +107,7 @@ public class Returns {
 							.compress(CompressFormat.JPEG, 90, bao);
 					bas = new String(Base64.encodeBase64(bao.toByteArray()));
 				}
-				
-				item.put("pic", new StringBuilder(bas));
+				item.put("pic", bas);
 				Items.put(i, item);
 			}
 			returns.put("returnnumber", getReturnNo());
