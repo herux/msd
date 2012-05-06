@@ -14,6 +14,10 @@ import java.net.URLEncoder;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+import net.londatiga.android.ActionItem;
+import net.londatiga.android.QuickAction;
+import net.londatiga.android.QuickAction.OnActionItemClickListener;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,6 +52,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 	ViewPager mViewPager;
 	TabsAdapter mTabsAdapter;
 	static final int CHECKOUT_DIALOG = 1;
+	private static final int DELETE = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +72,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 							application.getLongitudelatitude());
 					String input = application.getSalesorder().saveToJSON();
 					String url = "";
-					Log.d("mensa", "request: " + input);
+					Log.d("mensa", "request Order: " + input);
 					input = Compression.encodeBase64(input);
 					HttpClient httpc = new HttpClient();
 					try {
@@ -82,7 +87,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 						toast.show();
 					}
 					String response = httpc.executeHttpPost(url, input);
-					Log.d("mensa", "response= " + response);
+					Log.d("mensa", "response order= " + response);
 
 					try {
 						JSONObject statusObj = new JSONObject(response);
@@ -122,7 +127,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 							application.getLongitudelatitude());
 					String input = application.getReturns().saveToJSON();
 					String url = "";
-					Log.d("mensa", "request: " + input);
+					Log.d("mensa", "request Return: " + input);
 					input = Compression.encodeBase64(input);
 					HttpClient httpc = new HttpClient();
 					try {
@@ -137,7 +142,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 						toast.show();
 					}
 					String response = httpc.executeHttpPost(url, input);
-					Log.d("mensa", "response= " + response);
+					Log.d("mensa", "response Return= " + response);
 
 					try {
 						JSONObject statusObj = new JSONObject(response);
@@ -179,8 +184,8 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 					checkoutObj.put("SALESMAN_CODE", getMensaapplication()
 							.getSalesid());
 					checkoutObj.put("CUSTOMER_CODE", getMensaapplication()
-							.getCurrentCustomer());
-					checkoutObj.put("STATUS", "?");
+							.getCurrentCustomer().getCUSTOMER_CODE());
+					checkoutObj.put("STATUS", "2");
 					checkoutObj.put("WAKTU", getMensaapplication()
 							.getDateTimeStr());
 					checkoutObj.put("KOORDINAT", getMensaapplication()
@@ -189,8 +194,10 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
-				String input = Compression.encodeBase64(checkoutObj.toString());
+				
+				String input = checkoutObj.toString();
+				Log.d("mensa", "Request CheckOut="+input);
+				input = Compression.encodeBase64(input);
 				HttpClient httpc = new HttpClient();
 				try {
 					input = "http://simfoni.mbs.co.id/services.php?key=czRMZTU0dVRvTWF0MTBu&tab=bW9iX2NoZWNrX2lu"
@@ -203,7 +210,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 					toast.show();
 				}
 				String response = httpc.executeHttpPost(input, "");
-				Log.d("mensa", "response= " + response);
+				Log.d("mensa", "response CheckOut= " + response);
 				if (response.equals("null")) {
 					Toast toast = Toast.makeText(CheckoutOrderActivity.this,
 							"Submit Checkout failed, error: null response",
@@ -302,6 +309,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 	}
 
 	public static class ReturnFragment extends Fragment {
+		QuickAction qa;
 		public static ReturnFragment newInstance(int index) {
 			ReturnFragment rf = new ReturnFragment();
 
@@ -315,7 +323,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View v = inflater.inflate(R.layout.returnfragment, null);
+			final View v = inflater.inflate(R.layout.returnfragment, null);
 			if (application.getReturnitems() != null) {
 				TextView lblreturnnum = (TextView) v
 						.findViewById(R.id.tvreturnsnum_value_rf);
@@ -336,6 +344,21 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 						for (int i = 0; i < adapterRI.getCount(); i++) {
 							adapterRI.setChecked(i, arg1);
 						}
+						if (arg1){
+							ActionItem deleteItem = new ActionItem(DELETE, "Delete All checked", getActivity().getResources()
+									.getDrawable(android.R.drawable.ic_menu_delete));
+							qa = new QuickAction(getActivity());
+							qa.addActionItem(deleteItem);
+							qa.setOnActionItemClickListener(new OnActionItemClickListener() {
+								
+								@Override
+								public void onItemClick(QuickAction source, int pos, int actionId) {
+									application.getReturns().getReturnitems().removeAll(application.getReturns().getReturnitems());
+									adapterRI.notifyDataSetChanged();
+								}
+							});
+							qa.show(v);
+						}
 					}
 				});
 			}
@@ -344,6 +367,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 	}
 
 	public static class OrderFragment extends Fragment {
+		QuickAction qa;
 
 		public static OrderFragment newInstance(int index) {
 			OrderFragment of = new OrderFragment();
@@ -358,7 +382,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View v = inflater.inflate(R.layout.orderfragment, null);
+			final View v = inflater.inflate(R.layout.orderfragment, null);
 			if (application.getSalesitems() != null) {
 				TextView tvtotal = (TextView) v.findViewById(R.id.tvgrandtotal);
 				NumberFormat nf = NumberFormat.getInstance();
@@ -384,6 +408,22 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 							for (int i = 0; i < adapter.getCount(); i++) {
 								adapter.setChecked(i, arg1);
 							}
+						}
+						
+						if (arg1){
+							ActionItem deleteItem = new ActionItem(DELETE, "Delete All checked", getActivity().getResources()
+									.getDrawable(android.R.drawable.ic_menu_delete));
+							qa = new QuickAction(getActivity());
+							qa.addActionItem(deleteItem);
+							qa.setOnActionItemClickListener(new OnActionItemClickListener() {
+								
+								@Override
+								public void onItemClick(QuickAction source, int pos, int actionId) {
+									application.getSalesitems().removeAll(application.getSalesitems());
+									adapter.notifyDataSetChanged();
+								}
+							});
+							qa.show(v);
 						}
 					}
 				});

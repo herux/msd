@@ -8,7 +8,12 @@
 
 package com.mensa.salesdroid;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.Intent;
@@ -47,21 +52,24 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 		application = getMensaapplication();
 		setContentView(R.layout.listcallplan);
 
-		final LocationManager mlocManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+		final LocationManager mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		final GPSLocationListener mlocListener = new GPSLocationListener();
-		mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
+		mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
+				mlocListener);
 		mlocListener.setOnGPSLocationChanged(new OnGPSLocationChanged() {
-			
+
 			@Override
 			public void OnLatAndLongChanged(double longitude, double latitude) {
-				String longitudelatitude = Double.toString(longitude)+","+Double.toString(latitude);
+				String longitudelatitude = Double.toString(longitude) + ","
+						+ Double.toString(latitude);
 				application.setLongitudelatitude(longitudelatitude);
 				mlocManager.removeUpdates(mlocListener);
-				Toast toast = Toast.makeText(ListcallplanActivity.this, "location: "+longitudelatitude, Toast.LENGTH_LONG);
+				Toast toast = Toast.makeText(ListcallplanActivity.this,
+						"location: " + longitudelatitude, Toast.LENGTH_LONG);
 				toast.show();
 			}
 		});
-		
+
 		final ActionBar actionbar = getSupportActionBar();
 		actionbar.setDisplayHomeAsUpEnabled(false);
 		actionbar.setDisplayUseLogoEnabled(false);
@@ -162,7 +170,8 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 				public void OnClick() {
 					application.setCurrentCustomer(customers
 							.get(getShownIndex()));
-					Toast toast = Toast.makeText(getActivity(), "Customer check, changed.!", Toast.LENGTH_SHORT);
+					Toast toast = Toast.makeText(getActivity(),
+							"Customer check, changed.!", Toast.LENGTH_SHORT);
 					toast.show();
 					getActivity().finish();
 					Intent intent = new Intent();
@@ -171,10 +180,11 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 				}
 			});
 			alert.SetOnClickNegativeButtonListener(new OnClickNegativeButtonListener() {
-				
+
 				@Override
 				public void OnClick() {
-					Toast toast = Toast.makeText(getActivity(), "Re-Checkin", Toast.LENGTH_SHORT);
+					Toast toast = Toast.makeText(getActivity(), "Re-Checkin",
+							Toast.LENGTH_SHORT);
 					toast.show();
 					getActivity().finish();
 					Intent intent = new Intent();
@@ -193,13 +203,15 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			View v = inflater.inflate(R.layout.callplandetail, null);
-			RelativeLayout rl2 = (RelativeLayout) v.findViewById(R.id.relativeLayout2);
+			RelativeLayout rl2 = (RelativeLayout) v
+					.findViewById(R.id.relativeLayout2);
 			rl2.getBackground().setAlpha(170);
-			RelativeLayout rl1 = (RelativeLayout) v.findViewById(R.id.relativeLayout1);
+			RelativeLayout rl1 = (RelativeLayout) v
+					.findViewById(R.id.relativeLayout1);
 			rl1.getBackground().setAlpha(170);
-			TextView customerdesc = (TextView) v.findViewById(R.id.tvCustomerValue);
-			customerdesc.setText(customers.get(getShownIndex())
-					.getNAMA());
+			TextView customerdesc = (TextView) v
+					.findViewById(R.id.tvCustomerValue);
+			customerdesc.setText(customers.get(getShownIndex()).getNAMA());
 			TextView addresskirim = (TextView) v
 					.findViewById(R.id.tvdeliveryaddressValue);
 			addresskirim.setText(customers.get(getShownIndex())
@@ -216,10 +228,59 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 					if (application.getCurrentCustomer() == null) {
 						application.setCurrentCustomer(customers
 								.get(getShownIndex()));
-						Log.d("mensa", "Checkin:"+application.getCurrentCustomer().getCUSTOMER_CODE()+":"+application.getCurrentCustomer().getNAMA());
+						Log.d("mensa", "Checkin:"
+								+ application.getCurrentCustomer()
+										.getCUSTOMER_CODE() + ":"
+								+ application.getCurrentCustomer().getNAMA());
+						
+						// ----------checkin
+						JSONObject checkoutObj = new JSONObject();
+						String salescode = application.getSalesid();
+						String[] branches = salescode.split("-");
+						try {
+							checkoutObj.put("CABANG", branches[0]);
+							checkoutObj.put("SALESMAN_CODE", application
+									.getSalesid());
+							checkoutObj.put("CUSTOMER_CODE", application
+									.getCurrentCustomer().getCUSTOMER_CODE());
+							checkoutObj.put("STATUS", "1");
+							checkoutObj.put("WAKTU", application
+									.getDateTimeStr());
+							checkoutObj.put("KOORDINAT", application
+									.getLongitudelatitude());
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						String input = checkoutObj.toString();
+						Log.d("mensa", "Request Checkin="+input);
+						input = Compression.encodeBase64(input);
+						HttpClient httpc = new HttpClient();
+						try {
+							input = "http://simfoni.mbs.co.id/services.php?key=czRMZTU0dVRvTWF0MTBu&tab=bW9iX2NoZWNrX2lu"
+									+ "&packet=" + URLEncoder.encode(input, "UTF-8");
+						} catch (UnsupportedEncodingException e) {
+							e.printStackTrace();
+							Toast toast = Toast.makeText(getActivity(),
+									"Submit Checkout failed, error: " + e.getMessage(),
+									Toast.LENGTH_LONG);
+							toast.show();
+						}
+						String response = httpc.executeHttpPost(input, "");
+						Log.d("mensa", "response Checkin= " + response);
+						if (response.equals("null")) {
+							Toast toast = Toast.makeText(getActivity(),
+									"Submit Checkout failed, error: null response",
+									Toast.LENGTH_LONG);
+							toast.show();
+						}
+
+						// ------------------
 						getActivity().finish();
 						Intent intent = new Intent();
-						intent.setClass(getActivity(), CustomerMenuActivity.class);
+						intent.setClass(getActivity(),
+								CustomerMenuActivity.class);
 						startActivity(intent);
 					} else {
 						showDialog();
