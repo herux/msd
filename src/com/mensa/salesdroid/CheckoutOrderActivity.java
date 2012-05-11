@@ -65,6 +65,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onClick(View arg0) {
+				String respAll = "";
 				if (application.getSalesitems() != null) {
 					application.getSalesorder().setSalesitems(
 							application.getSalesitems());
@@ -77,14 +78,10 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 					HttpClient httpc = new HttpClient();
 					try {
 						url = MensaApplication.mbs_url + MensaApplication.fullsync_paths[7];
-						input = "packet=" + URLEncoder.encode(input, "UTF-8");
+						input = URLEncoder.encode(input, "UTF-8");
 					} catch (UnsupportedEncodingException e) {
 						e.printStackTrace();
-						Toast toast = Toast.makeText(
-								CheckoutOrderActivity.this,
-								"Transaction Failed, error: " + e.getMessage(),
-								Toast.LENGTH_LONG);
-						toast.show();
+						respAll = respAll + "| Order: Failed, error msg: "+e.getMessage()+"|";
 					}
 					String response = httpc.executeHttpPost(url, input);
 					Log.d("mensa", "response order= " + response);
@@ -92,12 +89,8 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 					try {
 						JSONObject statusObj = new JSONObject(response);
 						String status = statusObj.getString("status");
-						if (status.equals("OK")) {
-							Toast toast = Toast.makeText(
-									CheckoutOrderActivity.this,
-									statusObj.getString("description"),
-									Toast.LENGTH_LONG);
-							toast.show();
+						if (status.equals("SUCCESS")) {
+							respAll = respAll + "| Order: "+status+" |";
 							// delete file disini
 							File root = Environment
 									.getExternalStorageDirectory();
@@ -113,11 +106,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
-						Toast toast = Toast.makeText(
-								CheckoutOrderActivity.this,
-								"Submit Transaction Order failed, error: "
-										+ e.getMessage(), Toast.LENGTH_LONG);
-						toast.show();
+						respAll = respAll + "| Order: Failed, error msg: "+e.getMessage()+"|";
 					}
 				}
 				if (application.getReturnitems() != null) {
@@ -132,14 +121,10 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 					HttpClient httpc = new HttpClient();
 					try {
 						url = MensaApplication.mbs_url + MensaApplication.fullsync_paths[9]; 
-						input = "packet=" + URLEncoder.encode(input, "UTF-8");
+						input = URLEncoder.encode(input, "UTF-8");
 					} catch (UnsupportedEncodingException e) {
 						e.printStackTrace();
-						Toast toast = Toast.makeText(
-								CheckoutOrderActivity.this,
-								"Submit Transaction Return failed, error: "
-										+ e.getMessage(), Toast.LENGTH_LONG);
-						toast.show();
+						respAll = respAll + "| Return: Failed, error msg: "+e.getMessage()+"|";
 					}
 					String response = httpc.executeHttpPost(url, input);
 					Log.d("mensa", "response Return= " + response);
@@ -147,12 +132,8 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 					try {
 						JSONObject statusObj = new JSONObject(response);
 						String status = statusObj.getString("status");
-						if (status.equals("OK")) {
-							Toast toast = Toast.makeText(
-									CheckoutOrderActivity.this,
-									statusObj.getString("description"),
-									Toast.LENGTH_LONG);
-							toast.show();
+						if (status.equals("SUCCESS")) {
+							respAll = respAll + "| Return: "+status+" |";
 							// delete file disini
 							File root = Environment
 									.getExternalStorageDirectory();
@@ -167,11 +148,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
-						Toast toast = Toast.makeText(
-								CheckoutOrderActivity.this,
-								"Transaction Failed, error: " + e.getMessage(),
-								Toast.LENGTH_LONG);
-						toast.show();
+						respAll = respAll + "| Return: Failed, error msg: "+e.getMessage()+"|";
 					}
 				}
 
@@ -196,27 +173,26 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 				}
 				
 				String input = checkoutObj.toString();
+				String url = "http://simfoni.mbs.co.id/services.php?key=czRMZTU0dVRvTWF0MTBu&tab=bW9iX2NoZWNrX2lu"; 
 				Log.d("mensa", "Request CheckOut="+input);
 				input = Compression.encodeBase64(input);
 				HttpClient httpc = new HttpClient();
 				try {
-					input = "http://simfoni.mbs.co.id/services.php?key=czRMZTU0dVRvTWF0MTBu&tab=bW9iX2NoZWNrX2lu"
-							+ "&packet=" + URLEncoder.encode(input, "UTF-8");
+					input = URLEncoder.encode(input, "UTF-8");
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
-					Toast toast = Toast.makeText(CheckoutOrderActivity.this,
-							"Submit Checkout failed, error: " + e.getMessage(),
-							Toast.LENGTH_LONG);
-					toast.show();
+					respAll = respAll + "| CheckOut: Failed, error msg: "+e.getMessage()+"|";
 				}
-				String response = httpc.executeHttpPost(input, "");
+				String response = httpc.executeHttpPost(url, input);
 				Log.d("mensa", "response CheckOut= " + response);
 				if (response.equals("null")) {
-					Toast toast = Toast.makeText(CheckoutOrderActivity.this,
-							"Submit Checkout failed, error: null response",
-							Toast.LENGTH_LONG);
-					toast.show();
+					respAll = respAll + "| CheckOut: Failed, error msg: null response |";
 				}
+				
+				Toast toast = Toast.makeText(CheckoutOrderActivity.this,
+						"Checkout Report: "+respAll,
+						Toast.LENGTH_LONG);
+				toast.show();
 
 				// ------------------
 

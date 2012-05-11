@@ -98,6 +98,7 @@ public class MensaApplication extends Application {
 	private ArrayList<Product> products;
 	private ArrayList<Product> productsfocus;
 	private ArrayList<Product> productspromo;
+	private ArrayList<Product> productsnew;
 	private SalesOrder salesorder;
 	private ArrayList<SalesItem> salesitems;
 	private Returns returns;
@@ -327,6 +328,14 @@ public class MensaApplication extends Application {
 
 	public void setProductsearchs(ArrayList<Product> productsearchs) {
 		this.productsearchs = productsearchs;
+	}
+
+	public ArrayList<Product> getProductsnew() {
+		return productsnew;
+	}
+
+	public void setProductsnew(ArrayList<Product> productsnew) {
+		this.productsnew = productsnew;
 	}
 
 }
