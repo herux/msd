@@ -48,6 +48,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 	static final int FOCUSTAB = 0;
 	static final int PROMOTAB = 1;
 	static final int ALLTAB = 2;
+	static final int NEWTAB = 3;
 	static final int proCAPTURORDER = 0;
 	static final int proBROWSER = 1;
 	static ProgressDialogFragment progressDialog;
@@ -70,6 +71,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 							.getProductsfocus());
 					application.setProductspromo(productsThread
 							.getProductspromo());
+					application.setProductsnew(new ArrayList<Product>());
 
 					switch (tabIndex) {
 					case FOCUSTAB: {
@@ -85,6 +87,11 @@ public class ProductviewActivity extends BaseFragmentActivity {
 					case ALLTAB: {
 						adapter.setWithsearch(true);
 						tmpProduct = application.getProducts();
+						break;
+					}
+					case NEWTAB: {
+						adapter.setWithsearch(false);
+						tmpProduct = application.getProductsnew();
 						break;
 					}
 					}
@@ -248,6 +255,39 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			}
 		});
 		actionbar.addTab(tabPromo);
+		
+		Tab tabNew = actionbar.newTab();
+		tabNew.setText("New");
+		tabNew.setTabListener(new TabListener() {
+			
+			@Override
+			public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onTabSelected(Tab tab, FragmentTransaction ft) {
+				Log.d("mensa", "loaded:" + Boolean.toString(loaded));
+				tabIndex = NEWTAB;
+				if (loaded) {
+					adapter.setWithsearch(false);
+					products = application.getProductsnew();
+					adapter.clear();
+					for (int i = 0; i < products.size(); i++) {
+						adapter.add(products.get(i));
+					}
+					adapter.notifyDataSetChanged();
+				}
+			}
+			
+			@Override
+			public void onTabReselected(Tab tab, FragmentTransaction ft) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		actionbar.addTab(tabNew);
 
 		Tab tabAll = actionbar.newTab();
 		tabAll.setText("All");
@@ -302,6 +342,10 @@ public class ProductviewActivity extends BaseFragmentActivity {
 		}
 		case ALLTAB: {
 			tabAll.select();
+			break;
+		}
+		case NEWTAB: {
+			tabNew.select();
 			break;
 		}
 		}

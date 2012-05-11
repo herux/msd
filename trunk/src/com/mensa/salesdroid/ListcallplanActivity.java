@@ -254,12 +254,12 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 						}
 						
 						String input = checkoutObj.toString();
+						String url = "http://simfoni.mbs.co.id/services.php?key=czRMZTU0dVRvTWF0MTBu&tab=bW9iX2NoZWNrX2lu";
 						Log.d("mensa", "Request Checkin="+input);
 						input = Compression.encodeBase64(input);
 						HttpClient httpc = new HttpClient();
 						try {
-							input = "http://simfoni.mbs.co.id/services.php?key=czRMZTU0dVRvTWF0MTBu&tab=bW9iX2NoZWNrX2lu"
-									+ "&packet=" + URLEncoder.encode(input, "UTF-8");
+							input = URLEncoder.encode(input, "UTF-8");
 						} catch (UnsupportedEncodingException e) {
 							e.printStackTrace();
 							Toast toast = Toast.makeText(getActivity(),
@@ -267,7 +267,7 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 									Toast.LENGTH_LONG);
 							toast.show();
 						}
-						String response = httpc.executeHttpPost(input, "");
+						String response = httpc.executeHttpPost(url, input);
 						Log.d("mensa", "response Checkin= " + response);
 						if (response.equals("null")) {
 							Toast toast = Toast.makeText(getActivity(),

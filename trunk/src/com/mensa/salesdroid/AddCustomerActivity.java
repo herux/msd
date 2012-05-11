@@ -104,11 +104,10 @@ public class AddCustomerActivity extends BaseFragmentActivity {
 				String json = saveToJSON();
 				Log.d("mensa", "json: " + json);
 				String input = Compression.encodeBase64(json);
+				String url = MensaApplication.mbs_url + MensaApplication.fullsync_paths[10]; 
 				HttpClient httpc = new HttpClient();
 				try {
-					input = MensaApplication.mbs_url
-							+ MensaApplication.fullsync_paths[10] + "&packet="
-							+ URLEncoder.encode(input, "UTF-8");
+					input = URLEncoder.encode(input, "UTF-8");
 					Log.d("mensa", "url: " + input);
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
@@ -117,7 +116,7 @@ public class AddCustomerActivity extends BaseFragmentActivity {
 							Toast.LENGTH_LONG);
 					toast.show();
 				}
-				String response = httpc.executeHttpPost(input, "");
+				String response = httpc.executeHttpPost(url, input);
 				Log.d("mensa", "response= " + response);
 
 				try {

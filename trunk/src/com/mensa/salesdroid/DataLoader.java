@@ -119,6 +119,7 @@ public class DataLoader {
 						File dir = new File(datafolder);
 						File[] filelist = dir.listFiles();
 						for (int k = filelist.length - 1; k > 0; k--) {
+
 							if (filelist[k].getName().contains(
 									MensaApplication.PRODUCTSPAGEFILENAME)) {
 								FileInputStream productsfile = new FileInputStream(

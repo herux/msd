@@ -107,6 +107,7 @@ public class Returns {
 							.compress(CompressFormat.JPEG, 90, bao);
 					bas = new String(Base64.encodeBase64(bao.toByteArray()));
 				}
+				Log.d("mensa", "savetojson image: "+bas);
 				item.put("pic", bas);
 				Items.put(i, item);
 			}
