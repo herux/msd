@@ -256,7 +256,7 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 						String input = checkoutObj.toString();
 						String url = "http://simfoni.mbs.co.id/services.php?key=czRMZTU0dVRvTWF0MTBu&tab=bW9iX2NoZWNrX2lu";
 						Log.d("mensa", "Request Checkin="+input);
-						input = Compression.encodeBase64(input);
+						input = Compression.encodebase64(input);
 						HttpClient httpc = new HttpClient();
 						try {
 							input = URLEncoder.encode(input, "UTF-8");

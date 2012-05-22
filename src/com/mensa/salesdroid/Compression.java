@@ -7,22 +7,16 @@ import java.io.UnsupportedEncodingException;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
+import org.apache.commons.codec.binary.Base64;
+
 import android.graphics.Bitmap;
-import android.util.Base64;
+//import android.util.Base64;
+
 
 public class Compression {
 
-	public static String encodeBase64(String s) {
-		byte[] data;
-		String base64 = "";
-		try {
-			data = s.getBytes("UTF-8");
-			base64 = Base64.encodeToString(data, Base64.DEFAULT);
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return base64;
+	public static String encodebase64(String s) {
+		return Base64.encodeBase64String(s.getBytes());
 	}
 	
 	public static String imageToString(Bitmap bmp){
@@ -32,8 +26,8 @@ public class Compression {
 
         byte [] ba = bao.toByteArray();
 
-        String ba1=Base64.encodeToString(ba, Base64.DEFAULT);
-        return ba1;
+        String bal = Base64.encodeBase64String(ba);
+        return bal;
 	}
 	
 	public static String Compress(String sIN) {
@@ -45,8 +39,7 @@ public class Compression {
 			dis.close();
 			byte[] compressed = baos.toByteArray();
 			baos.close();
-			byte[] encode = Base64.encode(compressed, Base64.DEFAULT);
-			res = new String(encode);
+			res = Base64.encodeBase64String(compressed);
 			return res;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -56,7 +49,7 @@ public class Compression {
 	}
 
 	public static String Decompress(String sIN) {
-		byte[] decodestr = Base64.decode(sIN, Base64.DEFAULT);
+		byte[] decodestr = Base64.decodeBase64(sIN);
 		ByteArrayInputStream bais = new ByteArrayInputStream(decodestr);
 		InflaterInputStream iis = new InflaterInputStream(bais);
 		StringBuilder sb = new StringBuilder();

@@ -103,7 +103,7 @@ public class AddCustomerActivity extends BaseFragmentActivity {
 			public void onClick(View arg0) {
 				String json = saveToJSON();
 				Log.d("mensa", "json: " + json);
-				String input = Compression.encodeBase64(json);
+				String input = Compression.encodebase64(json);
 				String url = MensaApplication.mbs_url + MensaApplication.fullsync_paths[10]; 
 				HttpClient httpc = new HttpClient();
 				try {
@@ -122,7 +122,7 @@ public class AddCustomerActivity extends BaseFragmentActivity {
 				try {
 					JSONObject statusObj = new JSONObject(response);
 					String status = statusObj.getString("status");
-					if (status.equals("OK")) {
+					if (status.equals("SUCCESS")) {
 						Toast toast = Toast.makeText(AddCustomerActivity.this,
 								statusObj.getString("description"),
 								Toast.LENGTH_LONG);

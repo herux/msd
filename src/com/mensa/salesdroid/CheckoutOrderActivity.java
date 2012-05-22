@@ -74,7 +74,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 					String input = application.getSalesorder().saveToJSON();
 					String url = "";
 					Log.d("mensa", "request Order: " + input);
-					input = Compression.encodeBase64(input);
+					input = Compression.encodebase64(input);
 					HttpClient httpc = new HttpClient();
 					try {
 						url = MensaApplication.mbs_url + MensaApplication.fullsync_paths[7];
@@ -117,7 +117,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 					String input = application.getReturns().saveToJSON();
 					String url = "";
 					Log.d("mensa", "request Return: " + input);
-					input = Compression.encodeBase64(input);
+					input = Compression.encodebase64(input);
 					HttpClient httpc = new HttpClient();
 					try {
 						url = MensaApplication.mbs_url + MensaApplication.fullsync_paths[9]; 
@@ -175,7 +175,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 				String input = checkoutObj.toString();
 				String url = "http://simfoni.mbs.co.id/services.php?key=czRMZTU0dVRvTWF0MTBu&tab=bW9iX2NoZWNrX2lu"; 
 				Log.d("mensa", "Request CheckOut="+input);
-				input = Compression.encodeBase64(input);
+				input = Compression.encodebase64(input);
 				HttpClient httpc = new HttpClient();
 				try {
 					input = URLEncoder.encode(input, "UTF-8");
