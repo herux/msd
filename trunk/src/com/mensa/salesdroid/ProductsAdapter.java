@@ -101,7 +101,7 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
 			} else {
 				etSearch.setBackgroundResource(R.drawable.searchbkg);
 			}
-			etSearch.setTextColor(R.color.titlemaincolor);
+			
 			etSearch.setOnSearchClickListener(new OnSearchClickListener() {
 				
 				@Override

@@ -30,6 +30,7 @@ public class DataLoader {
 	public static final int dlPRODUCTSFOCUS = 3;
 	public static final int dlPRODUCTSSEARCH = 5;
 	public static final int dlPRODUCTSPROMO = 8;
+	public static final int dlPRODUCTSNEW = 9;
 	public static final int dlSALESORDER = 7;
 	public static final int dlPIUTANG = 4;
 
@@ -321,6 +322,9 @@ public class DataLoader {
 						}
 					}
 					datalist[i] = productspromo;
+					break;
+				}case dlPRODUCTSNEW: {
+						
 					break;
 				}
 				case dlPIUTANG: {

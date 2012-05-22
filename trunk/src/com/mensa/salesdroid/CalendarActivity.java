@@ -18,7 +18,7 @@ package com.mensa.salesdroid;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.CalendarView;
+//import android.widget.CalendarView;
 
 public class CalendarActivity extends Activity {
 //	public static final String MIME_TYPE = "vnd.android.cursor.dir/vnd.exina.android.calendar.date";
@@ -37,8 +37,7 @@ public class CalendarActivity extends Activity {
         
 //        if(getIntent().getAction().equals(Intent.ACTION_PICK))
 //        	findViewById(R.id.hint).setVisibility(View.INVISIBLE);
-        CalendarView calendar = new CalendarView(this);
-        setContentView(calendar);
+
     }
 
 	
