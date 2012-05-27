@@ -9,6 +9,10 @@
 package com.mensa.salesdroid;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -154,7 +158,146 @@ public class DataSync extends BaseThread {
 			break;
 		}
 		case PENDSYNC: {
-			for (int i = 0; i < MensaApplication.fastsync_paths.length; i++) {
+			for (int i = 0; i < MensaApplication.PENDSYNC.length; i++) {
+				String datafolder = root + "/" + folder;
+				File dir = new File(datafolder);
+				File[] filelist = dir.listFiles();
+				// urutan sync adalah : order, return, new cust
+				// jika i = 0, cari file berawalan nama order,
+				// semua file yang ketemu di post sesuai path i,
+				// dan seterusnya 
+				switch (i) {
+				case 0:{
+					// order pending
+					for (int j = 0; j < filelist.length; j++) {
+						if (filelist[j].getName().contains(
+								MensaApplication.SALESORDERFILENAME)) {
+							// ambil content file
+							Log.d("mensa", "orderfilename="+filelist[j].getName());
+							FileInputStream orderfile = null;
+							try {
+								orderfile = new FileInputStream(filelist[j]);
+							} catch (FileNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							String ordercontents = MensaApplication.getFileContent(orderfile);
+							ordercontents = Compression.encodebase64(ordercontents);
+							String url = "";
+							HttpClient httpc = new HttpClient();
+							try {
+								url = MensaApplication.mbs_url + MensaApplication.PENDSYNC[i];
+								ordercontents = URLEncoder.encode(ordercontents, "UTF-8");
+							} catch (UnsupportedEncodingException e) {
+								e.printStackTrace();
+							}
+							Log.d("mensa", "send order url="+url+" content="+ordercontents);
+							String response = httpc.executeHttpPost(url, ordercontents);
+							Log.d("mensa", "response order = "+response);
+							String status = null;
+							try {
+								JSONObject statusObj = new JSONObject(response);
+								status = statusObj.getString("status");
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							if (status.equals("SUCCESS")) {
+								Log.d("mensa", "delete file order");
+								filelist[j].delete();
+							}
+						}
+					}
+					break;
+				}
+				case 1:{
+					// return pending
+					for (int j = 0; j < filelist.length; j++) {
+						if (filelist[j].getName().contains(
+								MensaApplication.RETURNORDERFILENAME)) {
+							Log.d("mensa", "return filename="+filelist[j].getName());
+							// ambil content file 
+							FileInputStream orderfile = null;
+							try {
+								orderfile = new FileInputStream(filelist[j]);
+							} catch (FileNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							String returncontents = MensaApplication.getFileContent(orderfile);
+							returncontents = Compression.encodebase64(returncontents);
+							String url = "";
+							HttpClient httpc = new HttpClient();
+							try {
+								url = MensaApplication.mbs_url + MensaApplication.PENDSYNC[i];
+								returncontents = URLEncoder.encode(returncontents, "UTF-8");
+							} catch (UnsupportedEncodingException e) {
+								e.printStackTrace();
+							}
+							String response = httpc.executeHttpPost(url, returncontents);
+							Log.d("mensa", "response return = "+response);
+							String status = null;
+							try {
+								JSONObject statusObj = new JSONObject(response);
+								status = statusObj.getString("status");
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							if (status.equals("SUCCESS")) {
+								Log.d("mensa", "delete file return");
+								filelist[j].delete();
+							}
+						}
+					}
+					break;
+				}
+				case 2:{
+					// new customers pending
+					for (int j = 0; j < filelist.length; j++) {
+						if (filelist[j].getName().contains(
+								MensaApplication.NEWCUSTFILENAME)) {
+							Log.d("mensa", "new cust filename="+filelist[j].getName());
+							// ambil content file 
+							FileInputStream orderfile = null;
+							try {
+								orderfile = new FileInputStream(filelist[j]);
+							} catch (FileNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							String newcustcontents = MensaApplication.getFileContent(orderfile);
+							newcustcontents = Compression.encodebase64(newcustcontents);
+							String url = "";
+							HttpClient httpc = new HttpClient();
+							try {
+								url = MensaApplication.mbs_url + MensaApplication.PENDSYNC[i];
+								newcustcontents = URLEncoder.encode(newcustcontents, "UTF-8");
+							} catch (UnsupportedEncodingException e) {
+								e.printStackTrace();
+							}
+							String response = httpc.executeHttpPost(url, newcustcontents);
+							Log.d("mensa", "response new cust = "+response);
+							String status = null;
+							try {
+								JSONObject statusObj = new JSONObject(response);
+								status = statusObj.getString("status");
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							if (status.equals("SUCCESS")) {
+								Log.d("mensa", "delete file new customers");
+								filelist[j].delete();
+							}
+						}
+					}
+					break;
+				}
+				default:
+					break;
+				}
+				
 				if (onDataSyncListener != null) {
 					onDataSyncListener.OnDataSync(MensaApplication.FULLSYNC[i], i, 0);
 				}
