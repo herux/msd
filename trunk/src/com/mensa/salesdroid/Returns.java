@@ -6,13 +6,13 @@ import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.ArrayList;
 
-import org.apache.commons.codec.binary.Base64;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.graphics.Bitmap.CompressFormat;
 import android.os.Environment;
+import android.util.Base64;
 import android.util.Log;
 
 public class Returns {
@@ -105,7 +105,7 @@ public class Returns {
 					ByteArrayOutputStream bao = new ByteArrayOutputStream();
 					returnitems.get(i).getImage()
 							.compress(CompressFormat.JPEG, 90, bao);
-					bas = new String(Base64.encodeBase64(bao.toByteArray()));
+					bas = new String(Base64.encodeToString(bao.toByteArray(), Base64.DEFAULT));
 				}
 				Log.d("mensa", "savetojson image: "+bas);
 				item.put("pic", bas);

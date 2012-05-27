@@ -91,7 +91,9 @@ public class MensaApplication extends Application {
 			};
 	
 	static String[] PENDSYNC = {
-		
+		"key=czRMZTU0dVRvTWF0MTBu&tab=cG9zdF9vcmRlcg==", // post_order
+		"key=czRMZTU0dVRvTWF0MTBu&tab=cG9zdF9yZXR1cm4=", // post return
+		"key=czRMZTU0dVRvTWF0MTBu&tab=bmV3X2N1c3RvbWVy" // newcustomer
 	};
 
 	private ArrayList<Product> productsearchs;
