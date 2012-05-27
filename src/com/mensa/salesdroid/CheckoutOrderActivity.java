@@ -53,6 +53,14 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 	TabsAdapter mTabsAdapter;
 	static final int CHECKOUT_DIALOG = 1;
 	private static final int DELETE = 1;
+	
+	private void FreeCheckOutObj(){
+		application.setCurrentCustomer(null);
+		application.setSalesorder(null);
+		application.setSalesitems(null);
+		application.setReturnitems(null);
+		application.setReturns(null);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -196,7 +204,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 
 				// ------------------
 
-				application.setCurrentCustomer(null);
+				FreeCheckOutObj();
 				Intent intent = new Intent();
 				intent.setClass(CheckoutOrderActivity.this,
 						MainmenuActivity.class);
@@ -210,11 +218,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onClick(View arg0) {
-				application.setCurrentCustomer(null);
-				application.setSalesorder(null);
-				application.setSalesitems(null);
-				application.setReturnitems(null);
-				application.setReturns(null);
+				FreeCheckOutObj();
 				Toast toast = Toast.makeText(CheckoutOrderActivity.this,
 						"Cancel Order and/or Return", Toast.LENGTH_SHORT);
 				toast.show();
