@@ -8,12 +8,17 @@
 
 package com.mensa.salesdroid;
 
+import android.graphics.Bitmap;
+
 public class Product {
 	private String CONTRACT, DIV, PART_NO, DESCRIPTION, LOCATION_NO,
 			LOT_BATCH_NO;
 	private float QTY_ONHAND, QTY_RESERVED;
 	private double PRICE;
 	private String fileSource;
+	private String DESCRIPTION2;
+	private String CABANG;
+	private Bitmap image; 
 
 	public Product(String ACONTRACT, String ADIV, String APART_NO,
 			String ADESCRIPTION, String ALOCATION_NO, String ALOT_BATCH_NO,
@@ -107,6 +112,30 @@ public class Product {
 
 	public void setFileSource(String fileSource) {
 		this.fileSource = fileSource;
+	}
+
+	public Bitmap getImage() {
+		return image;
+	}
+
+	public void setImage(Bitmap image) {
+		this.image = image;
+	}
+
+	public String getDESCRIPTION2() {
+		return DESCRIPTION2;
+	}
+
+	public void setDESCRIPTION2(String dESCRIPTION2) {
+		DESCRIPTION2 = dESCRIPTION2;
+	}
+
+	public String getCABANG() {
+		return CABANG;
+	}
+
+	public void setCABANG(String cABANG) {
+		CABANG = cABANG;
 	}
 
 }

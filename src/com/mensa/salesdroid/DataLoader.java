@@ -20,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.graphics.Bitmap;
 import android.os.Environment;
 import android.util.Log;
 
@@ -193,7 +194,7 @@ public class DataLoader {
 					JSONArray jsonproductsfocus = null;
 					try {
 						jsonproductsfocus = focusObj
-								.getJSONArray("product_focus_stock");
+								.getJSONArray("product_focus");
 					} catch (JSONException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -226,18 +227,28 @@ public class DataLoader {
 							try {
 								product = new Product(
 										jsonproductsfocus.getJSONObject(h)
-												.getString("CONTRACT"),
+												.optString("CONTRACT", ""),
 										jsonproductsfocus.getJSONObject(h)
-												.getString("DIV"),
+												.getString("DIVISI"),
 										jsonproductsfocus.getJSONObject(h)
 												.getString("PART_NO"),
 										jsonproductsfocus.getJSONObject(h)
-												.getString("DESCRIPTION"), "",// jsonproducts.getJSONObject(h).getString("LOCATION_NO"),
+												.getString("KETERANGAN"), "",// jsonproducts.getJSONObject(h).getString("LOCATION_NO"),
 										"", // jsonproducts.getJSONObject(h).getString("LOT_BATCH_NO")
 										jsonproductsfocus.getJSONObject(h)
-												.getLong("QTY"), 0,// jsonproducts.getJSONObject(h).getLong("QTY_RESERVED"),
+												.optLong("QTY", 0), 0,// jsonproducts.getJSONObject(h).getLong("QTY_RESERVED"),
 										jsonproductsfocus.getJSONObject(h)
 												.optDouble("HNA", 0));
+								product.setDESCRIPTION2(jsonproductsfocus.getJSONObject(h)
+										.getString("KETERANGAN2"));
+								product.setCABANG(jsonproductsfocus.getJSONObject(h)
+										.getString("CABANG"));
+								Bitmap bmp = null;
+								String base64image = jsonproductsfocus.getJSONObject(h).getString("GAMBAR"); 
+								if (base64image != null) {
+									bmp = Compression.StringToBitmap(base64image);
+								}
+								product.setImage(bmp);
 							} catch (JSONException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();

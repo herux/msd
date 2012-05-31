@@ -8,6 +8,7 @@ import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Base64;
 
 
@@ -26,6 +27,13 @@ public class Compression {
 
         String bal = Base64.encodeToString(ba, Base64.DEFAULT);
         return bal;
+	}
+	
+	public static Bitmap StringToBitmap(String str){
+		Bitmap bmpret = null;
+		byte[] imageData = Base64.decode(str.getBytes(), Base64.DEFAULT);
+		bmpret = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+		return bmpret;
 	}
 	
 	public static String Compress(String sIN) {

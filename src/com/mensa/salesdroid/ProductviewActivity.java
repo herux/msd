@@ -452,13 +452,22 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			TextView productdesc = (TextView) v
 					.findViewById(R.id.tvProductDetail);
 			if (products.size() > 0) {
-				productdesc.setText(products.get(getShownIndex())
-						.getDESCRIPTION());
+				if (products.get(getShownIndex()).getDESCRIPTION2()!=null){
+					productdesc.setText(products.get(getShownIndex())
+							.getDESCRIPTION2());
+				}else{
+					productdesc.setText(products.get(getShownIndex())
+							.getDESCRIPTION());
+				}
 			} else {
 				productdesc.setText("Description");
 			}
 			ImageView iv = (ImageView) v.findViewById(R.id.imgProduct);
-			iv.setImageDrawable(getResources().getDrawable(R.drawable.box));
+			if (products.get(getShownIndex()).getImage()!=null){
+				iv.setImageBitmap(products.get(getShownIndex()).getImage());
+			}else{
+				iv.setImageDrawable(getResources().getDrawable(R.drawable.box));
+			}
 
 			final TextView tvqty = (TextView) v.findViewById(R.id.edtQty);
 			tvqty.setWidth(50);

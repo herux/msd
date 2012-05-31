@@ -62,7 +62,7 @@ public class MensaApplication extends Application {
 			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3Byb2R1Y3Q=&uid=", //PRODUCTSFILENAME
 			"key=czRMZTU0dVRvTWF0MTBu&tab=Y2FsbF9wbGFu&uid=", //CUSTOMERSFILENAME
 			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3NhbGVzbWFu",
-			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9mb2N1c19zdG9jaw==&uid=", 
+			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9mb2N1cw==&uid=", //"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9mb2N1c19zdG9jaw==&uid=", 
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cGl1dGFuZ19jYWxscGxhbg==&uid=", //PIUTANGFILENAME
 			"key=czRMZTU0dVRvTWF0MTBu&tab=Y3VzdF9vcmRlcl90eXBl",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cmV0dXJuX2NhdXNl",
@@ -81,7 +81,7 @@ public class MensaApplication extends Application {
 		ORDERTYPE, 
 		RETURNCAUSE};
 	static final String[] fastsync_paths = {
-			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9mb2N1c19zdG9jaw==&uid=",
+			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9mb2N1cw==&uid=",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9wcm9tb19zdG9jaw==&uid=",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=Y2FsbF9wbGFu&uid=",
 			"key=czRMZTU0dVRvTWF0MTBu&tab=cGl1dGFuZ19jYWxscGxhbg==&uid=",
