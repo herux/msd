@@ -33,6 +33,7 @@ public class MensaApplication extends Application {
 	static final String ORDERTYPE = "ordertype.mbs";
 	static final String RETURNCAUSE = "returncause.mbs";
 	static final String CUSTGROUP = "customersgroup.mbs";
+	static final String USERLOG_HISTORY = "loginhistory.mbs";
 
 	static final String PRODUCTSPAGEFILENAME = "products_";
 	static final String SALESMANSPAGEFILENAME = "salesmans_";
@@ -107,6 +108,7 @@ public class MensaApplication extends Application {
 	private Customer currentCustomer;
 	private String salesid;
 	private String longitudelatitude;
+	private boolean needSync;
 
 	@Override
 	public void onCreate() {
@@ -329,6 +331,14 @@ public class MensaApplication extends Application {
 
 	public void setProductsearchs(ArrayList<Product> productsearchs) {
 		this.productsearchs = productsearchs;
+	}
+
+	public boolean isNeedSync() {
+		return needSync;
+	}
+
+	public void setNeedSync(boolean needSync) {
+		this.needSync = needSync;
 	}
 
 }

@@ -8,6 +8,10 @@
 
 package com.mensa.salesdroid;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -64,6 +68,30 @@ public class LoginActivity extends Activity {
 				} else {
 					MensaApplication app = (MensaApplication) getApplication();
 					app.setSalesid(response);
+					
+					File fileuserlog = new File("/sdcard/" + MensaApplication.APP_DATAFOLDER + "/"
+							+ MensaApplication.USERLOG_HISTORY);
+					if (fileuserlog.exists()){
+						FileInputStream filestream;
+						try {
+							filestream = new FileInputStream(fileuserlog);
+							String logContent = MensaApplication.getFileContent(filestream);
+							if (logContent.equals(response)){
+								app.setNeedSync(false);
+							}else{
+								app.setNeedSync(true);
+								MensaApplication.SaveStringToFile(fileuserlog, response);
+							}
+						} catch (FileNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+					}else{
+						app.setNeedSync(true);
+						MensaApplication.SaveStringToFile(fileuserlog, response);
+					}
+					
 					Intent intent = new Intent();
 					intent.setClass(LoginActivity.this, MainmenuActivity.class);
 					startActivity(intent);

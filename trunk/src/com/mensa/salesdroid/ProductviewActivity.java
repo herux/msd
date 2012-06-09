@@ -66,10 +66,20 @@ public class ProductviewActivity extends BaseFragmentActivity {
 				switch (productsThread.getLoadType()) {
 				case ProductsThread.LOADPRODUCT: {
 					application.setProducts(productsThread.getProducts());
-					application.setProductsfocus(productsThread
-							.getProductsfocus());
-					application.setProductspromo(productsThread
-							.getProductspromo());
+					// jika loader data focus = null. maka create arraylist product
+					if (productsThread.getProductsfocus()==null){
+						application.setProductsfocus(new ArrayList<Product>());
+					}else{
+						application.setProductsfocus(productsThread
+								.getProductsfocus());
+					}
+					// jika loader data promo = null. maka create arraylist product
+					if (productsThread.getProductspromo()==null){
+						application.setProductspromo(new ArrayList<Product>());
+					}else{
+						application.setProductspromo(productsThread
+								.getProductspromo());
+					}
 
 					switch (tabIndex) {
 					case FOCUSTAB: {
