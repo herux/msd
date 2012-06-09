@@ -14,6 +14,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,11 +33,15 @@ public class MainmenuActivity extends Activity {
 	static ProgressDialog progressDialog;
 	static final int SYNCDIALOG = 0;
 	static final int CHOOSESYNCDIALOG = 1;
+	static final int NEEDFULLSYNCDIALOG = 2;
+	MensaApplication mensaapplication;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mainmenu);
+		
+		mensaapplication = (MensaApplication) getApplication();
 
 		LinearLayout ll1 = (LinearLayout) findViewById(R.id.ll1);
 		ll1.getBackground().setAlpha(170);
@@ -44,6 +49,10 @@ public class MainmenuActivity extends Activity {
 		ll2.getBackground().setAlpha(170);
 		LinearLayout ll3 = (LinearLayout) findViewById(R.id.ll3);
 		ll3.getBackground().setAlpha(170);
+		
+		if (mensaapplication.isNeedSync()){
+			showDialog(NEEDFULLSYNCDIALOG);
+		}
 		
 		Button btnProductview = (Button) findViewById(R.id.btn_productlist);
 		btnProductview.setOnClickListener(new OnClickListener() {
@@ -120,6 +129,31 @@ public class MainmenuActivity extends Activity {
 	protected Dialog onCreateDialog(int id) {
 		Dialog ret = null;
 		switch (id) {
+		case NEEDFULLSYNCDIALOG: {
+			AlertDialog ad = new AlertDialog.Builder(this).create();
+			ad.setCancelable(false); 
+			ad.setMessage("application detects that the user has changed since last login. Klik OK, for FULL SYNC");
+			ad.setButton("OK", new DialogInterface.OnClickListener() {
+			    @Override
+			    public void onClick(DialogInterface dialog, int which) {
+			        dialog.dismiss();
+			        showDialog(SYNCDIALOG);
+			        sync = new DataSync(handler, mensaapplication);
+					sync.setSyncMethod(0);
+					sync.setOnDataSyncListener(new OnDataSyncListener() {
+	
+						@Override
+						public void OnDataSync(String dataname, int count, int max) {
+							
+						}
+					});
+					sync.start();
+			    }
+			});
+			ad.show();
+			ret = ad;
+			break;
+		}
 		case SYNCDIALOG: {
 			progressDialog = new ProgressDialog(MainmenuActivity.this);
 			progressDialog.setTitle("Data Synchronization");
@@ -138,8 +172,8 @@ public class MainmenuActivity extends Activity {
 			    public void onClick(DialogInterface dialog, int item) {
 			        Toast.makeText(getApplicationContext(), items[item], Toast.LENGTH_SHORT).show();
 					showDialog(SYNCDIALOG);
-					MensaApplication app = (MensaApplication) getApplication();
-					sync = new DataSync(handler, app);
+					
+					sync = new DataSync(handler, mensaapplication);
 					sync.setSyncMethod(item);
 					sync.setOnDataSyncListener(new OnDataSyncListener() {
 	

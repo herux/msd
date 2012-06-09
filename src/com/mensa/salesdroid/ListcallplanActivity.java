@@ -15,7 +15,10 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -39,8 +42,7 @@ import com.mensa.salesdroid.AlertFragmentDialog.OnClickPositiveButtonListener;
 import com.mensa.salesdroid.GPSLocationListener.OnGPSLocationChanged;
 
 public class ListcallplanActivity extends BaseFragmentActivity {
-	double LATITUDE = 37.42233;
-	double LONGITUDE = -122.083;
+	static final int EMPTYDATA_DIALOG = 0; 
 
 	static ArrayList<Customer> customers;
 	static CustomersAdapter adapter;
@@ -81,6 +83,30 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 		DataLoader dtcustomers = new DataLoader(datatypes);
 		Customers custs = (Customers) dtcustomers.getDatalist()[0];
 		customers = custs.getCustomers();
+		if (customers.size() == 0) {
+			showDialog(EMPTYDATA_DIALOG);
+		}
+	}
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		AlertDialog ad = null;
+		switch (id) {
+		case EMPTYDATA_DIALOG: {
+			ad = new AlertDialog.Builder(this).create();
+			ad.setCancelable(false); 
+			ad.setMessage("Data call plan not found, Make sure that the sync process is successful");
+			ad.setButton("OK", new DialogInterface.OnClickListener() {
+			    @Override
+			    public void onClick(DialogInterface dialog, int which) {
+			        dialog.dismiss();                    
+			    }
+			});
+			ad.show();
+			break;
+		}
+		}
+		return ad;
 	}
 
 	public static class CustomersFragment extends ListFragment {

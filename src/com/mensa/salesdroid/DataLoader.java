@@ -179,163 +179,181 @@ public class DataLoader {
 					break;
 				}
 				case dlPRODUCTSFOCUS: {
-					FileInputStream jsonfile = new FileInputStream(new File(
-							"/sdcard/" + MensaApplication.APP_DATAFOLDER + "/"
-									+ MensaApplication.FULLSYNC[3]));
-					String focus = MensaApplication.getFileContent(jsonfile);
-					Log.d("mensa", "focus=" + focus);
-					JSONObject focusObj = null;
-					try {
-						focusObj = new JSONObject(focus);
-					} catch (JSONException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					JSONArray jsonproductsfocus = null;
-					try {
-						jsonproductsfocus = focusObj
-								.getJSONArray("product_focus");
-					} catch (JSONException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					File filefocus = new File("/sdcard/"
+							+ MensaApplication.APP_DATAFOLDER + "/"
+							+ MensaApplication.FULLSYNC[3]);
 					BaseDataListObj productsfocus = (BaseDataListObj) new Products();
-					for (int h = 0; h < jsonproductsfocus.length(); h++) {
-						Calendar c = Calendar.getInstance();
-						Date d = c.getTime();
-						SimpleDateFormat formatter = new SimpleDateFormat(
-								"yyyy-MM-dd");
-						Date min = null;
-						Date max = null;
+					if (filefocus.exists()) {
+						FileInputStream jsonfile = new FileInputStream(
+								filefocus);
+						String focus = MensaApplication
+								.getFileContent(jsonfile);
+						Log.d("mensa", "focus=" + focus);
+						JSONObject focusObj = null;
 						try {
-							try {
-								min = formatter.parse(jsonproductsfocus
-										.getJSONObject(h).getString(
-												"START_DATE"));
-								max = formatter
-										.parse(jsonproductsfocus.getJSONObject(
-												h).getString("END_DATE"));
-							} catch (ParseException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						} catch (JSONException e) {
-							e.printStackTrace();
+							focusObj = new JSONObject(focus);
+						} catch (JSONException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
 						}
-						Product product = null;
-						if (d.compareTo(min) >= 0 && d.compareTo(max) <= 0) {
+						JSONArray jsonproductsfocus = null;
+						try {
+							jsonproductsfocus = focusObj
+									.getJSONArray("product_focus");
+						} catch (JSONException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						for (int h = 0; h < jsonproductsfocus.length(); h++) {
+							Calendar c = Calendar.getInstance();
+							Date d = c.getTime();
+							SimpleDateFormat formatter = new SimpleDateFormat(
+									"yyyy-MM-dd");
+							Date min = null;
+							Date max = null;
 							try {
-								product = new Product(
-										jsonproductsfocus.getJSONObject(h)
-												.optString("CONTRACT", ""),
-										jsonproductsfocus.getJSONObject(h)
-												.getString("DIVISI"),
-										jsonproductsfocus.getJSONObject(h)
-												.getString("PART_NO"),
-										jsonproductsfocus.getJSONObject(h)
-												.getString("KETERANGAN"), "",// jsonproducts.getJSONObject(h).getString("LOCATION_NO"),
-										"", // jsonproducts.getJSONObject(h).getString("LOT_BATCH_NO")
-										jsonproductsfocus.getJSONObject(h)
-												.optLong("QTY", 0), 0,// jsonproducts.getJSONObject(h).getLong("QTY_RESERVED"),
-										jsonproductsfocus.getJSONObject(h)
-												.optDouble("HNA", 0));
-								product.setDESCRIPTION2(jsonproductsfocus.getJSONObject(h)
-										.getString("KETERANGAN2"));
-								product.setCABANG(jsonproductsfocus.getJSONObject(h)
-										.getString("CABANG"));
-								Bitmap bmp = null;
-								String base64image = jsonproductsfocus.getJSONObject(h).getString("GAMBAR"); 
-								if (base64image != null) {
-									bmp = Compression.StringToBitmap(base64image);
+								try {
+									min = formatter.parse(jsonproductsfocus
+											.getJSONObject(h).getString(
+													"START_DATE"));
+									max = formatter.parse(jsonproductsfocus
+											.getJSONObject(h).getString(
+													"END_DATE"));
+								} catch (ParseException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
 								}
-								product.setImage(bmp);
 							} catch (JSONException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							product.setFileSource("/sdcard/"
-									+ MensaApplication.APP_DATAFOLDER + "/"
-									+ MensaApplication.FULLSYNC[3]);
-							((Products) productsfocus).addProduct(product);
+							Product product = null;
+							if (d.compareTo(min) >= 0 && d.compareTo(max) <= 0) {
+								try {
+									product = new Product(jsonproductsfocus
+											.getJSONObject(h).optString(
+													"CONTRACT", ""),
+											jsonproductsfocus.getJSONObject(h)
+													.getString("DIVISI"),
+											jsonproductsfocus.getJSONObject(h)
+													.getString("PART_NO"),
+											jsonproductsfocus.getJSONObject(h)
+													.getString("KETERANGAN"),
+											"",// jsonproducts.getJSONObject(h).getString("LOCATION_NO"),
+											"", // jsonproducts.getJSONObject(h).getString("LOT_BATCH_NO")
+											jsonproductsfocus.getJSONObject(h)
+													.optLong("QTY", 0), 0,// jsonproducts.getJSONObject(h).getLong("QTY_RESERVED"),
+											jsonproductsfocus.getJSONObject(h)
+													.optDouble("HNA", 0));
+									product.setDESCRIPTION2(jsonproductsfocus
+											.getJSONObject(h).getString(
+													"KETERANGAN2"));
+									product.setCABANG(jsonproductsfocus
+											.getJSONObject(h).getString(
+													"CABANG"));
+									Bitmap bmp = null;
+									String base64image = jsonproductsfocus
+											.getJSONObject(h).getString(
+													"GAMBAR");
+									if (base64image != null) {
+										bmp = Compression
+												.StringToBitmap(base64image);
+									}
+									product.setImage(bmp);
+								} catch (JSONException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								product.setFileSource("/sdcard/"
+										+ MensaApplication.APP_DATAFOLDER + "/"
+										+ MensaApplication.FULLSYNC[3]);
+								((Products) productsfocus).addProduct(product);
+							}
 						}
 					}
 					datalist[i] = productsfocus;
 					break;
 				}
 				case dlPRODUCTSPROMO: {
-					FileInputStream jsonfile = new FileInputStream(new File(
-							"/sdcard/" + MensaApplication.APP_DATAFOLDER + "/"
-									+ MensaApplication.FULLSYNC[8]));
-					String promo = MensaApplication.getFileContent(jsonfile);
-					JSONObject promoObj = null;
-					try {
-						promoObj = new JSONObject(promo);
-					} catch (JSONException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					JSONArray jsonproductspromo = null;
-					try {
-						jsonproductspromo = promoObj
-								.getJSONArray("product_promo_stock");
-					} catch (JSONException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					File filepromo = new File("/sdcard/"
+							+ MensaApplication.APP_DATAFOLDER + "/"
+							+ MensaApplication.FULLSYNC[8]);
 					BaseDataListObj productspromo = (BaseDataListObj) new Products();
-					for (int h = 0; h < jsonproductspromo.length(); h++) {
-						Calendar c = Calendar.getInstance();
-						Date d = c.getTime();
-						SimpleDateFormat formatter = new SimpleDateFormat(
-								"yyyy-MM-dd");
-						Date min = null;
-						Date max = null;
+					if (filepromo.exists()) {
+						FileInputStream jsonfile = new FileInputStream(
+								filepromo);
+						String promo = MensaApplication
+								.getFileContent(jsonfile);
+						JSONObject promoObj = null;
 						try {
-							try {
-								min = formatter.parse(jsonproductspromo
-										.getJSONObject(h).getString(
-												"START_DATE"));
-								max = formatter
-										.parse(jsonproductspromo.getJSONObject(
-												h).getString("END_DATE"));
-							} catch (ParseException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						} catch (JSONException e) {
-							e.printStackTrace();
+							promoObj = new JSONObject(promo);
+						} catch (JSONException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
 						}
-						Product product = null;
-						if (d.compareTo(min) >= 0 && d.compareTo(max) <= 0) {
+						JSONArray jsonproductspromo = null;
+						try {
+							jsonproductspromo = promoObj
+									.getJSONArray("product_promo_stock");
+						} catch (JSONException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						for (int h = 0; h < jsonproductspromo.length(); h++) {
+							Calendar c = Calendar.getInstance();
+							Date d = c.getTime();
+							SimpleDateFormat formatter = new SimpleDateFormat(
+									"yyyy-MM-dd");
+							Date min = null;
+							Date max = null;
 							try {
-								product = new Product(
-										jsonproductspromo.getJSONObject(h)
-												.getString("CONTRACT"),
-										jsonproductspromo.getJSONObject(h)
-												.getString("DIV"),
-										jsonproductspromo.getJSONObject(h)
-												.getString("PART_NO"),
-										jsonproductspromo.getJSONObject(h)
-												.getString("DESCRIPTION"), "",// jsonproducts.getJSONObject(h).getString("LOCATION_NO"),
-										"", // jsonproducts.getJSONObject(h).getString("LOT_BATCH_NO")
-										jsonproductspromo.getJSONObject(h)
-												.getLong("QTY"), 0,// jsonproducts.getJSONObject(h).getLong("QTY_RESERVED"),
-										jsonproductspromo.getJSONObject(h)
-												.optDouble("HNA", 0));
+								try {
+									min = formatter.parse(jsonproductspromo
+											.getJSONObject(h).getString(
+													"START_DATE"));
+									max = formatter.parse(jsonproductspromo
+											.getJSONObject(h).getString(
+													"END_DATE"));
+								} catch (ParseException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 							} catch (JSONException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							product.setFileSource("/sdcard/"
-									+ MensaApplication.APP_DATAFOLDER + "/"
-									+ MensaApplication.FULLSYNC[8]);
-							((Products) productspromo).addProduct(product);
+							Product product = null;
+							if (d.compareTo(min) >= 0 && d.compareTo(max) <= 0) {
+								try {
+									product = new Product(jsonproductspromo
+											.getJSONObject(h).getString(
+													"CONTRACT"),
+											jsonproductspromo.getJSONObject(h)
+													.getString("DIV"),
+											jsonproductspromo.getJSONObject(h)
+													.getString("PART_NO"),
+											jsonproductspromo.getJSONObject(h)
+													.getString("DESCRIPTION"),
+											"",// jsonproducts.getJSONObject(h).getString("LOCATION_NO"),
+											"", // jsonproducts.getJSONObject(h).getString("LOT_BATCH_NO")
+											jsonproductspromo.getJSONObject(h)
+													.getLong("QTY"), 0,// jsonproducts.getJSONObject(h).getLong("QTY_RESERVED"),
+											jsonproductspromo.getJSONObject(h)
+													.optDouble("HNA", 0));
+								} catch (JSONException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								product.setFileSource("/sdcard/"
+										+ MensaApplication.APP_DATAFOLDER + "/"
+										+ MensaApplication.FULLSYNC[8]);
+								((Products) productspromo).addProduct(product);
+							}
 						}
 					}
 					datalist[i] = productspromo;
 					break;
-				}case dlPRODUCTSNEW: {
-						
+				}
+				case dlPRODUCTSNEW: {
+
 					break;
 				}
 				case dlPIUTANG: {
@@ -379,35 +397,45 @@ public class DataLoader {
 				}
 				case dlCUSTOMERS: {
 					try {
-						FileInputStream jsonfile = new FileInputStream(
-								new File("/sdcard/"
-										+ MensaApplication.APP_DATAFOLDER + "/"
-										+ MensaApplication.FULLSYNC[dlData[i]]));
-						String json = MensaApplication.getFileContent(jsonfile);
-						jsonobj = new JSONObject(json);
-						JSONArray jsoncustomers = jsonobj
-								.getJSONArray("call_plan_daily");
-						Customer customer;
+						Log.d("mensa", "load call plan customers");
+						File filecustomer = new File("/sdcard/"
+								+ MensaApplication.APP_DATAFOLDER + "/"
+								+ MensaApplication.FULLSYNC[dlData[i]]);
 						BaseDataListObj customers = (BaseDataListObj) new Customers();
-						for (int j = 0; j < jsoncustomers.length(); j++) {
-							JSONObject custproperty = jsoncustomers
-									.getJSONObject(j);
-							customer = new Customer(
-									custproperty.getString("CB_NOMOR"),
-									custproperty.getString("CABANG"),
-									custproperty.getString("PERSON_ID"),
-									custproperty.getString("RAYON"),
-									custproperty.getString("PERIODE"),
-									custproperty.getString("DIVISI"),
-									custproperty.getString("CUSTOMER_CODE"),
-									custproperty.getString("NAMA"),
-									custproperty.getString("KLAS"),
-									custproperty.optDouble("VALUE_GUIDE", 0),
-									custproperty.getString("ALAMAT_KIRIM"),
-									custproperty.getString("KOTA"),
-									custproperty.optDouble("CREDIT_LIMIT", 0),
-									custproperty.optDouble("PIUTANG", 0), "");
-							((Customers) customers).addCustomer(customer);
+						if (filecustomer.exists()) {
+							FileInputStream jsonfile = new FileInputStream(
+									filecustomer);
+							Log.d("mensa",
+									"load file = " + filecustomer.getName());
+							String json = MensaApplication
+									.getFileContent(jsonfile);
+							jsonobj = new JSONObject(json);
+							JSONArray jsoncustomers = jsonobj
+									.getJSONArray("call_plan_daily");
+							Customer customer;
+							for (int j = 0; j < jsoncustomers.length(); j++) {
+								JSONObject custproperty = jsoncustomers
+										.getJSONObject(j);
+								customer = new Customer(custproperty
+										.getString("CB_NOMOR"), custproperty
+										.getString("CABANG"), custproperty
+										.getString("PERSON_ID"), custproperty
+										.getString("RAYON"), custproperty
+										.getString("PERIODE"), custproperty
+										.getString("DIVISI"), custproperty
+										.getString("CUSTOMER_CODE"),
+										custproperty.getString("NAMA"),
+										custproperty.getString("KLAS"),
+										custproperty
+												.optDouble("VALUE_GUIDE", 0),
+										custproperty.getString("ALAMAT_KIRIM"),
+										custproperty.getString("KOTA"),
+										custproperty.optDouble("CREDIT_LIMIT",
+												0), custproperty.optDouble(
+												"PIUTANG", 0), "");
+								((Customers) customers).addCustomer(customer);
+							}
+
 						}
 						datalist[i] = customers;
 					} catch (JSONException e) {
