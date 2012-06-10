@@ -119,10 +119,10 @@ public class DataSync extends BaseThread {
 				Log.d("mensa", "request:" + request);
 				response = http.executeHttpPost(request, "");
 				Log.d("mensa", "response:" + response);
-				if (response.equals("null") || response.equals("")) {
-					Log.d("mensa", "Webservices no response");
-					continue;
-				}
+//				if (response.equals("null") || response.equals("")) {
+//					Log.d("mensa", "Webservices no response");
+//					continue;
+//				}
 				if (root.canWrite()) {
 					file = new File(root, folder + MensaApplication.FULLSYNC[i]);
 					MensaApplication.SaveStringToFile(file, response);
