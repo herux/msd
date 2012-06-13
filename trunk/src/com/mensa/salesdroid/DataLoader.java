@@ -285,6 +285,7 @@ public class DataLoader {
 								filepromo);
 						String promo = MensaApplication
 								.getFileContent(jsonfile);
+						Log.d("mensa", "promo=" + promo);
 						if (!promo.equals("null")){
 							JSONObject promoObj = null;
 							try {
