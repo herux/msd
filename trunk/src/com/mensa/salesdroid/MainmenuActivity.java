@@ -52,6 +52,7 @@ public class MainmenuActivity extends Activity {
 		
 		if (mensaapplication.isNeedSync()){
 			showDialog(NEEDFULLSYNCDIALOG);
+			mensaapplication.setNeedSync(false);
 		}
 		
 		Button btnProductview = (Button) findViewById(R.id.btn_productlist);
