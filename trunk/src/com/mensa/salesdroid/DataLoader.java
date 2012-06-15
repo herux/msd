@@ -91,8 +91,8 @@ public class DataLoader {
 																"DESCRIPTION"),
 												"",// jsonproducts.getJSONObject(j).getString("LOCATION_NO"),
 												"", // jsonproducts.getJSONObject(j).getString("LOT_BATCH_NO")
-												jsonproducts.getJSONObject(j).optLong("QTY", 0),
-												0,// jsonproducts.getJSONObject(j).getLong("QTY_RESERVED"),
+												jsonproducts.getJSONObject(j)
+														.optLong("QTY", 0), 0,// jsonproducts.getJSONObject(j).getLong("QTY_RESERVED"),
 												jsonproducts.getJSONObject(j)
 														.optDouble("HNA", 0));
 										product.setFileSource(filelist[k]
@@ -113,6 +113,7 @@ public class DataLoader {
 				}
 				case dlPRODUCTSSEARCH: {
 					Log.d("mensa", "Search product");
+					BaseDataListObj products = (BaseDataListObj) new Products();
 					try {
 						File root = Environment.getExternalStorageDirectory();
 						String folder = MensaApplication.APP_DATAFOLDER + "/";
@@ -129,26 +130,26 @@ public class DataLoader {
 								String productSTR = MensaApplication
 										.getFileContent(productsfile);
 								if (!productSTR.contains(textToSearch)) {
-									Log.d("mensa", "continue");
+									// Log.d("mensa", "continue");
 									continue;
 								}
 								jsonobj = new JSONObject(productSTR);
 								JSONArray jsonproducts = jsonobj
 										.getJSONArray("master_product");
 
-								Product product;
-								BaseDataListObj products = (BaseDataListObj) new Products();
 								for (int j = 0; j < jsonproducts.length(); j++) {
-									Log.d("mensa", "productDesc: "
-											+ jsonproducts.getJSONObject(j)
-													.getString("DESCRIPTION"));
-									if (jsonproducts.getJSONObject(j)
-											.getString("DESCRIPTION")
-											.contains(textToSearch)) {
+									String prodDesc = jsonproducts
+											.getJSONObject(j).getString(
+													"DESCRIPTION");
+									// Log.d("mensa", "productDesc: "+
+									// prodDesc);
 
-										product = new Product(jsonproducts
-												.getJSONObject(j).getString(
-														"CONTRACT"),
+									if (prodDesc.contains(textToSearch)) {
+										Log.d("mensa", "found " + prodDesc
+												+ " contains=" + textToSearch);
+										Product product = new Product(
+												jsonproducts.getJSONObject(j)
+														.getString("CONTRACT"),
 												jsonproducts.getJSONObject(j)
 														.getString("DIV"),
 												jsonproducts.getJSONObject(j)
@@ -164,18 +165,27 @@ public class DataLoader {
 														.optDouble("HNA", 0));
 										product.setFileSource(filelist[k]
 												.getAbsolutePath());
+										Log.d("mensa",
+												"add product="
+														+ product
+																.getDESCRIPTION());
 										((Products) products)
 												.addProduct(product);
+										Log.d("mensa",
+												"Jml item product="
+														+ Integer
+																.toString(((Products) products)
+																		.getProducts()
+																		.size()));
 									}
 								}
-								datalist[i] = products;
 							}
 						}
 
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
-
+					datalist[i] = products;
 					break;
 				}
 				case dlPRODUCTSFOCUS: {
@@ -189,7 +199,7 @@ public class DataLoader {
 						String focus = MensaApplication
 								.getFileContent(jsonfile);
 						Log.d("mensa", "focus=" + focus);
-						if (!focus.equals("null")){
+						if (!focus.equals("null")) {
 							JSONObject focusObj = null;
 							try {
 								focusObj = new JSONObject(focus);
@@ -228,22 +238,31 @@ public class DataLoader {
 									e.printStackTrace();
 								}
 								Product product = null;
-								if (d.compareTo(min) >= 0 && d.compareTo(max) <= 0) {
+								if (d.compareTo(min) >= 0
+										&& d.compareTo(max) <= 0) {
 									try {
-										product = new Product(jsonproductsfocus
-												.getJSONObject(h).optString(
-														"CONTRACT", ""),
-												jsonproductsfocus.getJSONObject(h)
+										product = new Product(
+												jsonproductsfocus
+														.getJSONObject(h)
+														.optString("CONTRACT",
+																""),
+												jsonproductsfocus
+														.getJSONObject(h)
 														.getString("DIVISI"),
-												jsonproductsfocus.getJSONObject(h)
+												jsonproductsfocus
+														.getJSONObject(h)
 														.getString("PART_NO"),
-												jsonproductsfocus.getJSONObject(h)
+												jsonproductsfocus
+														.getJSONObject(h)
 														.getString("KETERANGAN"),
 												"",// jsonproducts.getJSONObject(h).getString("LOCATION_NO"),
 												"", // jsonproducts.getJSONObject(h).getString("LOT_BATCH_NO")
-												jsonproductsfocus.getJSONObject(h).optLong("QTY", 0), 
-														0,// jsonproducts.getJSONObject(h).getLong("QTY_RESERVED"),
-												jsonproductsfocus.getJSONObject(h).optDouble("HNA", 0));
+												jsonproductsfocus
+														.getJSONObject(h)
+														.optLong("QTY", 0), 0,// jsonproducts.getJSONObject(h).getLong("QTY_RESERVED"),
+												jsonproductsfocus
+														.getJSONObject(h)
+														.optDouble("HNA", 0));
 										product.setDESCRIPTION2(jsonproductsfocus
 												.getJSONObject(h).getString(
 														"KETERANGAN2"));
@@ -264,9 +283,11 @@ public class DataLoader {
 										e.printStackTrace();
 									}
 									product.setFileSource("/sdcard/"
-											+ MensaApplication.APP_DATAFOLDER + "/"
+											+ MensaApplication.APP_DATAFOLDER
+											+ "/"
 											+ MensaApplication.FULLSYNC[3]);
-									((Products) productsfocus).addProduct(product);
+									((Products) productsfocus)
+											.addProduct(product);
 								}
 							}
 						}
@@ -285,7 +306,7 @@ public class DataLoader {
 						String promo = MensaApplication
 								.getFileContent(jsonfile);
 						Log.d("mensa", "promo=" + promo);
-						if (!promo.equals("null")){
+						if (!promo.equals("null")) {
 							JSONObject promoObj = null;
 							try {
 								promoObj = new JSONObject(promo);
@@ -324,31 +345,40 @@ public class DataLoader {
 									e.printStackTrace();
 								}
 								Product product = null;
-								if (d.compareTo(min) >= 0 && d.compareTo(max) <= 0) {
+								if (d.compareTo(min) >= 0
+										&& d.compareTo(max) <= 0) {
 									try {
 										product = new Product(jsonproductspromo
 												.getJSONObject(h).getString(
 														"CONTRACT"),
-												jsonproductspromo.getJSONObject(h)
+												jsonproductspromo
+														.getJSONObject(h)
 														.getString("DIV"),
-												jsonproductspromo.getJSONObject(h)
+												jsonproductspromo
+														.getJSONObject(h)
 														.getString("PART_NO"),
-												jsonproductspromo.getJSONObject(h)
-														.getString("DESCRIPTION"),
+												jsonproductspromo
+														.getJSONObject(h)
+														.getString(
+																"DESCRIPTION"),
 												"",// jsonproducts.getJSONObject(h).getString("LOCATION_NO"),
 												"", // jsonproducts.getJSONObject(h).getString("LOT_BATCH_NO")
-												jsonproductspromo.getJSONObject(h)
+												jsonproductspromo
+														.getJSONObject(h)
 														.getLong("QTY"), 0,// jsonproducts.getJSONObject(h).getLong("QTY_RESERVED"),
-												jsonproductspromo.getJSONObject(h)
+												jsonproductspromo
+														.getJSONObject(h)
 														.optDouble("HNA", 0));
 									} catch (JSONException e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
 									}
 									product.setFileSource("/sdcard/"
-											+ MensaApplication.APP_DATAFOLDER + "/"
+											+ MensaApplication.APP_DATAFOLDER
+											+ "/"
 											+ MensaApplication.FULLSYNC[8]);
-									((Products) productspromo).addProduct(product);
+									((Products) productspromo)
+											.addProduct(product);
 								}
 							}
 						}
@@ -366,32 +396,37 @@ public class DataLoader {
 								+ MensaApplication.APP_DATAFOLDER + "/"
 								+ MensaApplication.FULLSYNC[dlData[i]]);
 						BaseDataListObj piutangs = (BaseDataListObj) new Piutangs();
-						if (filepiutang.exists()){
-							FileInputStream jsonfile = new FileInputStream(filepiutang);
-							String json = MensaApplication.getFileContent(jsonfile);
-							if (!json.equals("null")){
+						if (filepiutang.exists()) {
+							FileInputStream jsonfile = new FileInputStream(
+									filepiutang);
+							String json = MensaApplication
+									.getFileContent(jsonfile);
+							if (!json.equals("null")) {
 								jsonobj = new JSONObject(json);
 								JSONArray jsonpiutangs = jsonobj
 										.getJSONArray("piutang_callplan");
 								Piutang piutang;
 								for (int j = 0; j < jsonpiutangs.length(); j++) {
-									piutang = new Piutang(jsonpiutangs.getJSONObject(j)
-											.getString("SITE"), jsonpiutangs
-											.getJSONObject(j).getString("DIVISI"),
-											jsonpiutangs.getJSONObject(j).getString(
-													"RAYON_SALES"), jsonpiutangs
-													.getJSONObject(j).getString(
-															"IDENTITY"), jsonpiutangs
-													.getJSONObject(j).getString(
-															"INVOICE_NO"), jsonpiutangs
-													.getJSONObject(j).getString(
-															"INVOICE_DATE"),
-											jsonpiutangs.getJSONObject(j).getString(
-													"DUE_DATE"), jsonpiutangs
-													.getJSONObject(j).getDouble(
-															"INVOICE_AMOUNT"),
-											jsonpiutangs.getJSONObject(j).getDouble(
-													"OPEN_AMOUNT"));
+									piutang = new Piutang(
+											jsonpiutangs.getJSONObject(j)
+													.getString("SITE"),
+											jsonpiutangs.getJSONObject(j)
+													.getString("DIVISI"),
+											jsonpiutangs.getJSONObject(j)
+													.getString("RAYON_SALES"),
+											jsonpiutangs.getJSONObject(j)
+													.getString("IDENTITY"),
+											jsonpiutangs.getJSONObject(j)
+													.getString("INVOICE_NO"),
+											jsonpiutangs.getJSONObject(j)
+													.getString("INVOICE_DATE"),
+											jsonpiutangs.getJSONObject(j)
+													.getString("DUE_DATE"),
+											jsonpiutangs
+													.getJSONObject(j)
+													.getDouble("INVOICE_AMOUNT"),
+											jsonpiutangs.getJSONObject(j)
+													.getDouble("OPEN_AMOUNT"));
 									((Piutangs) piutangs).AddPiutang(piutang);
 								}
 							}
@@ -417,7 +452,7 @@ public class DataLoader {
 									"load file = " + filecustomer.getName());
 							String json = MensaApplication
 									.getFileContent(jsonfile);
-							if (!json.equals("null")){
+							if (!json.equals("null")) {
 								jsonobj = new JSONObject(json);
 								JSONArray jsoncustomers = jsonobj
 										.getJSONArray("call_plan_daily");
@@ -425,24 +460,29 @@ public class DataLoader {
 								for (int j = 0; j < jsoncustomers.length(); j++) {
 									JSONObject custproperty = jsoncustomers
 											.getJSONObject(j);
-									customer = new Customer(custproperty
-											.getString("CB_NOMOR"), custproperty
-											.getString("CABANG"), custproperty
-											.getString("PERSON_ID"), custproperty
-											.getString("RAYON"), custproperty
-											.getString("PERIODE"), custproperty
-											.getString("DIVISI"), custproperty
-											.getString("CUSTOMER_CODE"),
+									customer = new Customer(
+											custproperty.getString("CB_NOMOR"),
+											custproperty.getString("CABANG"),
+											custproperty.getString("PERSON_ID"),
+											custproperty.getString("RAYON"),
+											custproperty.getString("PERIODE"),
+											custproperty.getString("DIVISI"),
+											custproperty
+													.getString("CUSTOMER_CODE"),
 											custproperty.getString("NAMA"),
 											custproperty.getString("KLAS"),
+											custproperty.optDouble(
+													"VALUE_GUIDE", 0),
 											custproperty
-													.optDouble("VALUE_GUIDE", 0),
-											custproperty.getString("ALAMAT_KIRIM"),
+													.getString("ALAMAT_KIRIM"),
 											custproperty.getString("KOTA"),
-											custproperty.optDouble("CREDIT_LIMIT",
-													0), custproperty.optDouble(
-													"PIUTANG", 0), "");
-									((Customers) customers).addCustomer(customer);
+											custproperty.optDouble(
+													"CREDIT_LIMIT", 0),
+											custproperty
+													.optDouble("PIUTANG", 0),
+											"");
+									((Customers) customers)
+											.addCustomer(customer);
 								}
 							}
 						}
