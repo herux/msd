@@ -91,7 +91,7 @@ public class DataLoader {
 																"DESCRIPTION"),
 												"",// jsonproducts.getJSONObject(j).getString("LOCATION_NO"),
 												"", // jsonproducts.getJSONObject(j).getString("LOT_BATCH_NO")
-												0, // jsonproducts.getJSONObject(j).getLong("QTY_ONHAND"),
+												jsonproducts.getJSONObject(j).optLong("QTY", 0),
 												0,// jsonproducts.getJSONObject(j).getLong("QTY_RESERVED"),
 												jsonproducts.getJSONObject(j)
 														.optDouble("HNA", 0));
@@ -241,10 +241,9 @@ public class DataLoader {
 														.getString("KETERANGAN"),
 												"",// jsonproducts.getJSONObject(h).getString("LOCATION_NO"),
 												"", // jsonproducts.getJSONObject(h).getString("LOT_BATCH_NO")
-												jsonproductsfocus.getJSONObject(h)
-														.optLong("QTY", 0), 0,// jsonproducts.getJSONObject(h).getLong("QTY_RESERVED"),
-												jsonproductsfocus.getJSONObject(h)
-														.optDouble("HNA", 0));
+												jsonproductsfocus.getJSONObject(h).optLong("QTY", 0), 
+														0,// jsonproducts.getJSONObject(h).getLong("QTY_RESERVED"),
+												jsonproductsfocus.getJSONObject(h).optDouble("HNA", 0));
 										product.setDESCRIPTION2(jsonproductsfocus
 												.getJSONObject(h).getString(
 														"KETERANGAN2"));
