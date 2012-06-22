@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -91,14 +92,13 @@ public class DataLoader {
 																"DESCRIPTION"),
 												"",// jsonproducts.getJSONObject(j).getString("LOCATION_NO"),
 												"", // jsonproducts.getJSONObject(j).getString("LOT_BATCH_NO")
-												jsonproducts.getJSONObject(j)
-														.optLong("QTY", 0), 0,// jsonproducts.getJSONObject(j).getLong("QTY_RESERVED"),
+												jsonproducts.getJSONObject(j).optLong("QTY"),
+														0,// jsonproducts.getJSONObject(j).getLong("QTY_RESERVED"),
 												jsonproducts.getJSONObject(j)
 														.optDouble("HNA", 0));
 										product.setFileSource(filelist[k]
 												.getAbsolutePath());
-										((Products) products)
-												.addProduct(product);
+										((Products) products).addProduct(product);
 									}
 									datalist[i] = products;
 								}
@@ -129,7 +129,7 @@ public class DataLoader {
 										filelist[k]);
 								String productSTR = MensaApplication
 										.getFileContent(productsfile);
-								if (!productSTR.contains(textToSearch)) {
+								if (!(productSTR.toUpperCase()).contains(textToSearch.toUpperCase())) {
 									// Log.d("mensa", "continue");
 									continue;
 								}
@@ -144,7 +144,7 @@ public class DataLoader {
 									// Log.d("mensa", "productDesc: "+
 									// prodDesc);
 
-									if (prodDesc.contains(textToSearch)) {
+									if ((prodDesc.toUpperCase()).contains(textToSearch.toUpperCase())) {
 										Log.d("mensa", "found " + prodDesc
 												+ " contains=" + textToSearch);
 										Product product = new Product(
@@ -159,24 +159,15 @@ public class DataLoader {
 																"DESCRIPTION"),
 												"",// jsonproducts.getJSONObject(j).getString("LOCATION_NO"),
 												"", // jsonproducts.getJSONObject(j).getString("LOT_BATCH_NO")
-												0, // jsonproducts.getJSONObject(j).getLong("QTY_ONHAND"),
+												jsonproducts.getJSONObject(j).optLong("QTY"),
 												0,// jsonproducts.getJSONObject(j).getLong("QTY_RESERVED"),
 												jsonproducts.getJSONObject(j)
 														.optDouble("HNA", 0));
 										product.setFileSource(filelist[k]
 												.getAbsolutePath());
-										Log.d("mensa",
-												"add product="
-														+ product
-																.getDESCRIPTION());
-										((Products) products)
-												.addProduct(product);
-										Log.d("mensa",
-												"Jml item product="
-														+ Integer
-																.toString(((Products) products)
-																		.getProducts()
-																		.size()));
+										if (!((Products) products).getProducts().contains(product)){
+											((Products) products).addProduct(product);
+										}
 									}
 								}
 							}
