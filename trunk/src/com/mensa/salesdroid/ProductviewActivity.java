@@ -23,6 +23,9 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuInflater;
+import android.support.v4.view.MenuItem;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -181,7 +184,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			return progressDialog;
 		}
 	}
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -449,7 +452,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 
 			return f;
 		}
-
+		
 		public int getShownIndex() {
 			return getArguments().getInt("index", 0);
 		}

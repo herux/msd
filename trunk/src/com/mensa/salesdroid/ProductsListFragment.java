@@ -13,6 +13,7 @@ public class ProductsListFragment extends ListFragment implements ListView.OnScr
 		super.onActivityCreated(savedInstanceState);
 		listview = getListView();
 		listview.setOnScrollListener(this);
+		listview.setFastScrollEnabled(true);
 	}
 	
 	@Override
