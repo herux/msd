@@ -24,6 +24,7 @@ import android.os.Environment;
 import android.util.DisplayMetrics;
 
 public class MensaApplication extends Application {
+	static int THEME = R.style.Theme_Sherlock;
 	static final String CUSTOMERSFILENAME = "customers.mbs";
 	static final String PRODUCTSFILENAME = "products.mbs";
 	static final String SALESMANSFILENAME = "salesmans.mbs";
