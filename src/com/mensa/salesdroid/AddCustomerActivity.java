@@ -41,7 +41,15 @@ public class AddCustomerActivity extends BaseFragmentActivity {
 		actionbar.setSubtitle("Adding New Customer");
 
 		etcode = (EditText) findViewById(R.id.etcode);
-		etcode.setText(("C-"+(getMensaapplication().getDateTimeInt()).substring(1, 12)));
+		String dt = getMensaapplication().getDateTimeInt();
+		int pjg;
+		if (dt.length() >= 12){
+			pjg = 12;
+		}else{
+			pjg = dt.length(); 
+		}
+			
+		etcode.setText(("C-"+dt.substring(1, pjg)));
 		etname = (EditText) findViewById(R.id.etname);
 		etchain = (EditText) findViewById(R.id.etchain);
 

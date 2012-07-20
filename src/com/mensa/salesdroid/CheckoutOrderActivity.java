@@ -21,7 +21,10 @@ import net.londatiga.android.QuickAction.OnActionItemClickListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -53,6 +56,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 	TabsAdapter mTabsAdapter;
 	static final int CHECKOUT_DIALOG = 1;
 	private static final int DELETE = 1;
+	String respAll = "";
 	
 	private void FreeCheckOutObj(){
 		application.setCurrentCustomer(null);
@@ -60,6 +64,34 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 		application.setSalesitems(null);
 		application.setReturnitems(null);
 		application.setReturns(null);
+	}
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		AlertDialog ad = null;
+		switch (id){
+		case CHECKOUT_DIALOG: {
+			ad = new AlertDialog.Builder(this).create();
+			ad.setCancelable(false); 
+			ad.setMessage(respAll);
+			ad.setButton("Ok", new DialogInterface.OnClickListener(){
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					FreeCheckOutObj();
+					Intent intent = new Intent();
+					intent.setClass(CheckoutOrderActivity.this,
+							MainmenuActivity.class);
+					startActivity(intent);
+					finish();
+				}
+				
+			});
+			ad.show();
+			break;
+		}
+		}
+		return ad;
 	}
 
 	@Override
@@ -73,7 +105,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onClick(View arg0) {
-				String respAll = "";
+				
 				if (application.getSalesitems() != null) {
 					application.getSalesorder().setSalesitems(
 							application.getSalesitems());
@@ -197,19 +229,15 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 					respAll = respAll + "| CheckOut: Failed, error msg: null response |";
 				}
 				
-				Toast toast = Toast.makeText(CheckoutOrderActivity.this,
-						"Checkout Report: "+respAll,
-						Toast.LENGTH_LONG);
-				toast.show();
+				respAll = "Checkout Report: "+respAll;
+//				Toast toast = Toast.makeText(CheckoutOrderActivity.this,
+//						"Checkout Report: "+respAll,
+//						Toast.LENGTH_LONG);
+//				toast.show();
 
 				// ------------------
 
-				FreeCheckOutObj();
-				Intent intent = new Intent();
-				intent.setClass(CheckoutOrderActivity.this,
-						MainmenuActivity.class);
-				startActivity(intent);
-				finish();
+				showDialog(CHECKOUT_DIALOG);
 			}
 		});
 
