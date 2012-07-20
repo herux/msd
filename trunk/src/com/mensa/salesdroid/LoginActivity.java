@@ -80,7 +80,7 @@ public class LoginActivity extends Activity {
 								app.setNeedSync(false);
 							}else{
 								app.setNeedSync(true);
-								MensaApplication.SaveStringToFile(fileuserlog, response);
+//								MensaApplication.SaveStringToFile(fileuserlog, response);
 							}
 						} catch (FileNotFoundException e) {
 							// TODO Auto-generated catch block
@@ -89,7 +89,7 @@ public class LoginActivity extends Activity {
 						
 					}else{
 						app.setNeedSync(true);
-						MensaApplication.SaveStringToFile(fileuserlog, response);
+//						MensaApplication.SaveStringToFile(fileuserlog, response);
 					}
 					
 					Intent intent = new Intent();

@@ -8,6 +8,7 @@
 
 package com.mensa.salesdroid;
 
+import java.io.File;
 import java.util.Calendar;
 
 import android.app.Activity;
@@ -128,6 +129,9 @@ public class MainmenuActivity extends Activity {
 
 	@Override
 	protected Dialog onCreateDialog(int id) {
+		final File fileuserlog = new File("/sdcard/" + MensaApplication.APP_DATAFOLDER + "/"
+				+ MensaApplication.USERLOG_HISTORY);
+		
 		Dialog ret = null;
 		switch (id) {
 		case NEEDFULLSYNCDIALOG: {
@@ -137,6 +141,8 @@ public class MainmenuActivity extends Activity {
 			ad.setButton("OK", new DialogInterface.OnClickListener() {
 			    @Override
 			    public void onClick(DialogInterface dialog, int which) {
+			    	MensaApplication.SaveStringToFile(fileuserlog, mensaapplication.getSalesid());
+			    	mensaapplication.setNeedSync(false);
 			        dialog.dismiss();
 			        showDialog(SYNCDIALOG);
 			        sync = new DataSync(handler, mensaapplication);
@@ -150,6 +156,15 @@ public class MainmenuActivity extends Activity {
 					});
 					sync.start();
 			    }
+			});
+			ad.setButton2("Cancel", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					mensaapplication.setNeedSync(true);
+					dialog.dismiss();
+					finish();
+				}
 			});
 			ad.show();
 			ret = ad;
