@@ -5,6 +5,10 @@
     android:layout_height="fill_parent"
     android:background="@drawable/mensabackground"
     android:orientation="vertical" >
+    
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -75,6 +79,24 @@
                 android:drawableTop="@drawable/btnpromo"
                 android:text="Info Promo" />
         </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/ll4"
+            android:background="@drawable/roundedbkg"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btn_compareorder"
+                style="@style/HomeButton"
+                android:drawableTop="@drawable/btnsynchronize"
+                android:text="Compare Order" />
+
+            
+        </LinearLayout>
     </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
