@@ -14,7 +14,8 @@
             android:layout_toLeftOf="@+id/btnSearch"
             android:layout_weight="1"
             android:background="@drawable/searchbkg"
-            android:text="Search"
+            android:nextFocusUp="@id/etSearch" 
+            android:nextFocusLeft="@id/etSearch"
             android:height="60dip">
             <requestFocus />
         </EditText>
