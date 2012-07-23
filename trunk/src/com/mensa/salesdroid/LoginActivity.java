@@ -8,19 +8,13 @@
 
 package com.mensa.salesdroid;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -38,7 +32,7 @@ public class LoginActivity extends Activity {
 		rl2.getBackground().setAlpha(170);
 		
 		final EditText etUsername = (EditText) findViewById(R.id.etUsername);
-		etUsername.setText("YGY1-CP-SRN");
+		etUsername.setText("JKT1-CP-RNO");
 		final EditText etPassword = (EditText) findViewById(R.id.etPassword);
 		etPassword.setText("Z");
 
@@ -69,27 +63,21 @@ public class LoginActivity extends Activity {
 					MensaApplication app = (MensaApplication) getApplication();
 					app.setSalesid(response);
 					
-					File fileuserlog = new File("/sdcard/" + MensaApplication.APP_DATAFOLDER + "/"
-							+ MensaApplication.USERLOG_HISTORY);
-					if (fileuserlog.exists()){
-						FileInputStream filestream;
-						try {
-							filestream = new FileInputStream(fileuserlog);
-							String logContent = MensaApplication.getFileContent(filestream);
-							if (logContent.equals(response)){
-								app.setNeedSync(false);
-							}else{
-								app.setNeedSync(true);
-//								MensaApplication.SaveStringToFile(fileuserlog, response);
-							}
-						} catch (FileNotFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						
-					}else{
+					String userLogFull = app.getSettings().getString(MensaApplication.FULLSYNC_LOG, "");
+					if (userLogFull.equals("")) {
 						app.setNeedSync(true);
-//						MensaApplication.SaveStringToFile(fileuserlog, response);
+					}else{
+						app.setNeedSync(false);
+						String userLogFast = app.getSettings().getString(MensaApplication.FASTSYNC_LOG, "");
+						if (userLogFast.equals("")){
+							app.setNeesFastSync(true);
+						}else{
+							if (userLogFast.equals(app.getDateString())){
+								app.setNeesFastSync(false);
+							}else{
+								app.setNeesFastSync(true);
+							}
+						}
 					}
 					
 					Intent intent = new Intent();

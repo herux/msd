@@ -20,6 +20,7 @@ import java.util.Calendar;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.os.Environment;
 import android.util.DisplayMetrics;
 
@@ -41,6 +42,8 @@ public class MensaApplication extends Application {
 	static final String SALESORDERFILENAME = "salesorder_";
 	static final String RETURNORDERFILENAME = "returnorder_";
 	static final String NEWCUSTFILENAME = "newcustomer_";
+	
+	static final String ORDERNOLIST = "todayordernolist.mbs"; 
 
 	static final String APP_DATAFOLDER = "mensadata";
 
@@ -110,10 +113,14 @@ public class MensaApplication extends Application {
 	private String salesid;
 	private String longitudelatitude;
 	private boolean needSync;
+	private boolean neesFastSync;
+	private SharedPreferences settings;
+	public static final String FULLSYNC_LOG = "FullSL";
+	public static final String FASTSYNC_LOG = "FastSL";
 
 	@Override
 	public void onCreate() {
-		// TODO Auto-generated method stub
+		setSettings(getSharedPreferences("mensa_prefs", MODE_PRIVATE));
 		super.onCreate();
 	}
 	
@@ -168,6 +175,15 @@ public class MensaApplication extends Application {
 		File dir = new File(datafolder);
 		File[] filelist = dir.listFiles();
 		return filelist;
+	}
+	
+	public String getDateString() {
+		Calendar c = Calendar.getInstance();
+		int day = c.get(Calendar.DAY_OF_MONTH);
+		int month = c.get(Calendar.MONTH);
+		int year = c.get(Calendar.YEAR);
+		return Integer.toString(day) + "-" + Integer.toString(month) + "-"
+				+ Integer.toString(year);
 	}
 
 	public String getDateTimeStr() {
@@ -340,6 +356,22 @@ public class MensaApplication extends Application {
 
 	public void setNeedSync(boolean needSync) {
 		this.needSync = needSync;
+	}
+
+	public boolean isNeesFastSync() {
+		return neesFastSync;
+	}
+
+	public void setNeesFastSync(boolean neesFastSync) {
+		this.neesFastSync = neesFastSync;
+	}
+
+	public SharedPreferences getSettings() {
+		return settings;
+	}
+
+	public void setSettings(SharedPreferences settings) {
+		this.settings = settings;
 	}
 
 }
