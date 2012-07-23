@@ -9,6 +9,8 @@
 package com.mensa.salesdroid;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.NumberFormat;
@@ -18,6 +20,7 @@ import net.londatiga.android.ActionItem;
 import net.londatiga.android.QuickAction;
 import net.londatiga.android.QuickAction.OnActionItemClickListener;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -141,6 +144,33 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 									+ application.getSalesorder()
 											.getOrdernumber());
 							file.delete();
+							//---simpan ordernumber
+							file = new File(root, folder + MensaApplication.ORDERNOLIST);
+							JSONArray orderlist = null; 
+							JSONObject orderobj = null;
+							if (file.exists()){
+								FileInputStream fileis = null;
+								try {
+									fileis = new FileInputStream(file);
+								} catch (FileNotFoundException e) {
+									e.printStackTrace();
+								}
+								
+								orderlist = new JSONArray(MensaApplication.getFileContent(fileis));
+							}
+							orderobj = new JSONObject();
+							orderobj.put("orderno", application.getSalesorder().getOrdernumber());
+							orderobj.put("date", application.getDateString());
+							orderlist.put(orderobj);
+							JSONArray tmpOrderList = new JSONArray(); 
+							for (int i = 0; i < orderlist.length(); i++) {
+								orderobj = orderlist.getJSONObject(i);
+								if (orderobj.getString("date").equals(application.getDateString())){
+									tmpOrderList.put(orderobj);
+								}
+							}
+							MensaApplication.SaveStringToFile(file, tmpOrderList.toString());
+							//--->
 							application.setSalesorder(null);
 							application.setSalesitems(null);
 						}

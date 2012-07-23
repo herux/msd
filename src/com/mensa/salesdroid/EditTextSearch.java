@@ -8,18 +8,12 @@
 
 package com.mensa.salesdroid;
 
-import java.util.ArrayList;
-
 import android.content.Context;
-import android.graphics.Rect;
-import android.util.AttributeSet;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 public class EditTextSearch extends RelativeLayout {
 	OnSearchClickListener onSearchClickListener;
@@ -44,8 +38,9 @@ public class EditTextSearch extends RelativeLayout {
 			
 			@Override
 			public void onFocusChange(View arg0, boolean hasFocus) {
+				
 				if ((!hasFocus)&&(textSearch.getText().equals(""))||(textSearch.getText().equals("Search"))){
-					textSearch.setText("Search");
+					textSearch.setText("");
 				}
 			}
 		});
