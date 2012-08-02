@@ -9,6 +9,7 @@
 package com.mensa.salesdroid;
 
 import android.content.Context;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -27,23 +28,40 @@ public class EditTextSearch extends RelativeLayout {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		layoutInflater.inflate(R.layout.edittextsearch, this);
 		textSearch = (EditText) findViewById(R.id.etSearch);
-		textSearch.setOnClickListener(new OnClickListener() {
+		textSearch.setOnKeyListener(new OnKeyListener() {
 			
 			@Override
-			public void onClick(View v) {
-				textSearch.setText("");
-			}
-		});
-		textSearch.setOnFocusChangeListener(new OnFocusChangeListener() {
-			
-			@Override
-			public void onFocusChange(View arg0, boolean hasFocus) {
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if(event.getAction()==KeyEvent.ACTION_DOWN)
+			        return false;
 				
-				if ((!hasFocus)&&(textSearch.getText().equals(""))||(textSearch.getText().equals("Search"))){
+				if (textSearch.getText().equals("Search")){
 					textSearch.setText("");
 				}
+				
+				return false;
 			}
 		});
+//		textSearch.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				textSearch.setText("");
+//			}
+//		});
+//		
+//		textSearch.setOnFocusChangeListener(new OnFocusChangeListener() {
+//			
+//			@Override
+//			public void onFocusChange(View arg0, boolean hasFocus) {
+//				if (hasFocus){
+//					Log.d("mensa", "focused");
+//				}else{
+//					Log.d("mensa", "not focused");
+//					if (textSearch.getText().equals(""))
+//				}
+//			}
+//		});
 		btnSearch  = (Button) findViewById(R.id.btnSearch);
 		btnSearch.setOnClickListener(new OnClickListener() {
 			

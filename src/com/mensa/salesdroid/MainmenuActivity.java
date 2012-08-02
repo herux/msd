@@ -242,12 +242,14 @@ public class MainmenuActivity extends Activity {
 					showDialog(DataSync.FULLSYNC);
 					sync = new DataSync(handler, mensaapplication);
 					sync.setSyncMethod(0);
+					progressDialog.setTitle("Full Data Synchronization");
 					sync.setOnDataSyncListener(new OnDataSyncListener() {
 
 						@Override
 						public void OnDataSync(String dataname, int count,
 								int max) {
-
+							progressDialog.setProgress(count);
+							progressDialog.setMax(max);
 						}
 					});
 					sync.start();
@@ -269,7 +271,7 @@ public class MainmenuActivity extends Activity {
 		case NEEDFASTSYNCDIALOG: {
 			AlertDialog ad = new AlertDialog.Builder(this).create();
 			ad.setCancelable(false);
-			ad.setMessage("FAST SYNC process has not done for today, do it now?");
+			ad.setMessage("FULL SYNC process has not done for today, do it now?");
 			ad.setButton("Yes", new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -282,13 +284,16 @@ public class MainmenuActivity extends Activity {
 					dialog.dismiss();
 					showDialog(SYNCDIALOG);
 					sync = new DataSync(handler, mensaapplication);
-					sync.setSyncMethod(DataSync.FASTSYNC);
+//					sync.setSyncMethod(DataSync.FASTSYNC); dulu fast diganti jadi full, jadi pakai baris di bawahnya..
+					sync.setSyncMethod(DataSync.FULLSYNC);
+					progressDialog.setTitle("Full Data Synchronization");
 					sync.setOnDataSyncListener(new OnDataSyncListener() {
 
 						@Override
 						public void OnDataSync(String dataname, int count,
 								int max) {
-
+							progressDialog.setProgress(count);
+							progressDialog.setMax(max);
 						}
 					});
 					sync.start();
@@ -310,15 +315,14 @@ public class MainmenuActivity extends Activity {
 		case SYNCDIALOG: {
 			progressDialog = new ProgressDialog(MainmenuActivity.this);
 			progressDialog.setTitle("Data Synchronization");
-			// progressDialog.setMessage(MensaApplication.FULLSYNC[0]);
 			progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 			progressDialog.setMax(MensaApplication.FULLSYNC.length);
 			ret = progressDialog;
 			break;
 		}
 		case CHOOSESYNCDIALOG: {
-			final CharSequence[] items = { "Full Sync", "Fast Sync",
-					"Resend Pending" };
+			final CharSequence[] items = { "Full Data ", "Fast Data ",
+					"Resend Pending " };
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("select the synchronization method");
@@ -338,12 +342,14 @@ public class MainmenuActivity extends Activity {
 
 					sync = new DataSync(handler, mensaapplication);
 					sync.setSyncMethod(item);
+					progressDialog.setTitle(items[item]+"Syncronization");
 					sync.setOnDataSyncListener(new OnDataSyncListener() {
 
 						@Override
 						public void OnDataSync(String dataname, int count,
 								int max) {
 							progressDialog.setProgress(count);
+							progressDialog.setMax(max);
 						}
 					});
 					sync.start();
