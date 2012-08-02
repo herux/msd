@@ -5,98 +5,96 @@
     android:layout_height="fill_parent"
     android:background="@drawable/mensabackground"
     android:orientation="vertical" >
-    
+
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:padding="6dip" >
-
         <LinearLayout
-            android:id="@+id/ll1"
-            android:background="@drawable/roundedbkg"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="horizontal" >
+            android:orientation="vertical"
+            android:padding="6dip" >
 
-            <Button
-                android:id="@+id/btn_salescallplan"
-                style="@style/HomeButton"
-                android:drawableTop="@drawable/btnsalescallplan"
-                android:text="Sales Call Plan" />
+            <LinearLayout
+                android:id="@+id/ll1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/roundedbkg"
+                android:orientation="horizontal" >
 
-            <Button
-                android:id="@+id/btn_productlist"
-                style="@style/HomeButton"
-                android:drawableTop="@drawable/btnproductlist"
-                android:text="Product List" />
+                <Button
+                    android:id="@+id/btn_synchronize"
+                    style="@style/HomeButton"
+                    android:drawableTop="@drawable/btnsynchronize"
+                    android:text="Synchronize" />
+
+                <Button
+                    android:id="@+id/btn_salescallplan"
+                    style="@style/HomeButton"
+                    android:drawableTop="@drawable/btnsalescallplan"
+                    android:text="Sales Call Plan" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/roundedbkg"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/btn_infopromo"
+                    style="@style/HomeButton"
+                    android:drawableTop="@drawable/btnpromo"
+                    android:text="Info Promo" />
+
+                <Button
+                    android:id="@+id/btn_addcustomer"
+                    style="@style/HomeButton"
+                    android:drawableTop="@drawable/btncustomer"
+                    android:text="Add Customer" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/roundedbkg"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/btn_productlist"
+                    style="@style/HomeButton"
+                    android:drawableTop="@drawable/btnproductlist"
+                    android:text="Product List" />
+
+                <Button
+                    android:id="@+id/btn_compareorder"
+                    style="@style/HomeButton"
+                    android:drawableTop="@drawable/btnsynchronize"
+                    android:text="Compare Order" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll4"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/roundedbkg"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/btn_calendar"
+                    style="@style/HomeButton"
+                    android:drawableTop="@drawable/btncalendar"
+                    android:text="Calendar" />
+            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll2"
-            android:background="@drawable/roundedbkg"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/btn_calendar"
-                style="@style/HomeButton"
-                android:drawableTop="@drawable/btncalendar"
-                android:text="Calendar" />
-
-            <Button
-                android:id="@+id/btn_synchronize"
-                style="@style/HomeButton"
-                android:drawableTop="@drawable/btnsynchronize"
-                android:text="Synchronize" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll3"
-            android:background="@drawable/roundedbkg"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/btn_addcustomer"
-                style="@style/HomeButton"
-                android:drawableTop="@drawable/btncustomer"
-                android:text="Add Customer" />
-
-            <Button
-                android:id="@+id/btn_infopromo"
-                style="@style/HomeButton"
-                android:drawableTop="@drawable/btnpromo"
-                android:text="Info Promo" />
-        </LinearLayout>
-        
-        <LinearLayout
-            android:id="@+id/ll4"
-            android:background="@drawable/roundedbkg"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/btn_compareorder"
-                style="@style/HomeButton"
-                android:drawableTop="@drawable/btnsynchronize"
-                android:text="Compare Order" />
-
-            
-        </LinearLayout>
-    </LinearLayout>
     </ScrollView>
 
 </LinearLayout>

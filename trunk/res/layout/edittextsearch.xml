@@ -1,33 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/editextsearchrl"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/editextsearchrl"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:descendantFocusability="beforeDescendants"
-		android:focusableInTouchMode="true" >
+    <!--
+ android:descendantFocusability="beforeDescendants"
+		android:focusableInTouchMode="true"
+    -->
 
-        <EditText
-            android:id="@+id/etSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/btnSearch"
-            android:layout_weight="1"
-            android:background="@drawable/searchbkg"
+    <EditText
+        android:id="@+id/etSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/btnSearch"
+        android:layout_weight="1"
+        android:background="@drawable/searchbkg"
+        android:height="60dip"
+        android:text="Search" >
+
+        <requestFocus />
+    </EditText>
+    <!--
             android:nextFocusUp="@id/etSearch" 
             android:nextFocusLeft="@id/etSearch"
-            android:height="60dip">
-            <requestFocus />
-        </EditText>
-          
+    -->
 
-        <Button
-            android:id="@+id/btnSearch"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/btnsearchs" />
+    <Button
+        android:id="@+id/btnSearch"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/btnsearchs" />
 
-    </RelativeLayout>
+</RelativeLayout>

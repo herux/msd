@@ -55,10 +55,6 @@ public class DataSync extends BaseThread {
 		switch (getSyncMethod()) {
 		case FULLSYNC: {
 			for (int i = 0; i < MensaApplication.fullsync_paths.length; i++) {
-				if (onDataSyncListener != null) {
-					onDataSyncListener.OnDataSync(MensaApplication.FULLSYNC[i],
-							i, 0);
-				}
 				String request = MensaApplication.mbs_url
 						+ MensaApplication.fullsync_paths[i];
 				if ((i == DataLoader.dlCUSTOMERS)
@@ -83,6 +79,10 @@ public class DataSync extends BaseThread {
 					Log.d("mensa", "filelist: " + filelist.length);
 					for (int j = 0; j < filelist.length; j++) {
 						if (filelist[j].getName().contains(files)) {
+							if (onDataSyncListener != null) {
+								onDataSyncListener.OnDataSync(MensaApplication.FULLSYNC[i],
+										j, filelist.length);
+							}
 							Log.d("mensa",
 									"Deleting file " + filelist[j].getName());
 							filelist[j].delete();
@@ -95,6 +95,10 @@ public class DataSync extends BaseThread {
 						int page = pageobj.getInt("PAGE_COUNT");
 						Log.d("mensa", "Download product base page: " + page);
 						for (int j = 1; j < page; j++) {
+							if (onDataSyncListener != null) {
+								onDataSyncListener.OnDataSync(MensaApplication.FULLSYNC[i],
+										j, page);
+							}
 							response = http.executeHttpPost(request + "&page="
 									+ Integer.toString(j), "");
 							String filename = folder + files
@@ -114,6 +118,11 @@ public class DataSync extends BaseThread {
 				if (i == DataLoader.dlSALESORDER) {
 					Log.d("mensa", "SalesOrder Sync here ..");
 					continue;
+				}
+				
+				if (onDataSyncListener != null) {
+					onDataSyncListener.OnDataSync(MensaApplication.FULLSYNC[i],
+							i, MensaApplication.fullsync_paths.length);
 				}
 
 				Log.d("mensa", "request:" + request);
@@ -135,7 +144,7 @@ public class DataSync extends BaseThread {
 		case FASTSYNC: {
 			for (int i = 0; i < MensaApplication.fastsync_paths.length; i++) {
 				if (onDataSyncListener != null) {
-					onDataSyncListener.OnDataSync(MensaApplication.FULLSYNC[i], i, 0);
+					onDataSyncListener.OnDataSync(MensaApplication.FASTSYNC[i], i, MensaApplication.fastsync_paths.length);
 				}
 				String request = MensaApplication.mbs_url
 						+ MensaApplication.fastsync_paths[i];
