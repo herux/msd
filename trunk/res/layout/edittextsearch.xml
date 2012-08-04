@@ -17,7 +17,7 @@
         android:layout_weight="1"
         android:background="@drawable/searchbkg"
         android:height="60dip"
-        android:text="Search" >
+        android:text="" >
 
         <requestFocus />
     </EditText>

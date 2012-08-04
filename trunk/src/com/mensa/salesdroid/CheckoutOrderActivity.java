@@ -143,7 +143,10 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 									+ MensaApplication.SALESORDERFILENAME
 									+ application.getSalesorder()
 											.getOrdernumber());
-							file.delete();
+							if (file.exists()){
+								file.delete();
+							}
+							Log.d("mensa", "setelah delete");
 							//---simpan ordernumber
 							file = new File(root, folder + MensaApplication.ORDERNOLIST);
 							JSONArray orderlist = null; 
@@ -157,10 +160,13 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 								}
 								
 								orderlist = new JSONArray(MensaApplication.getFileContent(fileis));
+							}else{
+								orderlist = new JSONArray();
 							}
 							orderobj = new JSONObject();
 							orderobj.put("orderno", application.getSalesorder().getOrdernumber());
 							orderobj.put("date", application.getDateString());
+							Log.d("mensa", "date: "+application.getDateString());
 							orderlist.put(orderobj);
 							JSONArray tmpOrderList = new JSONArray(); 
 							for (int i = 0; i < orderlist.length(); i++) {

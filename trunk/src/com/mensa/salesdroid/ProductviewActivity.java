@@ -512,6 +512,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 					if (so == null) {
 						so = new SalesOrder("", "", "", "", "");
 						so.setDates(application.getDateTimeStr());
+						Log.d("mensa", "date order: "+so.getDates());
 						so.setOrdernumber("SOM."
 								+ application.getTimeInt()
 								+ "."

@@ -30,6 +30,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -187,6 +188,7 @@ public class MainmenuActivity extends Activity {
 					String input = "";
 					try {
 						input = URLEncoder.encode(orderobj.toString(), "UTF-8");
+						Log.d("mensa", "input for compare : "+orderobj.toString());
 					} catch (UnsupportedEncodingException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -197,6 +199,7 @@ public class MainmenuActivity extends Activity {
 									"http://simfoni.mbs.co.id/services.php?key=czRMZTU0dVRvTWF0MTBu&tab=Y29tcGFyZQ==&uid="
 											+ mensaapplication.getSalesid(),
 									input);
+					Log.d("mensa", "reponse compare : "+response);
 					try {
 						JSONObject respObj = new JSONObject(response);
 						String message = "";
@@ -238,6 +241,7 @@ public class MainmenuActivity extends Activity {
 							mensaapplication.getSalesid());
 					editor.commit();
 					mensaapplication.setNeedSync(false);
+					mensaapplication.setNeesFastSync(false);
 					dialog.dismiss();
 					showDialog(DataSync.FULLSYNC);
 					sync = new DataSync(handler, mensaapplication);

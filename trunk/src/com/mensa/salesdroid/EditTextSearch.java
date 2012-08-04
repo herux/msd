@@ -9,6 +9,7 @@
 package com.mensa.salesdroid;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,40 +29,48 @@ public class EditTextSearch extends RelativeLayout {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		layoutInflater.inflate(R.layout.edittextsearch, this);
 		textSearch = (EditText) findViewById(R.id.etSearch);
-		textSearch.setOnKeyListener(new OnKeyListener() {
+		textSearch.setText("Search");
+//		textSearch.setOnKeyListener(new OnKeyListener() {
+//			
+//			@Override
+//			public boolean onKey(View v, int keyCode, KeyEvent event) {
+//				if(event.getAction()==KeyEvent.ACTION_DOWN)
+//			        return false;
+//				
+//				Log.d("mensa", "onKey: "+textSearch.getText());
+//				if (textSearch.getText().equals("Search")){
+//					textSearch.setText("");
+//				}
+//				
+//				return false;
+//			}
+//		});
+		textSearch.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if(event.getAction()==KeyEvent.ACTION_DOWN)
-			        return false;
-				
-				if (textSearch.getText().equals("Search")){
-					textSearch.setText("");
-				}
-				
-				return false;
+			public void onClick(View v) {
+				Log.d("mensa", "onclick");
+				textSearch.setText("");
 			}
 		});
-//		textSearch.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				textSearch.setText("");
-//			}
-//		});
-//		
-//		textSearch.setOnFocusChangeListener(new OnFocusChangeListener() {
-//			
-//			@Override
-//			public void onFocusChange(View arg0, boolean hasFocus) {
-//				if (hasFocus){
-//					Log.d("mensa", "focused");
-//				}else{
-//					Log.d("mensa", "not focused");
-//					if (textSearch.getText().equals(""))
-//				}
-//			}
-//		});
+		
+		textSearch.setOnFocusChangeListener(new OnFocusChangeListener() {
+			
+			@Override
+			public void onFocusChange(View arg0, boolean hasFocus) {
+				if (hasFocus){
+					Log.d("mensa", "focused: "+textSearch.getText());
+					if(!textSearch.getText().equals("Search")||(!textSearch.getText().equals(""))){
+						textSearch.setText(textSearch.getText());
+					}
+				}else{
+					Log.d("mensa", "not focused: "+textSearch.getText());
+					if(!textSearch.getText().equals("Search")||(!textSearch.getText().equals(""))){
+						textSearch.setText(textSearch.getText());
+					}
+				}
+			}
+		});
 		btnSearch  = (Button) findViewById(R.id.btnSearch);
 		btnSearch.setOnClickListener(new OnClickListener() {
 			
