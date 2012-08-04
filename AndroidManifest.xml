@@ -33,7 +33,8 @@
         <activity
             android:name=".MainmenuActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ProductviewActivity" />
+        <activity android:name=".ProductviewActivity" 
+            android:screenOrientation="portrait"/>
         <activity android:name=".ProductviewDetailsActivity" />
         <activity
             android:name=".ListcallplanActivity"
