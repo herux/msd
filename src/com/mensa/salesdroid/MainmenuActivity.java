@@ -157,7 +157,8 @@ public class MainmenuActivity extends Activity {
 				FileInputStream fileis = null;
 				if (!file.exists()) {
 					Toast toast = Toast.makeText(MainmenuActivity.this,
-							"not yet transaction order for today", Toast.LENGTH_LONG);
+							"not yet transaction order for today",
+							Toast.LENGTH_LONG);
 					toast.show();
 				} else {
 					try {
@@ -185,21 +186,21 @@ public class MainmenuActivity extends Activity {
 						e.printStackTrace();
 					}
 
-					String input = "";
+					String input = Compression.encodebase64(orderobj.toString());
 					try {
-						input = URLEncoder.encode(orderobj.toString(), "UTF-8");
-						Log.d("mensa", "input for compare : "+orderobj.toString());
-					} catch (UnsupportedEncodingException e) {
+						input = URLEncoder.encode(orderobj.toString(),"UTF-8");
+					} catch (UnsupportedEncodingException e1) {
 						// TODO Auto-generated catch block
-						e.printStackTrace();
+						e1.printStackTrace();
 					}
+					Log.d("mensa", "input for compare : " + orderobj.toString());
 					HttpClient httpc = new HttpClient();
 					String response = httpc
 							.executeHttpPost(
 									"http://simfoni.mbs.co.id/services.php?key=czRMZTU0dVRvTWF0MTBu&tab=Y29tcGFyZQ==&uid="
 											+ mensaapplication.getSalesid(),
 									input);
-					Log.d("mensa", "reponse compare : "+response);
+					Log.d("mensa", "reponse compare : " + response);
 					try {
 						JSONObject respObj = new JSONObject(response);
 						String message = "";
@@ -207,9 +208,11 @@ public class MainmenuActivity extends Activity {
 							message = respObj.getString("description");
 						} else {
 							message = respObj.getString("description");
-							JSONArray orderlist = respObj.getJSONArray("order_no");
+							JSONArray orderlist = respObj
+									.getJSONArray("order_no");
 							for (int i = 0; i < orderlist.length(); i++) {
-								message = message +" "+ orderlist.getString(i);
+								message = message + " "
+										+ orderlist.getString(i);
 							}
 						}
 						Toast toast = Toast.makeText(MainmenuActivity.this,
@@ -288,7 +291,8 @@ public class MainmenuActivity extends Activity {
 					dialog.dismiss();
 					showDialog(SYNCDIALOG);
 					sync = new DataSync(handler, mensaapplication);
-//					sync.setSyncMethod(DataSync.FASTSYNC); dulu fast diganti jadi full, jadi pakai baris di bawahnya..
+					// sync.setSyncMethod(DataSync.FASTSYNC); dulu fast diganti
+					// jadi full, jadi pakai baris di bawahnya..
 					sync.setSyncMethod(DataSync.FULLSYNC);
 					progressDialog.setTitle("Full Data Synchronization");
 					sync.setOnDataSyncListener(new OnDataSyncListener() {
@@ -346,7 +350,7 @@ public class MainmenuActivity extends Activity {
 
 					sync = new DataSync(handler, mensaapplication);
 					sync.setSyncMethod(item);
-					progressDialog.setTitle(items[item]+"Syncronization");
+					progressDialog.setTitle(items[item] + "Syncronization");
 					sync.setOnDataSyncListener(new OnDataSyncListener() {
 
 						@Override
