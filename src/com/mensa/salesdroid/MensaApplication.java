@@ -180,7 +180,7 @@ public class MensaApplication extends Application {
 	public String getDateString() {
 		Calendar c = Calendar.getInstance();
 		int day = c.get(Calendar.DAY_OF_MONTH);
-		int month = c.get(Calendar.MONTH);
+		int month = c.get(Calendar.MONTH) + 1;
 		int year = c.get(Calendar.YEAR);
 		return Integer.toString(day) + "-" + Integer.toString(month) + "-"
 				+ Integer.toString(year);
@@ -189,7 +189,7 @@ public class MensaApplication extends Application {
 	public String getDateTimeStr() {
 		Calendar c = Calendar.getInstance();
 		int day = c.get(Calendar.DAY_OF_MONTH);
-		int month = c.get(Calendar.MONTH);
+		int month = c.get(Calendar.MONTH)+1;
 		int year = c.get(Calendar.YEAR);
 		int hour = c.get(Calendar.HOUR);
 		int minute = c.get(Calendar.MINUTE);
@@ -212,7 +212,7 @@ public class MensaApplication extends Application {
 	static public String getDateTimeInt() {
 		Calendar c = Calendar.getInstance();
 		int day = c.get(Calendar.DAY_OF_MONTH);
-		int month = c.get(Calendar.MONTH);
+		int month = c.get(Calendar.MONTH)+1;
 		int year = c.get(Calendar.YEAR);
 		int hour = c.get(Calendar.HOUR);
 		int minute = c.get(Calendar.MINUTE);
