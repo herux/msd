@@ -47,6 +47,7 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 	static ArrayList<Customer> customers;
 	static CustomersAdapter adapter;
 	static MensaApplication application;
+	private static Button btnCheckin;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,9 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 				Toast toast = Toast.makeText(ListcallplanActivity.this,
 						"location: " + longitudelatitude, Toast.LENGTH_LONG);
 				toast.show();
+//				if (btnCheckin != null){
+//					btnCheckin.setEnabled(true);
+//				}
 			}
 		});
 
@@ -246,7 +250,7 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 					.findViewById(R.id.tvBillAddressValue);
 			addresstagih.setText(customers.get(getShownIndex())
 					.getALAMAT_KIRIM());
-			Button btnCheckin = (Button) v.findViewById(R.id.btnCheckin);
+			btnCheckin = (Button) v.findViewById(R.id.btnCheckin);
 			btnCheckin.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -272,8 +276,7 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 							checkoutObj.put("STATUS", "1");
 							checkoutObj.put("WAKTU", application
 									.getDateTimeStr());
-							checkoutObj.put("KOORDINAT", application
-									.getLongitudelatitude());
+							checkoutObj.put("KOORDINAT", application.getLongitudelatitude()); 
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

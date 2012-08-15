@@ -111,7 +111,7 @@ public class MensaApplication extends Application {
 	private ArrayList<ReturnItem> returnitems;
 	private Customer currentCustomer;
 	private String salesid;
-	private String longitudelatitude;
+	private String longitudelatitude = "0,0";
 	private boolean needSync;
 	private boolean neesFastSync;
 	private SharedPreferences settings;
