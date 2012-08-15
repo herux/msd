@@ -187,13 +187,13 @@ public class MainmenuActivity extends Activity {
 					}
 
 					String input = Compression.encodebase64(orderobj.toString());
-					try {
-						input = URLEncoder.encode(orderobj.toString(),"UTF-8");
-					} catch (UnsupportedEncodingException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					Log.d("mensa", "input for compare : " + orderobj.toString());
+//					try {
+//						input = orderobj.toString();//URLEncoder.encode(orderobj.toString(),"UTF-8");
+//					} catch (UnsupportedEncodingException e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					}
+					Log.d("mensa", "input for compare : " + input);
 					HttpClient httpc = new HttpClient();
 					String response = httpc
 							.executeHttpPost(
