@@ -60,24 +60,24 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 	static final int CHECKOUT_DIALOG = 1;
 	private static final int DELETE = 1;
 	String respAll = "";
-	
-	private void FreeCheckOutObj(){
+
+	private void FreeCheckOutObj() {
 		application.setCurrentCustomer(null);
 		application.setSalesorder(null);
 		application.setSalesitems(null);
 		application.setReturnitems(null);
 		application.setReturns(null);
 	}
-	
+
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		AlertDialog ad = null;
-		switch (id){
+		switch (id) {
 		case CHECKOUT_DIALOG: {
 			ad = new AlertDialog.Builder(this).create();
-			ad.setCancelable(false); 
+			ad.setCancelable(false);
 			ad.setMessage(respAll);
-			ad.setButton("Ok", new DialogInterface.OnClickListener(){
+			ad.setButton("Ok", new DialogInterface.OnClickListener() {
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -88,7 +88,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 					startActivity(intent);
 					finish();
 				}
-				
+
 			});
 			ad.show();
 			break;
@@ -108,7 +108,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onClick(View arg0) {
-				
+
 				if (application.getSalesitems() != null) {
 					application.getSalesorder().setSalesitems(
 							application.getSalesitems());
@@ -120,20 +120,31 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 					input = Compression.encodebase64(input);
 					HttpClient httpc = new HttpClient();
 					try {
-						url = MensaApplication.mbs_url + MensaApplication.fullsync_paths[7];
+						url = MensaApplication.mbs_url
+								+ MensaApplication.fullsync_paths[7];
 						input = URLEncoder.encode(input, "UTF-8");
 					} catch (UnsupportedEncodingException e) {
 						e.printStackTrace();
-						respAll = respAll + "| Order: Failed, error msg: "+e.getMessage()+"|";
+						respAll = respAll + "| Order: Failed, error msg: "
+								+ e.getMessage() + "|";
 					}
 					String response = httpc.executeHttpPost(url, input);
+					if ((response.equals("null")) || (response.equals(""))) {
+						Toast toast = Toast
+								.makeText(
+										CheckoutOrderActivity.this,
+										"Can't connect to webservices, check your internet connection..",
+										Toast.LENGTH_SHORT);
+						toast.show();
+						return;
+					}
 					Log.d("mensa", "response order= " + response);
 
 					try {
 						JSONObject statusObj = new JSONObject(response);
 						String status = statusObj.getString("status");
 						if (status.equals("SUCCESS")) {
-							respAll = respAll + "| Order: "+status+" |";
+							respAll = respAll + "| Order: " + status + " |";
 							// delete file disini
 							File root = Environment
 									.getExternalStorageDirectory();
@@ -143,46 +154,53 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 									+ MensaApplication.SALESORDERFILENAME
 									+ application.getSalesorder()
 											.getOrdernumber());
-							if (file.exists()){
+							if (file.exists()) {
 								file.delete();
 							}
 							Log.d("mensa", "setelah delete");
-							//---simpan ordernumber
-							file = new File(root, folder + MensaApplication.ORDERNOLIST);
-							JSONArray orderlist = null; 
+							// ---simpan ordernumber
+							file = new File(root, folder
+									+ MensaApplication.ORDERNOLIST);
+							JSONArray orderlist = null;
 							JSONObject orderobj = null;
-							if (file.exists()){
+							if (file.exists()) {
 								FileInputStream fileis = null;
 								try {
 									fileis = new FileInputStream(file);
 								} catch (FileNotFoundException e) {
 									e.printStackTrace();
 								}
-								
-								orderlist = new JSONArray(MensaApplication.getFileContent(fileis));
-							}else{
+
+								orderlist = new JSONArray(MensaApplication
+										.getFileContent(fileis));
+							} else {
 								orderlist = new JSONArray();
 							}
 							orderobj = new JSONObject();
-							orderobj.put("orderno", application.getSalesorder().getOrdernumber());
+							orderobj.put("orderno", application.getSalesorder()
+									.getOrdernumber());
 							orderobj.put("date", application.getDateString());
-							Log.d("mensa", "date: "+application.getDateString());
+							Log.d("mensa",
+									"date: " + application.getDateString());
 							orderlist.put(orderobj);
-							JSONArray tmpOrderList = new JSONArray(); 
+							JSONArray tmpOrderList = new JSONArray();
 							for (int i = 0; i < orderlist.length(); i++) {
 								orderobj = orderlist.getJSONObject(i);
-								if (orderobj.getString("date").equals(application.getDateString())){
+								if (orderobj.getString("date").equals(
+										application.getDateString())) {
 									tmpOrderList.put(orderobj);
 								}
 							}
-							MensaApplication.SaveStringToFile(file, tmpOrderList.toString());
-							//--->
+							MensaApplication.SaveStringToFile(file,
+									tmpOrderList.toString());
+							// --->
 							application.setSalesorder(null);
 							application.setSalesitems(null);
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
-						respAll = respAll + "| Order: Failed, error msg: "+e.getMessage()+"|";
+						respAll = respAll + "| Order: Failed, error msg: "
+								+ e.getMessage() + "|";
 					}
 				}
 				if (application.getReturnitems() != null) {
@@ -196,20 +214,31 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 					input = Compression.encodebase64(input);
 					HttpClient httpc = new HttpClient();
 					try {
-						url = MensaApplication.mbs_url + MensaApplication.fullsync_paths[9]; 
+						url = MensaApplication.mbs_url
+								+ MensaApplication.fullsync_paths[9];
 						input = URLEncoder.encode(input, "UTF-8");
 					} catch (UnsupportedEncodingException e) {
 						e.printStackTrace();
-						respAll = respAll + "| Return: Failed, error msg: "+e.getMessage()+"|";
+						respAll = respAll + "| Return: Failed, error msg: "
+								+ e.getMessage() + "|";
 					}
 					String response = httpc.executeHttpPost(url, input);
+					if ((response.equals("null")) || (response.equals(""))) {
+						Toast toast = Toast
+								.makeText(
+										CheckoutOrderActivity.this,
+										"Can't connect to webservices, check your internet connection..",
+										Toast.LENGTH_SHORT);
+						toast.show();
+						return;
+					}
 					Log.d("mensa", "response Return= " + response);
 
 					try {
 						JSONObject statusObj = new JSONObject(response);
 						String status = statusObj.getString("status");
 						if (status.equals("SUCCESS")) {
-							respAll = respAll + "| Return: "+status+" |";
+							respAll = respAll + "| Return: " + status + " |";
 							// delete file disini
 							File root = Environment
 									.getExternalStorageDirectory();
@@ -224,7 +253,8 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
-						respAll = respAll + "| Return: Failed, error msg: "+e.getMessage()+"|";
+						respAll = respAll + "| Return: Failed, error msg: "
+								+ e.getMessage() + "|";
 					}
 				}
 
@@ -247,29 +277,31 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+
 				String input = checkoutObj.toString();
-				String url = "http://simfoni.mbs.co.id/services.php?key=czRMZTU0dVRvTWF0MTBu&tab=bW9iX2NoZWNrX2lu"; 
-				Log.d("mensa", "Request CheckOut="+input);
+				String url = "http://simfoni.mbs.co.id/services.php?key=czRMZTU0dVRvTWF0MTBu&tab=bW9iX2NoZWNrX2lu";
+				Log.d("mensa", "Request CheckOut=" + input);
 				input = Compression.encodebase64(input);
 				HttpClient httpc = new HttpClient();
 				try {
 					input = URLEncoder.encode(input, "UTF-8");
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
-					respAll = respAll + "| CheckOut: Failed, error msg: "+e.getMessage()+"|";
+					respAll = respAll + "| CheckOut: Failed, error msg: "
+							+ e.getMessage() + "|";
 				}
 				String response = httpc.executeHttpPost(url, input);
 				Log.d("mensa", "response CheckOut= " + response);
-				if (response.equals("null")) {
-					respAll = respAll + "| CheckOut: Failed, error msg: null response |";
+				if ((response.equals("null")) || (response.equals(""))) {
+					respAll = respAll
+							+ "| CheckOut: Failed, error msg: null response |";
 				}
-				
-				respAll = "Checkout Report: "+respAll;
-//				Toast toast = Toast.makeText(CheckoutOrderActivity.this,
-//						"Checkout Report: "+respAll,
-//						Toast.LENGTH_LONG);
-//				toast.show();
+
+				respAll = "Checkout Report: " + respAll;
+				// Toast toast = Toast.makeText(CheckoutOrderActivity.this,
+				// "Checkout Report: "+respAll,
+				// Toast.LENGTH_LONG);
+				// toast.show();
 
 				// ------------------
 
@@ -354,6 +386,7 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 
 	public static class ReturnFragment extends Fragment {
 		QuickAction qa;
+
 		public static ReturnFragment newInstance(int index) {
 			ReturnFragment rf = new ReturnFragment();
 
@@ -388,16 +421,24 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 						for (int i = 0; i < adapterRI.getCount(); i++) {
 							adapterRI.setChecked(i, arg1);
 						}
-						if (arg1){
-							ActionItem deleteItem = new ActionItem(DELETE, "Delete All checked", getActivity().getResources()
-									.getDrawable(android.R.drawable.ic_menu_delete));
+						if (arg1) {
+							ActionItem deleteItem = new ActionItem(DELETE,
+									"Delete All checked",
+									getActivity().getResources().getDrawable(
+											android.R.drawable.ic_menu_delete));
 							qa = new QuickAction(getActivity());
 							qa.addActionItem(deleteItem);
 							qa.setOnActionItemClickListener(new OnActionItemClickListener() {
-								
+
 								@Override
-								public void onItemClick(QuickAction source, int pos, int actionId) {
-									application.getReturns().getReturnitems().removeAll(application.getReturns().getReturnitems());
+								public void onItemClick(QuickAction source,
+										int pos, int actionId) {
+									application
+											.getReturns()
+											.getReturnitems()
+											.removeAll(
+													application.getReturns()
+															.getReturnitems());
 									adapterRI.notifyDataSetChanged();
 								}
 							});
@@ -453,17 +494,21 @@ public class CheckoutOrderActivity extends BaseFragmentActivity {
 								adapter.setChecked(i, arg1);
 							}
 						}
-						
-						if (arg1){
-							ActionItem deleteItem = new ActionItem(DELETE, "Delete All checked", getActivity().getResources()
-									.getDrawable(android.R.drawable.ic_menu_delete));
+
+						if (arg1) {
+							ActionItem deleteItem = new ActionItem(DELETE,
+									"Delete All checked",
+									getActivity().getResources().getDrawable(
+											android.R.drawable.ic_menu_delete));
 							qa = new QuickAction(getActivity());
 							qa.addActionItem(deleteItem);
 							qa.setOnActionItemClickListener(new OnActionItemClickListener() {
-								
+
 								@Override
-								public void onItemClick(QuickAction source, int pos, int actionId) {
-									application.getSalesitems().removeAll(application.getSalesitems());
+								public void onItemClick(QuickAction source,
+										int pos, int actionId) {
+									application.getSalesitems().removeAll(
+											application.getSalesitems());
 									adapter.notifyDataSetChanged();
 								}
 							});
