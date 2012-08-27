@@ -298,11 +298,12 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 						}
 						String response = httpc.executeHttpPost(url, input);
 						Log.d("mensa", "response Checkin= " + response);
-						if (response.equals("null")) {
+						if ((response.equals("null"))||(response.equals(""))) {
 							Toast toast = Toast.makeText(getActivity(),
 									"Submit Checkout failed, error: null response",
 									Toast.LENGTH_LONG);
 							toast.show();
+							return;
 						}
 
 						// ------------------
