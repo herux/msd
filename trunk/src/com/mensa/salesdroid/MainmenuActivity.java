@@ -65,10 +65,12 @@ public class MainmenuActivity extends Activity {
 		ll4.getBackground().setAlpha(170);
 
 		if (mensaapplication.isNeedSync()) {
+			Log.d("mensa", "isNeedSync");
 			showDialog(NEEDFULLSYNCDIALOG);
 		}
 
 		if (mensaapplication.isNeesFastSync()) {
+			Log.d("mensa", "isNeedFastSync");
 			showDialog(NEEDFASTSYNCDIALOG);
 		}
 
