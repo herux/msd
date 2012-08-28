@@ -175,8 +175,13 @@ public class MainmenuActivity extends Activity {
 						orderlistObj = new JSONArray(fileContent);
 						JSONArray onolist = new JSONArray();
 						for (int i = 0; i < orderlistObj.length(); i++) {
-							onolist.put(orderlistObj.getJSONObject(i).get(
+							String datenow= mensaapplication.getDateString();
+							String dateonfile = orderlistObj.getJSONObject(i).getString("date");
+							Log.d("mensa", "date compare : "+datenow+" : "+dateonfile);
+							if (dateonfile.equals(datenow)){
+								onolist.put(orderlistObj.getJSONObject(i).get(
 									"orderno"));
+							}
 						}
 						orderobj = new JSONObject();
 						orderobj.put("tanggal_order",

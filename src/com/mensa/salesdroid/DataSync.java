@@ -287,18 +287,18 @@ public class DataSync extends BaseThread {
 							}
 							String response = httpc.executeHttpPost(url, newcustcontents);
 							Log.d("mensa", "response new cust = "+response);
-							String status = null;
-							try {
-								JSONObject statusObj = new JSONObject(response);
-								status = statusObj.getString("status");
-							} catch (JSONException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							if (status.equals("SUCCESS")) {
-								Log.d("mensa", "delete file new customers");
-								filelist[j].delete();
-							}
+//							String status = null;
+//							try {
+//								JSONObject statusObj = new JSONObject(response);
+//								status = statusObj.getString("status");
+//							} catch (JSONException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+//							if (status.equals("SUCCESS")) {
+//								Log.d("mensa", "delete file new customers");
+//								filelist[j].delete();
+//							}
 						}
 					}
 					break;
