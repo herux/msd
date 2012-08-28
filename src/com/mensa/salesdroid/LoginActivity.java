@@ -10,7 +10,9 @@ package com.mensa.salesdroid;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -64,11 +66,14 @@ public class LoginActivity extends Activity {
 					app.setSalesid(response);
 					
 					String userLogFull = app.getSettings().getString(MensaApplication.FULLSYNC_LOG, "");
-					if (userLogFull.equals("")) {
+					Log.d("mensa", "userLogFull = "+userLogFull+" # "+response);
+					if (userLogFull.equals("")||!userLogFull.equals(response)) {
+						Log.d("mensa", "need full sync cause different user login before");
 						app.setNeedSync(true);
 					}else{
 						app.setNeedSync(false);
 						String userLogFast = app.getSettings().getString(MensaApplication.FASTSYNC_LOG, "");
+						Log.d("mensa", "userLogFast = "+userLogFast+" # "+app.getDateString());
 						if (userLogFast.equals("")){
 							app.setNeesFastSync(true);
 						}else{
