@@ -113,7 +113,7 @@ public class MensaApplication extends Application {
 	private String salesid;
 	private String longitudelatitude = "0,0";
 	private boolean needSync;
-	private boolean neesFastSync;
+	private boolean needFastSync;
 	private SharedPreferences settings;
 	public static final String FULLSYNC_LOG = "FullSL";
 	public static final String FASTSYNC_LOG = "FastSL";
@@ -358,12 +358,12 @@ public class MensaApplication extends Application {
 		this.needSync = needSync;
 	}
 
-	public boolean isNeesFastSync() {
-		return neesFastSync;
+	public boolean isNeedFastSync() {
+		return needFastSync;
 	}
 
-	public void setNeesFastSync(boolean neesFastSync) {
-		this.neesFastSync = neesFastSync;
+	public void setNeedFastSync(boolean neesFastSync) {
+		this.needFastSync = neesFastSync;
 	}
 
 	public SharedPreferences getSettings() {
