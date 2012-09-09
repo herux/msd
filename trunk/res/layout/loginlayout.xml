@@ -105,6 +105,22 @@
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/btnlogin" />
 
+            <TextView
+                android:id="@+id/tvLastUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/tvLastSync"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/tvLastUser"
+                android:layout_alignParentLeft="true"
+                android:text="TextView" />
+
         </RelativeLayout>
 
     </RelativeLayout>

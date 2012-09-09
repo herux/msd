@@ -11,8 +11,6 @@ package com.mensa.salesdroid;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Calendar;
 
 import org.json.JSONArray;
@@ -49,6 +47,12 @@ public class MainmenuActivity extends Activity {
 	MensaApplication mensaapplication;
 
 	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+	}
+	
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mainmenu);
@@ -69,7 +73,7 @@ public class MainmenuActivity extends Activity {
 			showDialog(NEEDFULLSYNCDIALOG);
 		}
 
-		if (mensaapplication.isNeesFastSync()) {
+		if (mensaapplication.isNeedFastSync()) {
 			Log.d("mensa", "isNeedFastSync");
 			showDialog(NEEDFASTSYNCDIALOG);
 		}
@@ -251,7 +255,7 @@ public class MainmenuActivity extends Activity {
 							mensaapplication.getSalesid());
 					editor.commit();
 					mensaapplication.setNeedSync(false);
-					mensaapplication.setNeesFastSync(false);
+					mensaapplication.setNeedFastSync(false);
 					dialog.dismiss();
 					showDialog(DataSync.FULLSYNC);
 					sync = new DataSync(handler, mensaapplication);
@@ -294,7 +298,7 @@ public class MainmenuActivity extends Activity {
 					editor.putString(MensaApplication.FASTSYNC_LOG,
 							mensaapplication.getDateString());
 					editor.commit();
-					mensaapplication.setNeesFastSync(false);
+					mensaapplication.setNeedFastSync(false);
 					dialog.dismiss();
 					showDialog(SYNCDIALOG);
 					sync = new DataSync(handler, mensaapplication);
@@ -318,7 +322,7 @@ public class MainmenuActivity extends Activity {
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					mensaapplication.setNeesFastSync(true);
+					mensaapplication.setNeedFastSync(true);
 					dialog.dismiss();
 					finish();
 				}

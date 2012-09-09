@@ -10,7 +10,8 @@ package com.mensa.salesdroid;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences.Editor;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,9 +19,13 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity {
+	String userLogFull;
+	String userLogFast;
+	MensaApplication app;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -34,9 +39,29 @@ public class LoginActivity extends Activity {
 		rl2.getBackground().setAlpha(170);
 		
 		final EditText etUsername = (EditText) findViewById(R.id.etUsername);
-		etUsername.setText("JKT1-CP-RNO");
+		etUsername.setText("");
 		final EditText etPassword = (EditText) findViewById(R.id.etPassword);
-		etPassword.setText("Z");
+		etPassword.setText("");
+		
+		app = (MensaApplication) getApplication();
+		userLogFull = app.getSettings().getString(MensaApplication.FULLSYNC_LOG, "");
+		userLogFast = app.getSettings().getString(MensaApplication.FASTSYNC_LOG, "");
+		
+		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+			TextView tvLastUser = (TextView) findViewById(R.id.tvLastUser);
+			tvLastUser.setText("Last User Log: "+userLogFull);
+			tvLastUser.setTextColor(Color.BLUE);
+			tvLastUser.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					etUsername.setText(userLogFull);
+				}
+			});
+			
+			TextView tvLastSync = (TextView) findViewById(R.id.tvLastSync);
+			tvLastSync.setText("Date Last Sync: "+userLogFast);
+		}
 
 		Button btnLogin = (Button) findViewById(R.id.btnLogin);
 		btnLogin.setOnClickListener(new OnClickListener() {
@@ -62,25 +87,21 @@ public class LoginActivity extends Activity {
 							Toast.LENGTH_SHORT);
 					toast.show();
 				} else {
-					MensaApplication app = (MensaApplication) getApplication();
 					app.setSalesid(response);
 					
-					String userLogFull = app.getSettings().getString(MensaApplication.FULLSYNC_LOG, "");
 					Log.d("mensa", "userLogFull = "+userLogFull+" # "+response);
 					if (userLogFull.equals("")||!userLogFull.equals(response)) {
 						Log.d("mensa", "need full sync cause different user login before");
 						app.setNeedSync(true);
 					}else{
 						app.setNeedSync(false);
-						String userLogFast = app.getSettings().getString(MensaApplication.FASTSYNC_LOG, "");
-						Log.d("mensa", "userLogFast = "+userLogFast+" # "+app.getDateString());
 						if (userLogFast.equals("")){
-							app.setNeesFastSync(true);
+							app.setNeedFastSync(true);
 						}else{
 							if (userLogFast.equals(app.getDateString())){
-								app.setNeesFastSync(false);
+								app.setNeedFastSync(false);
 							}else{
-								app.setNeesFastSync(true);
+								app.setNeedFastSync(true);
 							}
 						}
 					}
