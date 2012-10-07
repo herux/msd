@@ -29,6 +29,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -44,14 +45,36 @@ public class MainmenuActivity extends Activity {
 	static final int CHOOSESYNCDIALOG = 1;
 	static final int NEEDFULLSYNCDIALOG = 2;
 	static final int NEEDFASTSYNCDIALOG = 3;
+	static final int BACKPRESSEDDIALOG = 4;
 	MensaApplication mensaapplication;
 
 	@Override
-	public void onBackPressed() {
-		// TODO Auto-generated method stub
-		super.onBackPressed();
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// Handle the back button
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			// Ask the user if they want to logout
+			new AlertDialog.Builder(this)
+					.setIcon(android.R.drawable.ic_dialog_alert)
+					.setTitle("Warning")
+					.setMessage("you pressed the back button, want to log out?")
+					.setPositiveButton("Yes",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int which) {
+									Intent intent = new Intent();
+									intent.setClass(MainmenuActivity.this,
+											LoginActivity.class);
+									startActivity(intent);
+									finish();
+								}
+							}).setNegativeButton("No", null).show();
+
+			return true;
+		} else {
+			return super.onKeyDown(keyCode, event);
+		}
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -181,12 +204,14 @@ public class MainmenuActivity extends Activity {
 						orderlistObj = new JSONArray(fileContent);
 						JSONArray onolist = new JSONArray();
 						for (int i = 0; i < orderlistObj.length(); i++) {
-							String datenow= mensaapplication.getDateString();
-							String dateonfile = orderlistObj.getJSONObject(i).getString("date");
-							Log.d("mensa", "date compare : "+datenow+" : "+dateonfile);
-							if (dateonfile.equals(datenow)){
+							String datenow = mensaapplication.getDateString();
+							String dateonfile = orderlistObj.getJSONObject(i)
+									.getString("date");
+							Log.d("mensa", "date compare : " + datenow + " : "
+									+ dateonfile);
+							if (dateonfile.equals(datenow)) {
 								onolist.put(orderlistObj.getJSONObject(i).get(
-									"orderno"));
+										"orderno"));
 							}
 						}
 						orderobj = new JSONObject();
@@ -198,12 +223,13 @@ public class MainmenuActivity extends Activity {
 					}
 
 					String input = Compression.encodebase64(orderobj.toString());
-//					try {
-//						input = orderobj.toString();//URLEncoder.encode(orderobj.toString(),"UTF-8");
-//					} catch (UnsupportedEncodingException e1) {
-//						// TODO Auto-generated catch block
-//						e1.printStackTrace();
-//					}
+					// try {
+					// input =
+					// orderobj.toString();//URLEncoder.encode(orderobj.toString(),"UTF-8");
+					// } catch (UnsupportedEncodingException e1) {
+					// // TODO Auto-generated catch block
+					// e1.printStackTrace();
+					// }
 					Log.d("mensa", "input for compare : " + input);
 					HttpClient httpc = new HttpClient();
 					String response = httpc
@@ -377,6 +403,22 @@ public class MainmenuActivity extends Activity {
 			});
 			AlertDialog alert = builder.create();
 			ret = alert;
+			break;
+		}
+		case BACKPRESSEDDIALOG: {
+			AlertDialog ad = new AlertDialog.Builder(this).create();
+			ad.setMessage("test");
+			ad.setButton("Yes", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+
+				}
+
+			});
+			ad.show();
+			ret = ad;
 			break;
 		}
 		}
