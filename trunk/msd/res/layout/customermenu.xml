@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/db1_root"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/mensabackground"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/ll0"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="6dip" >
+
+        <LinearLayout
+            android:id="@+id/ll1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/roundedbkg"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btn_capturorder"
+                style="@style/CustomerButton"
+                android:drawableTop="@drawable/btncapturorder"
+                android:text="Capture Order" />
+
+            <Button
+                android:id="@+id/btn_inforeturn"
+                style="@style/CustomerButton"
+                android:drawableTop="@drawable/btninforeturn"
+                android:text="Info Return" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/roundedbkg"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btn_listpiutang"
+                style="@style/CustomerButton"
+                android:drawableTop="@drawable/btnlistpiutang"
+                android:text="List Piutang" />
+
+            <Button
+                android:id="@+id/btn_infopromo"
+                style="@style/CustomerButton"
+                android:drawableTop="@drawable/btninfopromo"
+                android:text="Info Promo" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/roundedbkg"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btn_checkout"
+                style="@style/CustomerButton"
+                android:drawableTop="@drawable/btncheckout"
+                android:text="Checkout" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

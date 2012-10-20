@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="33dp"
+        android:background="@drawable/backgrndselectlist1" >
+
+        <TextView
+            android:id="@+id/tvCustomer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="Customer Name. " />
+
+        <TextView
+            android:id="@+id/tvCustomerValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tvCustomer"
+            android:text="CustomerName"
+            android:textColor="@color/titlemaincolor"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/relativeLayout1"
+        android:layout_below="@+id/relativeLayout1"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/backgrndselectlist" >
+
+        <TextView
+            android:id="@+id/tvdeliveryaddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="16dp"
+            android:text="Delivery Address. " />
+
+        <TextView
+            android:id="@+id/tvdeliveryaddressValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tvdeliveryaddress"
+            android:textAppearance="?android:attr/textAppearanceMedium" 
+            android:textColor="@color/titlemaincolor"
+            android:text="value" />
+
+        <TextView
+            android:id="@+id/tvBillAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tvdeliveryaddressValue"
+            android:layout_marginTop="25dp"
+            android:text="Billing Address. " />
+
+        <TextView
+            android:id="@+id/tvBillAddressValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tvBillAddress"
+            android:textAppearance="?android:attr/textAppearanceMedium" 
+            android:textColor="@color/titlemaincolor"
+            android:text="Value" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btnCheckin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/relativeLayout2"
+        android:layout_below="@+id/relativeLayout2"
+        android:layout_marginTop="16dp"
+        android:text="Check in" />
+
+</RelativeLayout>
