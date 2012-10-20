@@ -1,0 +1,111 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <ImageView
+        android:id="@+id/ivImageRetur"
+        android:layout_width="230dip"
+        android:layout_height="200dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:scaleType="center" />
+
+    <Button
+        android:id="@+id/btnCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ivImageRetur"
+        android:layout_alignLeft="@+id/ivImageRetur"
+        android:background="@drawable/btncamera" />
+
+    <Button
+        android:id="@+id/btnGallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ivImageRetur"
+        android:layout_toRightOf="@+id/btnCamera"
+        android:background="@drawable/btngallery" />
+
+    <TextView
+        android:id="@+id/tvImageDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnGallery"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="57dp"
+        android:text="image"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/titlemaincolor" />
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/ivImageRetur" >
+
+        <TextView
+            android:id="@+id/tvbarcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Product Code"
+            android:width="100px" />
+
+        <Button
+            android:id="@+id/btnbarcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tvbarcode"
+            android:width="100dip"
+            android:text="..." />
+
+        <EditText
+            android:id="@+id/etqty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/btnbarcode"
+            android:layout_alignRight="@+id/btnbarcode"
+            android:layout_below="@id/btnbarcode"
+            android:inputType="number"
+            android:text="1"
+            android:width="100px" />
+        
+        <TextView
+            android:id="@+id/tvreturncause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etqty"
+            android:layout_toLeftOf="@+id/Spreturncause"
+            android:text="Reason Code"
+            android:width="100px" />
+        
+        <Spinner 
+            android:id="@+id/Spreturncause"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:drawSelectorOnTop="true"
+            android:layout_below="@+id/etqty"
+            android:layout_alignLeft="@id/etqty"
+            android:layout_alignParentRight="true"/>
+        
+        <TextView
+            android:id="@+id/tvqty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnbarcode"
+            android:layout_toLeftOf="@id/etqty"
+            android:text="Qty"
+            android:width="100px" />
+
+        <Button
+            android:id="@+id/btnsave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/Spreturncause"
+            android:text=" Save " />
+
+    </RelativeLayout>
+
+</RelativeLayout>

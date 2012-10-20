@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/rlreturns_rf"
+        android:layout_width="wrap_content"
+        android:layout_height="50dip" >
+
+        <TextView
+            android:id="@+id/tvreturnsnum_rf"
+            android:layout_width="wrap_content"
+            android:layout_height="30dip"
+            android:text="Returns Num." />
+
+        <TextView
+            android:id="@+id/tvreturnsnum_value_rf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tvreturnsnum_rf"
+            android:text="value" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/llcaptionhead_rf"
+        android:layout_width="fill_parent"
+        android:layout_height="30dip"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/rlreturns_rf"
+        android:orientation="horizontal" >
+        
+        <CheckBox 
+            android:id="@+id/cball_rf"
+            android:layout_width="40dip"
+            android:layout_height="wrap_content"
+            android:background="@drawable/columnhead"
+            android:gravity="center_vertical"
+            android:text=""/>
+
+        <TextView
+            android:id="@+id/tvproductimage_rf"
+            android:layout_width="100dip"
+            android:layout_height="wrap_content"
+            android:background="@drawable/columnhead"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Image" />
+        
+        <TextView
+            android:id="@+id/tvproductcode_rf"
+            android:layout_width="150dip"
+            android:layout_height="wrap_content"
+            android:background="@drawable/columnhead"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Product Name" />
+
+        <TextView
+            android:id="@+id/tvqty_rf"
+            android:layout_width="70dip"
+            android:layout_height="wrap_content"
+            android:background="@drawable/columnhead"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Qty" />
+
+        <TextView
+            android:id="@+id/tvdescription_rf"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/columnhead"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Description" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/flrow_rf"
+        android:layout_width="match_parent"
+        android:layout_height="130dip"
+        android:layout_below="@+id/llcaptionhead_rf" >
+
+        <fragment
+            android:id="@+id/titles_rf"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            class="com.mensa.salesdroid.InfoReturListActivity$ReturnItemsFragment" />
+    </FrameLayout>
+    
+    <LinearLayout
+        android:id="@+id/llcaptionfoot_rf"
+        android:layout_width="wrap_content"
+        android:layout_height="60dip"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/flrow_rf"
+        android:orientation="horizontal" >
+        
+        <Button 
+            android:id="@+id/btnsubmit_rf"
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="Submit"/>
+             
+        
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvreturnsdate_rf"
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Returns Date." />
+
+    <TextView
+        android:id="@+id/tvreturnssalesid_rf"
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="Salesman." />
+
+    <TextView
+        android:id="@+id/tvreturnsdate_value_rf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvreturnsdate_rf"
+        android:layout_centerHorizontal="true"
+        android:text="value" />
+
+    <TextView
+        android:id="@+id/tvsalesid_value_rf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tvreturnssalesid_rf"
+        android:text="value" />
+
+</RelativeLayout>

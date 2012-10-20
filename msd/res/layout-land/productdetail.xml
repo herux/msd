@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/imgProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnAdd"
+        android:adjustViewBounds="true"
+        android:alpha="1"
+        android:soundEffectsEnabled="true"
+        android:src="@drawable/noimageproduct" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="52dp"
+        android:text="Description: " />
+
+    <TextView
+        android:id="@+id/tvProductDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imgProduct"
+        android:layout_alignTop="@+id/textView1"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="23dp"
+        android:text="Product Descriptions" />
+
+    <EditText
+        android:id="@+id/edtQty"
+        android:layout_width="80dip"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/btnAdd"
+        android:layout_toLeftOf="@+id/btnAdd"
+        android:inputType="number"
+        android:text="1" >
+
+        <requestFocus />
+    </EditText>
+    
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvProductDetail"
+        android:layout_alignParentRight="true"
+        android:text="Add to basket" />
+
+</RelativeLayout>
