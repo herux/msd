@@ -4,12 +4,9 @@ import java.util.List;
 
 import net.londatiga.android.ActionItem;
 import net.londatiga.android.QuickAction;
-import net.londatiga.android.R;
 import net.londatiga.android.QuickAction.OnActionItemClickListener;
-
 import android.app.Activity;
 import android.content.res.Configuration;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;

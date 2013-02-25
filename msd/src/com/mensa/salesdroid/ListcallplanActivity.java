@@ -222,7 +222,7 @@ public class ListcallplanActivity extends BaseFragmentActivity {
 					startActivity(intent);
 				}
 			});
-			alert.show(getSupportFragmentManager(), "dialog");
+//			alert.show(getSupportFragmentManager(), "dialog");
 		}
 
 		public int getShownIndex() {
