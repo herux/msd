@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.Application;
@@ -26,6 +27,22 @@ import android.util.DisplayMetrics;
 
 public class MensaApplication extends Application {
 	static int THEME = R.style.Theme_Sherlock;
+	
+	static final String PREFS_MENSA = "mensa_prefs";
+	static final String KEY_URL = "root";
+	static final String KEY_PRODUCT = "product";
+	static final String KEY_CUSTOMER = "customer";
+	static final String KEY_SALESMAN = "salesman";
+	static final String KEY_FOCUS = "focus";
+	static final String KEY_PIUTANG = "piutang";
+	static final String KEY_ORDERTYPE = "ordertype";
+	static final String KEY_RETURNCAUSE = "returncause";
+	static final String KEY_ORDER = "order";
+	static final String KEY_PROMO = "promo";
+	static final String KEY_RETURN = "return";
+	static final String KEY_NEWCUSTOMER = "newcustomer";
+	static final String KEY_CUSTOMERGROUP = "customergroup";
+	
 	static final String CUSTOMERSFILENAME = "customers.mbs";
 	static final String PRODUCTSFILENAME = "products.mbs";
 	static final String SALESMANSFILENAME = "salesmans.mbs";
@@ -62,20 +79,21 @@ public class MensaApplication extends Application {
 			CUSTGROUP
 			};
 
-	static final String mbs_url = "http://simfoni.mbs.co.id/services.php?";
-	static final String[] fullsync_paths = {
-			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3Byb2R1Y3Q=&uid=", //PRODUCTSFILENAME
-			"key=czRMZTU0dVRvTWF0MTBu&tab=Y2FsbF9wbGFu&uid=", //CUSTOMERSFILENAME
-			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3NhbGVzbWFu",
-			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9mb2N1cw==&uid=", //"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9mb2N1c19zdG9jaw==&uid=", 
-			"key=czRMZTU0dVRvTWF0MTBu&tab=cGl1dGFuZ19jYWxscGxhbg==&uid=", //PIUTANGFILENAME
-			"key=czRMZTU0dVRvTWF0MTBu&tab=Y3VzdF9vcmRlcl90eXBl",
-			"key=czRMZTU0dVRvTWF0MTBu&tab=cmV0dXJuX2NhdXNl",
-			"key=czRMZTU0dVRvTWF0MTBu&tab=cG9zdF9vcmRlcg==", // post_order
-			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9wcm9tb19zdG9jaw==&uid=", //PRODUCTSPROMOFILENAME
-			"key=czRMZTU0dVRvTWF0MTBu&tab=cG9zdF9yZXR1cm4=", // post return
-			"key=czRMZTU0dVRvTWF0MTBu&tab=bmV3X2N1c3RvbWVy", // newcustomer
-			"key=czRMZTU0dVRvTWF0MTBu&tab=Y3VzdF9ncnA"}; // customersgroup 
+	static String mbs_url = "http://simfoni.mbs.co.id/services.php?";
+//	static final String[] fullsync_paths = {
+//			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3Byb2R1Y3Q=&uid=", //PRODUCTSFILENAME
+//			"key=czRMZTU0dVRvTWF0MTBu&tab=Y2FsbF9wbGFu&uid=", //CUSTOMERSFILENAME
+//			"key=czRMZTU0dVRvTWF0MTBu&tab=bWFzdGVyX3NhbGVzbWFu",
+//			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9mb2N1cw==&uid=", //"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9mb2N1c19zdG9jaw==&uid=", 
+//			"key=czRMZTU0dVRvTWF0MTBu&tab=cGl1dGFuZ19jYWxscGxhbg==&uid=", //PIUTANGFILENAME
+//			"key=czRMZTU0dVRvTWF0MTBu&tab=Y3VzdF9vcmRlcl90eXBl",
+//			"key=czRMZTU0dVRvTWF0MTBu&tab=cmV0dXJuX2NhdXNl",
+//			"key=czRMZTU0dVRvTWF0MTBu&tab=cG9zdF9vcmRlcg==", // post_order
+//			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9wcm9tb19zdG9jaw==&uid=", //PRODUCTSPROMOFILENAME
+//			"key=czRMZTU0dVRvTWF0MTBu&tab=cG9zdF9yZXR1cm4=", // post return
+//			"key=czRMZTU0dVRvTWF0MTBu&tab=bmV3X2N1c3RvbWVy", // newcustomer
+//			"key=czRMZTU0dVRvTWF0MTBu&tab=Y3VzdF9ncnA"}; // customersgroup 
+	static String[] fullsync_paths = new String[12];
 	
 	static String[] FASTSYNC = { 
 		PRODUCTSFOCUSFILENAME,
@@ -85,21 +103,25 @@ public class MensaApplication extends Application {
 		CUSTGROUP,
 		ORDERTYPE, 
 		RETURNCAUSE};
-	static final String[] fastsync_paths = {
-			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9mb2N1cw==&uid=",
-			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9wcm9tb19zdG9jaw==&uid=",
-			"key=czRMZTU0dVRvTWF0MTBu&tab=Y2FsbF9wbGFu&uid=",
-			"key=czRMZTU0dVRvTWF0MTBu&tab=cGl1dGFuZ19jYWxscGxhbg==&uid=",
-			"key=czRMZTU0dVRvTWF0MTBu&tab=Y3VzdF9ncnA&uid=",
-			"key=czRMZTU0dVRvTWF0MTBu&tab=Y3VzdF9vcmRlcl90eXBl&uid=",
-			"key=czRMZTU0dVRvTWF0MTBu&tab=cmV0dXJuX2NhdXNl&uid="
-			};
+//	static final String[] fastsync_paths = {
+//			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9mb2N1cw==&uid=",
+//			"key=czRMZTU0dVRvTWF0MTBu&tab=cHJvZHVjdF9wcm9tb19zdG9jaw==&uid=",
+//			"key=czRMZTU0dVRvTWF0MTBu&tab=Y2FsbF9wbGFu&uid=",
+//			"key=czRMZTU0dVRvTWF0MTBu&tab=cGl1dGFuZ19jYWxscGxhbg==&uid=",
+//			"key=czRMZTU0dVRvTWF0MTBu&tab=Y3VzdF9ncnA&uid=",
+//			"key=czRMZTU0dVRvTWF0MTBu&tab=Y3VzdF9vcmRlcl90eXBl&uid=",
+//			"key=czRMZTU0dVRvTWF0MTBu&tab=cmV0dXJuX2NhdXNl&uid="
+//			};
 	
-	static String[] PENDSYNC = {
-		"key=czRMZTU0dVRvTWF0MTBu&tab=cG9zdF9vcmRlcg==", // post_order
-		"key=czRMZTU0dVRvTWF0MTBu&tab=cG9zdF9yZXR1cm4=", // post return
-		"key=czRMZTU0dVRvTWF0MTBu&tab=bmV3X2N1c3RvbWVy" // newcustomer
-	};
+	static String[] fastsync_paths = new String[7];
+	
+//	static String[] PENDSYNC = {
+//		"key=czRMZTU0dVRvTWF0MTBu&tab=cG9zdF9vcmRlcg==", // post_order
+//		"key=czRMZTU0dVRvTWF0MTBu&tab=cG9zdF9yZXR1cm4=", // post return
+//		"key=czRMZTU0dVRvTWF0MTBu&tab=bmV3X2N1c3RvbWVy" // newcustomer
+//	};
+	
+	static String[] PENDSYNC = new String[3];
 
 	private ArrayList<Product> productsearchs;
 	private ArrayList<Product> products;
@@ -120,8 +142,35 @@ public class MensaApplication extends Application {
 
 	@Override
 	public void onCreate() {
-		setSettings(getSharedPreferences("mensa_prefs", MODE_PRIVATE));
+		setSettings(getSharedPreferences(PREFS_MENSA, MODE_PRIVATE));
 		super.onCreate();
+		SharedPreferences settingsRead = getSharedPreferences(PREFS_MENSA, MODE_PRIVATE);
+		mbs_url = settingsRead.getString(KEY_URL, "");
+		
+		fullsync_paths[0] = settingsRead.getString(KEY_PRODUCT, "");
+		fullsync_paths[1] = settingsRead.getString(KEY_CUSTOMER, "");
+		fullsync_paths[2] = settingsRead.getString(KEY_SALESMAN, "");
+		fullsync_paths[3] = settingsRead.getString(KEY_FOCUS, "");
+		fullsync_paths[4] = settingsRead.getString(KEY_PIUTANG, "");
+		fullsync_paths[5] = settingsRead.getString(KEY_ORDERTYPE, "");
+		fullsync_paths[6] = settingsRead.getString(KEY_RETURNCAUSE, "");
+		fullsync_paths[7] = settingsRead.getString(KEY_ORDER, "");
+		fullsync_paths[8] = settingsRead.getString(KEY_PROMO, "");
+		fullsync_paths[9] = settingsRead.getString(KEY_RETURN, "");
+		fullsync_paths[10] = settingsRead.getString(KEY_NEWCUSTOMER, "");
+		fullsync_paths[11] = settingsRead.getString(KEY_CUSTOMERGROUP, "");
+		
+		fastsync_paths[0] = settingsRead.getString(KEY_FOCUS, "");
+		fastsync_paths[1] = settingsRead.getString(KEY_PROMO, "");
+		fastsync_paths[2] = settingsRead.getString(KEY_CUSTOMER, "");
+		fastsync_paths[3] = settingsRead.getString(KEY_PIUTANG, "");
+		fastsync_paths[4] = settingsRead.getString(KEY_CUSTOMERGROUP, "");
+		fastsync_paths[5] = settingsRead.getString(KEY_ORDERTYPE, "");
+		fastsync_paths[6] = settingsRead.getString(KEY_RETURNCAUSE, "");
+		
+		PENDSYNC[0] = settingsRead.getString(KEY_ORDER, "");
+		PENDSYNC[1] = settingsRead.getString(KEY_RETURN, "");
+		PENDSYNC[2] = settingsRead.getString(KEY_NEWCUSTOMER, "");
 	}
 	
 	public int getscreenWidth(Activity activity){

@@ -55,6 +55,7 @@
             android:name=".AddCustomerActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".CalendarView"></activity>
+        <activity android:name=".PrefActivity"></activity>
     </application>
 
 </manifest>

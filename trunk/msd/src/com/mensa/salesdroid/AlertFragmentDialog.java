@@ -1,11 +1,12 @@
 package com.mensa.salesdroid;
 
+import android.R;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 
 public class AlertFragmentDialog extends DialogFragment {
 	OnClickPositiveButtonListener onClickPositiveButtonListener;
@@ -41,7 +42,7 @@ public class AlertFragmentDialog extends DialogFragment {
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		int title = getArguments().getInt("title");
 		AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
-		ad.setIcon(R.drawable.ic_launcher);
+//		ad.setIcon(R.drawable.ic_launcher);
 		ad.setTitle(title);
 		ad.setPositiveButton("Yes", new OnClickListener() {
 
