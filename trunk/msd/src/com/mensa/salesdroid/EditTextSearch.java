@@ -29,7 +29,7 @@ public class EditTextSearch extends RelativeLayout {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		layoutInflater.inflate(R.layout.edittextsearch, this);
 		textSearch = (EditText) findViewById(R.id.etSearch);
-		textSearch.setText("Search");
+		textSearch.setText("");
 //		textSearch.setOnKeyListener(new OnKeyListener() {
 //			
 //			@Override
