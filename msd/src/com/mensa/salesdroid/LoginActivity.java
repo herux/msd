@@ -8,6 +8,8 @@
 
 package com.mensa.salesdroid;
 
+import java.util.Date;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -27,7 +29,8 @@ import android.widget.Toast;
 
 public class LoginActivity extends Activity {
 	String userLogFull;
-	String userLogFast;
+//	String userLogFast;
+	long userLogFast;
 	MensaApplication app;
 
 	@Override
@@ -76,8 +79,9 @@ public class LoginActivity extends Activity {
 		app = (MensaApplication) getApplication();
 		userLogFull = app.getSettings().getString(
 				MensaApplication.FULLSYNC_LOG, "");
-		userLogFast = app.getSettings().getString(
-				MensaApplication.FASTSYNC_LOG, "");
+//		userLogFast = app.getSettings().getString(
+//				MensaApplication.FASTSYNC_LOG, "");
+		userLogFast = app.getSettings().getLong(MensaApplication.FASTSYNC_LOG, 0);
 
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 			TextView tvLastUser = (TextView) findViewById(R.id.tvLastUser);
@@ -131,13 +135,21 @@ public class LoginActivity extends Activity {
 						app.setNeedSync(true);
 					} else {
 						app.setNeedSync(false);
-						if (userLogFast.equals("")) {
+						if (userLogFast == 0) {
 							app.setNeedFastSync(true);
 						} else {
-							if (userLogFast.equals(app.getDateString())) {
-								app.setNeedFastSync(false);
-							} else {
+//							if (userLogFast.equals(app.getDateString())) {
+//								app.setNeedFastSync(false);
+//							} else {
+//								app.setNeedFastSync(true);
+//							}
+							int DAY_IN_MILLIS = 1000 * 60 * 60 * 24;
+							Date spDate = new Date(userLogFast);
+							int diffInDays = (int) ((app.getDateLong() - spDate.getTime())/ DAY_IN_MILLIS );
+							if (diffInDays >= 2){
 								app.setNeedFastSync(true);
+							}else{
+								app.setNeedFastSync(false);
 							}
 						}
 					}

@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -233,6 +234,11 @@ public class MensaApplication extends Application {
 		int year = c.get(Calendar.YEAR);
 		return Integer.toString(day) + "-" + Integer.toString(month) + "-"
 				+ Integer.toString(year);
+	}
+	
+	public long getDateLong(){
+		Date date = new Date(System.currentTimeMillis());
+		return date.getTime();
 	}
 
 	public String getDateTimeStr() {
