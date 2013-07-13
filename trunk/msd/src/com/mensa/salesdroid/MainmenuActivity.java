@@ -92,7 +92,7 @@ public class MainmenuActivity extends Activity {
 		ll4.getBackground().setAlpha(170);
 
 		if (mensaapplication.isNeedSync()) {
-			Log.d("mensa", "isNeedSync");
+			Log.d("mensa", "isNeedFullSync");
 			showDialog(NEEDFULLSYNCDIALOG);
 		}
 
@@ -321,8 +321,9 @@ public class MainmenuActivity extends Activity {
 				public void onClick(DialogInterface dialog, int which) {
 					SharedPreferences.Editor editor = mensaapplication
 							.getSettings().edit();
-					editor.putString(MensaApplication.FASTSYNC_LOG,
-							mensaapplication.getDateString());
+//					editor.putString(MensaApplication.FASTSYNC_LOG,
+//							mensaapplication.getDateString());
+					editor.putLong(MensaApplication.FASTSYNC_LOG, mensaapplication.getDateLong());
 					editor.commit();
 					mensaapplication.setNeedFastSync(false);
 					dialog.dismiss();
