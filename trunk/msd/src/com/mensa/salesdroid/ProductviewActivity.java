@@ -22,6 +22,8 @@ import android.support.v4.app.ActionBar.TabListener;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +31,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -64,17 +67,19 @@ public class ProductviewActivity extends BaseFragmentActivity {
 				switch (productsThread.getLoadType()) {
 				case ProductsThread.LOADPRODUCT: {
 					application.setProducts(productsThread.getProducts());
-					// jika loader data focus = null. maka create arraylist product
-					if (productsThread.getProductsfocus()==null){
+					// jika loader data focus = null. maka create arraylist
+					// product
+					if (productsThread.getProductsfocus() == null) {
 						application.setProductsfocus(new ArrayList<Product>());
-					}else{
+					} else {
 						application.setProductsfocus(productsThread
 								.getProductsfocus());
 					}
-					// jika loader data promo = null. maka create arraylist product
-					if (productsThread.getProductspromo()==null){
+					// jika loader data promo = null. maka create arraylist
+					// product
+					if (productsThread.getProductspromo() == null) {
 						application.setProductspromo(new ArrayList<Product>());
-					}else{
+					} else {
 						application.setProductspromo(productsThread
 								.getProductspromo());
 					}
@@ -96,7 +101,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 						break;
 					}
 					}
-					
+
 					adapter.clear();
 					tmpProduct.addAll(products);
 					products = tmpProduct;
@@ -110,15 +115,15 @@ public class ProductviewActivity extends BaseFragmentActivity {
 					break;
 				}
 				case ProductsThread.SEARCHPRODUCT: {
-					if (productsThread.getProductssearch()!=null){
+					if (productsThread.getProductssearch() != null) {
 						application.setProductsearchs(productsThread
 								.getProductssearch());
-					}else{
+					} else {
 						application.setProductsearchs(new ArrayList<Product>());
 					}
 					adapter.setWithsearch(false);
 					tmpProduct = application.getProductsearchs();
-					
+
 					adapter.clear();
 					products = tmpProduct;
 					for (int i = 0; i < products.size(); i++) {
@@ -179,7 +184,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			return progressDialog;
 		}
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -256,7 +261,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			}
 		});
 		actionbar.addTab(tabPromo);
-		
+
 		Tab tabAll = actionbar.newTab();
 		tabAll.setText("All");
 		tabAll.setTabListener(new TabListener() {
@@ -370,15 +375,18 @@ public class ProductviewActivity extends BaseFragmentActivity {
 
 				@Override
 				public void OnItemSearchClick(View view) {
-					if (adapter.getTextSearch()==null){
+					if (adapter.getTextSearch() == null) {
 						Log.d("mensa", "adapter.getTextSearch() = null");
 					}
-					 if (!adapter.getTextSearch().equals("Search")) {
-					((ProductviewActivity) getActivity()).Reload(page,
-							ProductsThread.SEARCHPRODUCT, adapter.getTextSearch(),
-							"Search Products",
-							"Searching data product, keyword : "+adapter.getTextSearch());
-					 }
+					if (!adapter.getTextSearch().equals("Search")) {
+						((ProductviewActivity) getActivity()).Reload(
+								page,
+								ProductsThread.SEARCHPRODUCT,
+								adapter.getTextSearch(),
+								"Search Products",
+								"Searching data product, keyword : "
+										+ adapter.getTextSearch());
+					}
 				}
 			});
 			setListAdapter(adapter);
@@ -447,7 +455,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 
 			return f;
 		}
-		
+
 		public int getShownIndex() {
 			return getArguments().getInt("index", 0);
 		}
@@ -460,10 +468,10 @@ public class ProductviewActivity extends BaseFragmentActivity {
 			TextView productdesc = (TextView) v
 					.findViewById(R.id.tvProductDetail);
 			if (products.size() > 0) {
-				if (products.get(getShownIndex()).getDESCRIPTION2()!=null){
+				if (products.get(getShownIndex()).getDESCRIPTION2() != null) {
 					productdesc.setText(products.get(getShownIndex())
 							.getDESCRIPTION2());
-				}else{
+				} else {
 					productdesc.setText(products.get(getShownIndex())
 							.getDESCRIPTION());
 				}
@@ -471,21 +479,55 @@ public class ProductviewActivity extends BaseFragmentActivity {
 				productdesc.setText("Description");
 			}
 			ImageView iv = (ImageView) v.findViewById(R.id.imgProduct);
-			if (products.get(getShownIndex()).getImage()!=null){
+			if (products.get(getShownIndex()).getImage() != null) {
 				iv.setImageBitmap(products.get(getShownIndex()).getImage());
-			}else{
+			} else {
 				iv.setImageDrawable(getResources().getDrawable(R.drawable.box));
 			}
 
-			final TextView tvqty = (TextView) v.findViewById(R.id.edtQty);
-			tvqty.setWidth(50);
-			tvqty.setText("1");
+			final Button btnaddbasket = (Button) v.findViewById(R.id.btnAdd);
 
-			Button btnaddbasket = (Button) v.findViewById(R.id.btnAdd);
+			final EditText tvqty = (EditText) v.findViewById(R.id.edtQty);
+			tvqty.setWidth(50);
+			tvqty.setText("");
+			tvqty.addTextChangedListener(new TextWatcher() {
+
+				@Override
+				public void onTextChanged(CharSequence s, int start,
+						int before, int count) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void beforeTextChanged(CharSequence s, int start,
+						int count, int after) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void afterTextChanged(Editable s) {
+					// TODO Auto-generated method stub
+					if (!s.toString().equals("")) {
+						if (Integer.parseInt(s.toString()) > 0) {
+							btnaddbasket.setEnabled(true);
+						} else {
+							btnaddbasket.setEnabled(false);
+							tvqty.setEnabled(true);
+						}
+					}else{
+						btnaddbasket.setEnabled(false);
+						tvqty.setEnabled(true);
+					}
+				}
+			});
+
 			if (application.getCurrentCustomer() == null) {
 				btnaddbasket.setEnabled(false);
 				tvqty.setEnabled(false);
 			}
+
 			btnaddbasket.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -512,7 +554,7 @@ public class ProductviewActivity extends BaseFragmentActivity {
 					if (so == null) {
 						so = new SalesOrder("", "", "", "", "");
 						so.setDates(application.getDateTimeStr());
-						Log.d("mensa", "date order: "+so.getDates());
+						Log.d("mensa", "date order: " + so.getDates());
 						so.setOrdernumber("SOM."
 								+ application.getTimeInt()
 								+ "."
